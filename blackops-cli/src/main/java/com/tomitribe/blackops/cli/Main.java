@@ -22,11 +22,11 @@ import java.io.OutputStream;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-public enum  Main {
+public enum Main {
     ;
 
     @Command
-    public static StreamingOutput encrypt(@Option("public-key") final File file) throws Exception {
+    public static StreamingOutput encrypt(@Option({"public-key", "k"}) final File file) throws Exception {
         final PublicKey key = PEM.readPublicKey(IO.read(file));
 
         return new StreamingOutput() {
@@ -42,7 +42,7 @@ public enum  Main {
     }
 
     @Command
-    public static StreamingOutput decrypt(@Option("private-key") final File file) throws Exception {
+    public static StreamingOutput decrypt(@Option({"private-key", "k"}) final File file) throws Exception {
         final PrivateKey key = PEM.readPrivateKey(IO.read(file));
 
         return new StreamingOutput() {
