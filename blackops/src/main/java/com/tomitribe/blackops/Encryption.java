@@ -13,10 +13,14 @@ import org.tomitribe.util.IO;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
+import javax.crypto.Mac;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
@@ -32,46 +36,79 @@ public class Encryption {
 
         final ByteArrayInputStream inputStream = new ByteArrayInputStream(message);
 
-        // Read and RSA Decrypt the Key
+        final byte[] key = new byte[256];
+        final byte[] signature = new byte[32];
+        final byte[] body;
+
+        readExactly(inputStream, key, "Cannot read RSA encrypted key");
+        readExactly(inputStream, signature, "Cannot read AES signature");
+        try {
+            body = IO.readBytes(inputStream);
+        } catch (Exception e) {
+            throw new IllegalStateException("Cannot read AES Encrypted body", e);
+        }
+
+        // 1. RSA Decrypt the Key
 
         final SecretKey secretKey;
 
         try {
-            // Read
-            final byte[] encryptedKey = new byte[256];
-            final int read = inputStream.read(encryptedKey);
-            if (read != encryptedKey.length) throw new IllegalStateException("Cannot read encrypted key");
 
-            // RSA Decrypt
             final Cipher rsa = Cipher.getInstance("RSA");
             rsa.init(Cipher.DECRYPT_MODE, privateKey);
-            final byte[] aesKeyBytes = rsa.doFinal(encryptedKey);
+            final byte[] decrypted = rsa.doFinal(key);
 
-            secretKey = new SecretKeySpec(aesKeyBytes, "AES");
+            secretKey = new SecretKeySpec(decrypted, "AES");
 
         } catch (Exception e) {
-
-            throw new IllegalStateException("Unable to read and RSA Decrypt the AES SecreteKey", e);
+            throw new IllegalStateException("Unable to RSA Decrypt the AES SecreteKey", e);
         }
 
-        // Read and AES Decrypt the Payload
+
+        // 2. Check the Signature of the Body
 
         try {
-            // Read
-            final byte[] encryptedPayload = IO.readBytes(inputStream);
+            final Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(secretKey);
+            final byte[] expected = mac.doFinal(body);
+            final String a = new String(signature, "UTF-8");
+            final String b = new String(expected, "UTF-8");
+            if (!a.equals(b)) {
+                throw new IllegalStateException("Signature validation failed: Signatures do not match");
+            }
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to validate Signature", e);
+        }
+
+        // 3. Read and AES Decrypt the Payload
+
+        try {
 
             // AES Decrypt
             final Cipher aes = Cipher.getInstance("AES");
             aes.init(Cipher.DECRYPT_MODE, secretKey);
-            return aes.doFinal(encryptedPayload);
-        } catch (Exception e) {
+            return aes.doFinal(body);
 
-            throw new IllegalStateException("Unable to read and AES Decrypt the Payload", e);
+        } catch (Exception e) {
+            throw new IllegalStateException("Unable to AES Decrypt the Payload", e);
+        }
+    }
+
+    private static void readExactly(final ByteArrayInputStream inputStream, final byte[] required, final String message) {
+        try {
+
+            final int i = inputStream.read(required);
+
+            if (i != required.length) {
+                throw new IllegalStateException(message);
+            }
+
+        } catch (IOException e) {
+            throw new IllegalStateException(message, e);
         }
     }
 
     public static byte[] encrypt(final byte[] bytes, final PublicKey publicKey) {
-
         // 1. Create an AES Secret Key
 
         final SecretKey secretKey;
@@ -105,12 +142,22 @@ public class Encryption {
             throw new IllegalStateException("Uable to AES Encrypt the Payload", e);
         }
 
-        // 4. Write the encrypted Key then the Payload
+        // 4. Sign the Encrypted Payload
+
+        final byte[] signature;
+        try {
+            final Mac mac = Mac.getInstance("HmacSHA256");
+            mac.init(secretKey);
+            signature = mac.doFinal(body);
+        } catch (Exception e) {
+            throw new IllegalStateException("Uable to Sign the Payload", e);
+        }
 
         try {
             final ByteArrayOutputStream stream = new ByteArrayOutputStream(key.length + body.length);
-            stream.write(key);
-            stream.write(body);
+            stream.write(key); // 265 bytes
+            stream.write(signature); // 32 bytes
+            stream.write(body); // n bytes
             stream.close();
             return stream.toByteArray();
         } catch (Exception e) {

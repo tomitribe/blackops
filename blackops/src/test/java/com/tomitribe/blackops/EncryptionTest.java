@@ -62,7 +62,6 @@ public class EncryptionTest extends Assert {
         assertEquals(expected, new String(decrypted, "UTF-8"));
     }
 
-
     @Test(expected = IllegalStateException.class)
     public void badKey() throws Exception {
 
@@ -81,7 +80,6 @@ public class EncryptionTest extends Assert {
         assertEquals(expected, new String(decrypted, "UTF-8"));
     }
 
-    @Ignore
     @Test(expected = IllegalStateException.class)
     public void badContent() throws Exception {
 
