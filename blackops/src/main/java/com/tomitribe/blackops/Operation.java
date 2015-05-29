@@ -12,16 +12,12 @@ package com.tomitribe.blackops;
 import org.tomitribe.util.IO;
 import org.tomitribe.util.PrintString;
 
-import javax.crypto.Cipher;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.security.PublicKey;
 import java.util.concurrent.TimeUnit;
-import java.util.zip.GZIPOutputStream;
 
 public class Operation {
 
@@ -108,41 +104,20 @@ public class Operation {
 
     public String toUserData() {
         try {
-            return new String(base64(encrypt(gzip(out.toByteArray()))), "UTF-8");
-        } catch (UnsupportedEncodingException e) {
+            final byte[] data = out.toByteArray();
+
+            final PublicKey publicKey = PEM.readPublicKey(new ByteArrayInputStream(PUBLIC_PEM.getBytes()));
+
+            final byte[] encrypt = Encryption.encrypt(data, publicKey);
+
+            return new String(base64(encrypt), "UTF-8");
+        } catch (Exception e) {
             throw new IllegalStateException("Unable to UTF-8 encode the final operation script string", e);
-        }
-    }
-
-    private static byte[] gzip(byte[] data) {
-
-        try {
-            final ByteArrayOutputStream out = new ByteArrayOutputStream();
-            final GZIPOutputStream gzipOutputStream = new GZIPOutputStream(out);
-
-            gzipOutputStream.write(data);
-            gzipOutputStream.close();
-
-            return out.toByteArray();
-        } catch (IOException e) {
-            throw new IllegalStateException("Unable to gzip the operation script", e);
         }
     }
 
     private static byte[] base64(byte[] bytes) {
         return Base64.encodeBase64(bytes);
-    }
-
-    private static byte[] encrypt(byte[] data) {
-        try {
-            final PublicKey publicKey = PEM.readPublicKey(new ByteArrayInputStream(PUBLIC_PEM.getBytes()));
-            final Cipher rsa = Cipher.getInstance("RSA");
-            rsa.init(Cipher.ENCRYPT_MODE, publicKey);
-            rsa.update(data);
-            return rsa.doFinal();
-        } catch (Exception e) {
-            throw new IllegalStateException("Unable to encrypt the operation script", e);
-        }
     }
 
 

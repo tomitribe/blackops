@@ -21,6 +21,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.zip.GZIPInputStream;
+import java.util.zip.GZIPOutputStream;
 
 public enum  Encryption {
     ;
@@ -80,7 +82,9 @@ public enum  Encryption {
             // AES Decrypt
             final Cipher aes = Cipher.getInstance("AES");
             aes.init(Cipher.DECRYPT_MODE, secretKey);
-            return aes.doFinal(body);
+            final byte[] bytes = aes.doFinal(body);
+
+            return gunzip(bytes);
 
         } catch (Exception e) {
             throw new IllegalStateException("Unable to AES Decrypt the Payload", e);
@@ -102,6 +106,8 @@ public enum  Encryption {
     }
 
     public static byte[] encrypt(final byte[] bytes, final PublicKey publicKey) {
+        final byte[] gzip = gzip(bytes);
+
         // 1. Create an AES Secret Key
 
         final SecretKey secretKey;
@@ -130,7 +136,7 @@ public enum  Encryption {
         try {
             final Cipher aes = Cipher.getInstance("AES");
             aes.init(Cipher.ENCRYPT_MODE, secretKey);
-            body = aes.doFinal(bytes);
+            body = aes.doFinal(gzip);
         } catch (Exception e) {
             throw new IllegalStateException("Uable to AES Encrypt the Payload", e);
         }
@@ -155,6 +161,31 @@ public enum  Encryption {
             return stream.toByteArray();
         } catch (Exception e) {
             throw new IllegalStateException("Uable to write the RSA Encrypted Key and the AES Encrypted the Payload", e);
+        }
+    }
+
+
+    private static byte[] gzip(byte[] data) {
+        try {
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            final GZIPOutputStream gzipOutputStream = new GZIPOutputStream(out);
+
+            gzipOutputStream.write(data);
+            gzipOutputStream.close();
+
+            return out.toByteArray();
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to gzip the operation script", e);
+        }
+    }
+
+    private static byte[] gunzip(byte[] data) {
+        try {
+            final ByteArrayInputStream baos = new ByteArrayInputStream(data);
+            final GZIPInputStream inputStream = new GZIPInputStream(baos);
+            return IO.readBytes(inputStream);
+        } catch (IOException e) {
+            throw new IllegalStateException("Unable to gzip the operation script", e);
         }
     }
 
