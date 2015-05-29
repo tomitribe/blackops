@@ -88,17 +88,15 @@ public class Operation {
 
         int length = script.length;
 
-        if (script[script.length-1] == '\n') {
+        if (script[script.length - 1] == '\n') {
             length--;
         }
 
         // Use the interpreter of the script
         if ('#' == script[0] && '!' == script[1]) {
             out.write(script, 2, length - 2);
-        }
-
-        // Use Bash
-        else {
+        } else {
+            // Use Bash
             out.print("bash -l\n");
             out.write(script, 0, length);
         }

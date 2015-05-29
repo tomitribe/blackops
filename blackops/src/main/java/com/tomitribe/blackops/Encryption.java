@@ -19,18 +19,11 @@ import javax.crypto.spec.SecretKeySpec;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.NoSuchAlgorithmException;
 import java.security.PrivateKey;
 import java.security.PublicKey;
 
-public class Encryption {
-
-    public final byte[] data;
-
-    public Encryption(byte[] data) {
-        this.data = data;
-    }
+public enum  Encryption {
+    ;
 
     public static byte[] decrypt(byte[] message, final PrivateKey privateKey) {
 
