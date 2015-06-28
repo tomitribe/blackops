@@ -38,7 +38,7 @@ public class Operation {
         out.print("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n");
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
-        out.print("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n");
+        out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
         tag("Name", name);
     }
 

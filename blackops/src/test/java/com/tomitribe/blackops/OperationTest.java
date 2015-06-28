@@ -23,7 +23,7 @@ public class OperationTest extends Assert {
                 .toString();
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
-                "function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n" +
+                "function me {(export AWS_ACCESS_KEY=\"6b76b6c83f77fcbdc7cbaec\"; export AWS_SECRET_KEY=\"ab350c4aabf4c4a3d85affefbdf339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
                 "\n" +
                 "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | bash -l\n" +
@@ -44,7 +44,7 @@ public class OperationTest extends Assert {
 
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
-                "function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n" +
+                "function me {(export AWS_ACCESS_KEY=\"83f77f6b76b6ccbdc7cbaec\"; export AWS_SECRET_KEY=\"ab354aac4a3d85affe0cfbbf4df339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Color=Orange\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Shape=Circle\"\n" +
@@ -69,7 +69,7 @@ public class OperationTest extends Assert {
 
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
-                "function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n" +
+                "function me {(export AWS_ACCESS_KEY=\"83f77f6b76b6ccbdc7cbaec\"; export AWS_SECRET_KEY=\"ab354aac4a3d85affe0cfbbf4df339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
                 "\n" +
                 "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | bash -l\n" +
