@@ -34,7 +34,7 @@ public class Operative {
 
         specification = new LaunchSpecification()
                 .withInstanceType("m3.medium")
-                .withImageId("ami-01f4146a") // Operative 1.0
+                .withImageId("ami-5bf23530") // Operative 1.0
                 .withMonitoringEnabled(false)
                 .withKeyName("tomitribe_dev")
                 .withSecurityGroups("Ports 60000+10");
