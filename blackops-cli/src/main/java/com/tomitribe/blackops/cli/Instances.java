@@ -16,7 +16,6 @@ import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Filter;
 import com.amazonaws.services.ec2.model.Instance;
 import org.tomitribe.crest.api.Command;
-import org.tomitribe.crest.api.Default;
 import org.tomitribe.crest.api.StreamingOutput;
 import org.tomitribe.util.Join;
 
@@ -54,11 +53,6 @@ public class Instances {
             }
         }
 
-
-//        for (final KeyValue key : keys) {
-//            final Filter filter = new Filter("tag:"+key.getKey() + "=" + key.getValue());
-//            describeInstancesRequest.withFilters(filter);
-//        }
 
         final DescribeInstancesResult result = client.describeInstances(describeInstancesRequest);
 
