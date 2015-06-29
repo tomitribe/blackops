@@ -29,13 +29,13 @@
     <dependency>
       <groupId>org.tomitribe</groupId>
       <artifactId>tomitribe-crest</artifactId>
-      <version>0.3</version>
+      <version>0.4</version>
     </dependency>
-    <dependency>
-      <groupId>org.tomitribe</groupId>
-      <artifactId>tomitribe-crest-xbean</artifactId>
-      <version>0.3</version>
-    </dependency>
+    <!--<dependency>-->
+      <!--<groupId>org.tomitribe</groupId>-->
+      <!--<artifactId>tomitribe-crest-xbean</artifactId>-->
+      <!--<version>0.4</version>-->
+    <!--</dependency>-->
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

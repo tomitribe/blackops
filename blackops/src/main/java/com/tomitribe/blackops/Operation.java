@@ -13,13 +13,17 @@ import org.tomitribe.util.IO;
 import org.tomitribe.util.PrintString;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.security.MessageDigest;
 import java.security.PublicKey;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class Operation {
+
 
     public static final String PUBLIC_PEM = "-----BEGIN PUBLIC KEY-----\n" +
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9C7Fi7EJAgvxU7PybJNP\n" +
@@ -33,6 +37,7 @@ public class Operation {
 
 
     private final PrintString out = new PrintString();
+    private final String id = Operation.generateId();
 
     public Operation(final String name, final String accessKey, final String secretKey) {
         out.print("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n");
@@ -40,6 +45,24 @@ public class Operation {
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
         out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
         tag("Name", name);
+        tag("shutdown", "false");
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    private static String generateId() {
+        try {
+            final ByteArrayOutputStream out = new ByteArrayOutputStream();
+            System.getProperties().store(out, "" + System.currentTimeMillis() + new Random().nextDouble());
+            out.flush();
+            final MessageDigest sha1 = MessageDigest.getInstance("SHA");
+            final byte[] digest = sha1.digest(out.toByteArray());
+            return Hex.toString(digest);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public Operation tag(final String name, final String value) {
@@ -51,6 +74,7 @@ public class Operation {
      * Shutsdown the VM immediately
      */
     public Operation shutdown() {
+        tag("shutdown", "true");
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
         out.printf("me ec2-stop-instances \"$ID\"\n");
@@ -63,16 +87,27 @@ public class Operation {
     public Operation shutdownAfter(final long time, final TimeUnit unit) {
         final long seconds = unit.toSeconds(time);
 
+        tag("shutdownAfter", TimeUnit.SECONDS.toMinutes(seconds) + "m");
         out.printf("sleep %s && me ec2-stop-instances \"$ID\" &\n", seconds);
         return this;
     }
 
     public Operation script(final URL script) throws IOException {
-        return script(IO.readBytes(script));
+        tag("script", script.toExternalForm());
+        try {
+            return script(IO.readBytes(script));
+        } finally {
+            tag("exit", "$?");
+        }
     }
 
     public Operation script(final File script) throws IOException {
-        return script(IO.readBytes(script));
+        tag("script", script.getName());
+        try {
+            return script(IO.readBytes(script));
+        } finally {
+            tag("exit", "$?");
+        }
     }
 
     public Operation script(final String script) throws IOException {

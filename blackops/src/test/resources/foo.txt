@@ -1,0 +1,111 @@
+
+{
+ReservationId: r-eff3d805,
+OwnerId: 588134240945,
+RequesterId: 226008221399,
+Groups: [],
+GroupNames: [],
+Instances: [
+{
+InstanceId: i-635d1e9e,
+ImageId: ami-0e8fb766,
+State: { Code: 16, Name: running },
+PrivateDnsName: ip-172-30-2-47.ec2.internal,
+PublicDnsName: ec2-52-6-7-108.compute-1.amazonaws.com,
+StateTransitionReason: ,
+KeyName: tomitribe_dev,
+AmiLaunchIndex: 0,
+ProductCodes: [],
+InstanceType: t2.micro,
+LaunchTime: Thu Apr 30 17:58:19 PDT 2015,
+Placement: 
+{AvailabilityZone: us-east-1c,
+GroupName: ,
+Tenancy: default},
+Monitoring: 
+{State: disabled},
+SubnetId: subnet-91b617e6,
+VpcId: vpc-0a71f16f,
+PrivateIpAddress: 172.30.2.47,
+PublicIpAddress: 52.6.7.108,
+Architecture: x86_64,
+RootDeviceType: ebs,
+RootDeviceName: /dev/xvda,
+BlockDeviceMappings: [
+{DeviceName: /dev/xvda,
+Ebs: 
+{VolumeId: vol-b1bde3a7,
+Status: attached,
+AttachTime: Thu Apr 30 17:58:23 PDT 2015,
+DeleteOnTermination: true}}],
+VirtualizationType: hvm,
+ClientToken: d9466702-7146-48a6-819d-2714171811c2_subnet-91b617e6_1,
+Tags: [
+{Key: elasticbeanstalk:environment-id,
+Value: e-erppnckikx},
+ 
+{Key: aws:autoscaling:groupName,
+Value: awseb-e-erppnckikx-stack-AWSEBAutoScalingGroup-UHNX8V2PT5RT},
+ 
+{Key: elasticbeanstalk:environment-name,
+Value: roberto},
+ 
+{Key: aws:cloudformation:stack-id,
+Value: arn:aws:cloudformation:us-east-1:588134240945:stack/awseb-e-erppnckikx-stack/fc366f40-ef9c-11e4-8647-500150b34c44},
+ 
+{Key: Name,
+Value: roberto},
+ 
+{Key: aws:cloudformation:stack-name,
+Value: awseb-e-erppnckikx-stack},
+ 
+{Key: aws:cloudformation:logical-id,
+Value: AWSEBAutoScalingGroup}],
+SecurityGroups: [
+{GroupName: ssh-and-tomcat,
+GroupId: sg-762d2d13},
+ 
+{GroupName: awseb-e-erppnckikx-stack-AWSEBSecurityGroup-PPQXSE1088VM,
+GroupId: sg-856f3ce1}],
+SourceDestCheck: true,
+Hypervisor: xen,
+NetworkInterfaces: [
+{NetworkInterfaceId: eni-cb771a83,
+SubnetId: subnet-91b617e6,
+VpcId: vpc-0a71f16f,
+Description: ,
+OwnerId: 588134240945,
+Status: in-use,
+MacAddress: 0a:c9:b4:9d:b8:b9,
+PrivateIpAddress: 172.30.2.47,
+PrivateDnsName: ip-172-30-2-47.ec2.internal,
+SourceDestCheck: true,
+Groups: [
+{GroupName: ssh-and-tomcat,
+GroupId: sg-762d2d13},
+ 
+{GroupName: awseb-e-erppnckikx-stack-AWSEBSecurityGroup-PPQXSE1088VM,
+GroupId: sg-856f3ce1}],
+Attachment: 
+{AttachmentId: eni-attach-5b61c93e,
+DeviceIndex: 0,
+Status: attached,
+AttachTime: Thu Apr 30 17:58:19 PDT 2015,
+DeleteOnTermination: true},
+Association: 
+{PublicIp: 52.6.7.108,
+PublicDnsName: ec2-52-6-7-108.compute-1.amazonaws.com,
+IpOwnerId: amazon},
+PrivateIpAddresses: [
+{PrivateIpAddress: 172.30.2.47,
+PrivateDnsName: ip-172-30-2-47.ec2.internal,
+Primary: true,
+Association: 
+{PublicIp: 52.6.7.108,
+PublicDnsName: ec2-52-6-7-108.compute-1.amazonaws.com,
+IpOwnerId: amazon}}]}],
+IamInstanceProfile: 
+{Arn: arn:aws:iam::588134240945:instance-profile/aws-elasticbeanstalk-ec2-role,
+Id: AIPAJ7F6GZSZTJMQQKYXW},
+EbsOptimized: false,
+}]}

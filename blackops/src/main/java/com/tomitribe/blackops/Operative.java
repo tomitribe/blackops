@@ -26,6 +26,10 @@ public class Operative {
     private final AmazonEC2 client;
     private final RequestSpotInstancesRequest request;
 
+    public Operative(final String operationName) {
+        this(operationName, "AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn");
+    }
+
     public Operative(final String operationName, final String accessKey, final String secretKey) {
 
         specification = new LaunchSpecification()
@@ -36,6 +40,8 @@ public class Operative {
                 .withSecurityGroups("Ports 60000+10");
 
         operation = new Operation(operationName, accessKey, secretKey);
+        operation.tag("user.name", System.getProperty("user.name"));
+        operation.tag("operation", operation.getId());
 
         client = new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey));
 

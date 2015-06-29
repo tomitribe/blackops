@@ -46,6 +46,7 @@ public class OperationTest extends Assert {
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
                 "function me {(export AWS_ACCESS_KEY=\"83f77f6b76b6ccbdc7cbaec\"; export AWS_SECRET_KEY=\"ab354aac4a3d85affe0cfbbf4df339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"shutdown=false\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Color=Orange\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Shape=Circle\"\n" +
                 "\n" +
@@ -57,6 +58,7 @@ public class OperationTest extends Assert {
                 "touch /tmp/foo\n" +
                 "2dc013eefa7a33ad833c0eb36ba47428\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond - Finished\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"shutdown=true\"\n" +
                 "me ec2-stop-instances \"$ID\"\n", actual);
     }
 
