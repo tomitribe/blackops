@@ -41,7 +41,6 @@ public class Operative {
 
         operation = new Operation(operationName, accessKey, secretKey);
         operation.tag("user.name", System.getProperty("user.name"));
-        operation.tag("operation", operation.getId());
 
         client = new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey));
 

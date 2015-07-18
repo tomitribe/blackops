@@ -46,6 +46,7 @@ public class Operation {
         out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
         tag("Name", name);
         tag("shutdown", "false");
+        tag("operation-id", getId());
     }
 
     public String getId() {
@@ -87,7 +88,7 @@ public class Operation {
     public Operation shutdownAfter(final long time, final TimeUnit unit) {
         final long seconds = unit.toSeconds(time);
 
-        tag("shutdownAfter", TimeUnit.SECONDS.toMinutes(seconds) + "m");
+        tag("shutdown", TimeUnit.SECONDS.toMinutes(seconds) + "m");
         out.printf("sleep %s && me ec2-stop-instances \"$ID\" &\n", seconds);
         return this;
     }

@@ -18,13 +18,16 @@ public class OperationTest extends Assert {
 
     @Test
     public void minimum() throws Exception {
-        final String actual = new Operation("Jane Bond", "6b76b6c83f77fcbdc7cbaec", "ab350c4aabf4c4a3d85affefbdf339c3")
-                .script("touch /tmp/foo\n")
-                .toString();
+        final Operation operation = new Operation("Jane Bond", "6b76b6c83f77fcbdc7cbaec", "ab350c4aabf4c4a3d85affefbdf339c3")
+                .script("touch /tmp/foo\n");
+
+        final String actual = toString(operation);
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
                 "function me {(export AWS_ACCESS_KEY=\"6b76b6c83f77fcbdc7cbaec\"; export AWS_SECRET_KEY=\"ab350c4aabf4c4a3d85affefbdf339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"shutdown=false\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"operation-id=2778495aef93cb95b663dd6bdacf7f466e09466d\"\n" +
                 "\n" +
                 "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | bash -l\n" +
                 "touch /tmp/foo\n" +
@@ -33,20 +36,23 @@ public class OperationTest extends Assert {
 
     @Test
     public void complete() throws Exception {
-        final String actual = new Operation("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
+        final Operation operation = new Operation("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
                 .tag("Color", "Orange")
                 .tag("Shape", "Circle")
                 .script("#!/usr/bin/perl -w\nprint \"Hello, Perl\\n\";\n")
                 .script("touch /tmp/foo\n")
                 .tag("Name", "Jane Bond - Finished")
-                .shutdown()
-                .toString();
+                .shutdown();
+
+
+        final String actual = toString(operation);
 
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
                 "function me {(export AWS_ACCESS_KEY=\"83f77f6b76b6ccbdc7cbaec\"; export AWS_SECRET_KEY=\"ab354aac4a3d85affe0cfbbf4df339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"shutdown=false\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"operation-id=2778495aef93cb95b663dd6bdacf7f466e09466d\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Color=Orange\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Shape=Circle\"\n" +
                 "\n" +
@@ -62,22 +68,39 @@ public class OperationTest extends Assert {
                 "me ec2-stop-instances \"$ID\"\n", actual);
     }
 
+    private String toString(Operation operation) {
+
+        // For testing, we need a non-dynamic value
+        final String fixedId = "2778495aef93cb95b663dd6bdacf7f466e09466d";
+
+        // We of course test that the generated ID is unique and dynamic
+        assertNotEquals(fixedId, operation.getId());
+
+        // We replace the generated ID with a fixed ID so we can still do a string match
+        return operation.toString().replace(operation.getId(), fixedId);
+    }
+
     @Test
     public void shutdownAfter() throws Exception {
-        final String actual = new Operation("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
-                .script("touch /tmp/foo\n")
+        final Operation operation = new Operation("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
                 .shutdownAfter(10, TimeUnit.MINUTES)
-                .toString();
+                .script("touch /tmp/foo\n")
+                ;
+
+        final String actual = toString(operation);
 
 
         assertEquals("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n" +
                 "function me {(export AWS_ACCESS_KEY=\"83f77f6b76b6ccbdc7cbaec\"; export AWS_SECRET_KEY=\"ab354aac4a3d85affe0cfbbf4df339c3\"; /opt/aws/bin/\"$@\";)}\n" +
                 "me ec2-create-tags \"$ID\" --tag \"Name=Jane Bond\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"shutdown=false\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"operation-id=2778495aef93cb95b663dd6bdacf7f466e09466d\"\n" +
+                "me ec2-create-tags \"$ID\" --tag \"shutdown=10m\"\n" +
+                "sleep 600 && me ec2-stop-instances \"$ID\" &\n" +
                 "\n" +
                 "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | bash -l\n" +
                 "touch /tmp/foo\n" +
-                "2dc013eefa7a33ad833c0eb36ba47428\n" +
-                "sleep 600 && me ec2-stop-instances \"$ID\" &\n", actual);
+                "2dc013eefa7a33ad833c0eb36ba47428\n", actual);
     }
 
 }

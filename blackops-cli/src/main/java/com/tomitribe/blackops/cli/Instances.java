@@ -63,24 +63,25 @@ public class Instances {
                     .flatMap(reservation -> reservation.getInstances().stream())
                     .sorted((o1, o2) -> o2.getLaunchTime().compareTo(o1.getLaunchTime()))
                     .collect(Collectors.toList())
-                    .forEach(instance -> {
-                        final String name = getName(instance);
-                        out.printf("%-30s %-45s %-10s %-12s %-12s %-17s %-30s %s%n",
-                                name,
-                                instance.getPublicDnsName(),
-                                instance.getState().getName(),
-                                instance.getInstanceType(),
-                                instance.getInstanceId(),
-                                instance.getKeyName(),
-                                instance.getLaunchTime(),
-                                tags(instance)
-                        );
-                    });
-            ;
+                    .forEach(instance -> print(out, instance));
         };
     }
 
-    private String tags(final Instance instance) {
+    public static void print(PrintStream out, Instance instance) {
+        final String name = getName(instance);
+        out.printf("%-30s %-45s %-10s %-12s %-12s %-17s %-30s %s%n",
+                name,
+                instance.getPublicDnsName(),
+                instance.getState().getName(),
+                instance.getInstanceType(),
+                instance.getInstanceId(),
+                instance.getKeyName(),
+                instance.getLaunchTime(),
+                tags(instance)
+        );
+    }
+
+    private static String tags(final Instance instance) {
         final List<String> tags = instance.getTags().stream()
                 .map(tag -> tag.getKey() + "=" + tag.getValue())
                 .sorted(String::compareTo)
@@ -92,7 +93,7 @@ public class Instances {
         return Join.join(", ", tags);
     }
 
-    private String getName(final Instance instance) {
+    private static String getName(final Instance instance) {
         for (final com.amazonaws.services.ec2.model.Tag tag : instance.getTags()) {
             if ("Name".equals(tag.getKey())) return tag.getValue();
         }
