@@ -35,6 +35,7 @@ public class Operation {
             "0QIDAQAB\n" +
             "-----END PUBLIC KEY-----\n";
 
+    public static final String ID = "operation-id";
 
     private final PrintString out = new PrintString();
     private final String id = Operation.generateId();
@@ -46,7 +47,8 @@ public class Operation {
         out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
         tag("Name", name);
         tag("shutdown", "false");
-        tag("operation-id", getId());
+
+        tag(ID, getId());
     }
 
     public String getId() {

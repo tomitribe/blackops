@@ -12,9 +12,18 @@ package com.tomitribe.blackops;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.LaunchSpecification;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesRequest;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
+
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.ScheduledFuture;
+
+import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * @version $Revision$ $Date$
@@ -70,4 +79,27 @@ public class Operative {
         return client.requestSpotInstances(request);
     }
 
+    public class Launch {
+
+        private final CountDownLatch expected;
+        private final int instanceCount;
+
+        public Launch() {
+            instanceCount = request.getInstanceCount();
+            expected = new CountDownLatch(instanceCount);
+
+            final ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
+
+            final ScheduledFuture<?> future = pool.scheduleAtFixedRate(this::check, 3, 3, SECONDS);
+        }
+
+        public void check() {
+            final DescribeInstancesResult result = client.describeInstances(
+                    new DescribeInstances()
+                            .withOperationId(operation.getId())
+                            .withState(InstanceStateName.Running)
+                            .getRequest()
+            );
+        }
+    }
 }
