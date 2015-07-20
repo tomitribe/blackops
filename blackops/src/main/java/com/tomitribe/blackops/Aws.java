@@ -14,9 +14,11 @@ import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
+import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.SpotInstanceState;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 public enum Aws {
@@ -29,7 +31,7 @@ public enum Aws {
                 .collect(Collectors.toList());
     }
 
-    public static DescribeInstancesRequest describeInstancesRequest(final List<Tag> tag) {
+    public static DescribeInstancesRequest describeRunningInstances(final List<Tag> tag) {
         return new DescribeInstances()
                 .withState(InstanceStateName.Running)
                 .withTags(tag)
@@ -45,8 +47,16 @@ public enum Aws {
     }
 
     public static List<SpotInstanceState> getSpotInstanceStates(final DescribeSpotInstanceRequestsResult result) {
-        return (List<SpotInstanceState>) result.getSpotInstanceRequests().stream()
+        return getSpotInstanceStates(result.getSpotInstanceRequests());
+    }
+
+    public static List<SpotInstanceState> getSpotInstanceStates(final List<SpotInstanceRequest> spotInstanceRequests) {
+        return (List<SpotInstanceState>) spotInstanceRequests.stream()
                 .map(spotInstanceRequest -> SpotInstanceState.fromValue(spotInstanceRequest.getState()))
                 .collect(Collectors.toList());
+    }
+
+    public static Map<String, State> countInstanceStates(List<Instance> instances) {
+        return State.count(instances, instance -> instance.getState().getName());
     }
 }

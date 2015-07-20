@@ -20,7 +20,7 @@ import java.util.function.Supplier;
 public class Await {
 
     public static <T> T check(final Supplier<T> supplier) {
-        return check(supplier, 3, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);
+        return check(supplier, 0, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
     public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period, final TimeUnit unit) {

@@ -43,12 +43,16 @@ public class Instances {
     public StreamingOutput list(final List<Tag> tag) throws Exception {
         final AmazonEC2Client client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"));
 
-        final DescribeInstancesRequest describeInstancesRequest = Aws.describeInstancesRequest(tag);
+        final DescribeInstancesRequest describeInstancesRequest = Aws.describeRunningInstances(tag);
 
         final DescribeInstancesResult result = client.describeInstances(describeInstancesRequest);
 
         final List<Instance> instances = Aws.getInstances(result);
 
+        return listInstances(instances);
+    }
+
+    public static StreamingOutput listInstances(List<Instance> instances) {
         return outputStream -> {
             final PrintStream out = new PrintStream(outputStream);
             instances.forEach(instance -> print(out, instance));

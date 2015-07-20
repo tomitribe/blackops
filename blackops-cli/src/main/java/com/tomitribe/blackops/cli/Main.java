@@ -13,6 +13,7 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceType;
 import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.tomitribe.blackops.Encryption;
+import com.tomitribe.blackops.Operations;
 import com.tomitribe.blackops.Operative;
 import com.tomitribe.blackops.PEM;
 import org.tomitribe.crest.api.Command;
@@ -68,74 +69,47 @@ public enum Main {
 
     @Command
     public static StreamingOutput exec(final String script, @Option("name") String name,
-                              @Option("shutdown") @Default("false") final boolean shutdown,
-                              @Option("instance-type") @Default("m3.medium") final String instanceType,
-                              @Option("key-name") @Default("tomitribe_dev") final String keyName,
-                              @Option("security-group") @Default("Ports 60000+10") final String securityGroup,
-                              @Option("spot-price") @Default("0.012") final String spotPrice,
-                              @Option("instance-count") @Default("1") final int instanceCount,
-                              @Option("spot-request-type") @Default("one-time") final String spotRequestType,
-                              @Option("zone") @Default("us-east-1c") final String zone,
-                              @Option("await-capacity") @Default("false") final boolean awaitCapacity
+                                       @Option("shutdown") @Default("false") final boolean shutdown,
+                                       @Option("instance-type") @Default("m3.medium") final String instanceType,
+                                       @Option("key-name") @Default("tomitribe_dev") final String keyName,
+                                       @Option("security-group") @Default("Ports 60000+10") final String[] securityGroups,
+                                       @Option("spot-price") @Default("0.012") final String spotPrice,
+                                       @Option("instance-count") @Default("1") final int instanceCount,
+                                       @Option("spot-request-type") @Default("one-time") final String spotRequestType,
+                                       @Option("zone") @Default("us-east-1c") final String zone,
+                                       @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
         final Operative operative = new Operative(name);
 
         operative.operation().script(script);
 
-        if (shutdown) {
-            operative.operation().shutdown();
-        }
-
-        operative.specification()
-                .withInstanceType(InstanceType.fromValue(instanceType))
-                .withKeyName(keyName)
-                .withSecurityGroups(securityGroup)
-        ;
-
-        operative.request()
-                .withSpotPrice(spotPrice)
-                .withInstanceCount(instanceCount)
-                .withType(spotRequestType)
-                .withAvailabilityZoneGroup(zone);
-
-
-        final Operative.Launch launch = operative.execute();
-
-        return os -> {
-            final PrintStream stream = new PrintStream(os);
-
-            if (!awaitCapacity) {
-                stream.printf("%s%n%s%n", operative.operation().getId(), launch.toString());
-                return;
-            }
-
-            final List<SpotInstanceState> spotInstanceStates = launch.awaitSpotRequest();
-            stream.printf("Spot Request: %s%n", Join.join(", ", spotInstanceStates));
-
-            final List<Instance> instances = launch.awaitInstances();
-
-            instances.forEach(instance -> Instances.print(stream, instance));
-        };
+        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operative);
     }
 
     @Command
     public static StreamingOutput run(final File script, @Option("name") String name,
-                             @Option("shutdown") @Default("false") final boolean shutdown,
-                             @Option("instance-type") @Default("m3.medium") final String instanceType,
-                             @Option("key-name") @Default("tomitribe_dev") final String keyName,
-                             @Option("security-group") @Default("Ports 60000+10") final String[] securityGroups,
-                             @Option("spot-price") @Default("0.012") final String spotPrice,
-                             @Option("instance-count") @Default("1") final int instanceCount,
-                             @Option("spot-request-type") @Default("one-time") final String spotRequestType,
-                             @Option("zone") @Default("us-east-1c") final String zone,
-                             @Option("await-capacity") @Default("false") final boolean awaitCapacity
+                                      @Option("shutdown") @Default("false") final boolean shutdown,
+                                      @Option("instance-type") @Default("m3.medium") final String instanceType,
+                                      @Option("key-name") @Default("tomitribe_dev") final String keyName,
+                                      @Option("security-group") @Default("Ports 60000+10") final String[] securityGroups,
+                                      @Option("spot-price") @Default("0.012") final String spotPrice,
+                                      @Option("instance-count") @Default("1") final int instanceCount,
+                                      @Option("spot-request-type") @Default("one-time") final String spotRequestType,
+                                      @Option("zone") @Default("us-east-1c") final String zone,
+                                      @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
         final Operative operative = new Operative((name == null) ? script.getName() : name);
 
         operative.operation().script(script);
 
+        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operative);
+    }
+
+
+    public static StreamingOutput execute(
+            boolean shutdown, String instanceType, String keyName, String[] securityGroups, String spotPrice, int instanceCount, String spotRequestType, String zone, boolean awaitCapacity, Operative operative) {
         if (shutdown) {
             operative.operation().shutdown();
         }
@@ -163,8 +137,7 @@ public enum Main {
                 return;
             }
 
-            final List<SpotInstanceState> spotInstanceStates = launch.awaitSpotRequest();
-            stream.printf("Spot Request: %s%n", Join.join(", ", spotInstanceStates));
+            Operations.awaitFulfillment(launch.getSpotInstancesResult().getSpotInstanceRequests(), stream);
 
             final List<Instance> instances = launch.awaitInstances();
 

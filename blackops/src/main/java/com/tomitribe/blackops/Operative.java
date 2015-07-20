@@ -63,7 +63,8 @@ public class Operative {
                 .withInstanceCount(1)
                 .withType("one-time")
                 .withLaunchSpecification(specification)
-                .withAvailabilityZoneGroup("us-east-1c");
+                .withAvailabilityZoneGroup("us-east-1c")
+        ;
     }
 
     public RequestSpotInstancesRequest request() {
@@ -159,20 +160,4 @@ public class Operative {
             return spotInstancesResult.toString();
         }
     }
-
-    public static void main(String[] args) throws Exception {
-
-        final AtomicInteger count = new AtomicInteger();
-
-        final String check = Await.check(() -> {
-            System.out.print("\rTick " + count.incrementAndGet());
-            if (count.get() > 5) return "\rDone";
-            return null;
-        }, 1, 1, SECONDS);
-
-
-        System.out.println(check);
-    }
-
-
 }
