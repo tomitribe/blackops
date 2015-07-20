@@ -9,7 +9,9 @@
  */
 package com.tomitribe.blackops.cli;
 
+import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceType;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.tomitribe.blackops.Encryption;
 import com.tomitribe.blackops.Operative;
 import com.tomitribe.blackops.PEM;
@@ -18,12 +20,15 @@ import org.tomitribe.crest.api.Default;
 import org.tomitribe.crest.api.Option;
 import org.tomitribe.crest.api.StreamingOutput;
 import org.tomitribe.util.IO;
+import org.tomitribe.util.Join;
 
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.io.PrintStream;
 import java.security.PrivateKey;
 import java.security.PublicKey;
+import java.util.List;
 
 public enum Main {
     ;
@@ -62,7 +67,7 @@ public enum Main {
 
 
     @Command
-    public static String exec(final String script, @Option("name") String name,
+    public static StreamingOutput exec(final String script, @Option("name") String name,
                               @Option("shutdown") @Default("false") final boolean shutdown,
                               @Option("instance-type") @Default("m3.medium") final String instanceType,
                               @Option("key-name") @Default("tomitribe_dev") final String keyName,
@@ -70,7 +75,8 @@ public enum Main {
                               @Option("spot-price") @Default("0.012") final String spotPrice,
                               @Option("instance-count") @Default("1") final int instanceCount,
                               @Option("spot-request-type") @Default("one-time") final String spotRequestType,
-                              @Option("zone") @Default("us-east-1c") final String zone
+                              @Option("zone") @Default("us-east-1c") final String zone,
+                              @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
         final Operative operative = new Operative(name);
@@ -94,11 +100,27 @@ public enum Main {
                 .withAvailabilityZoneGroup(zone);
 
 
-        return String.format("%s%n%s", operative.operation().getId(), operative.execute().toString());
+        final Operative.Launch launch = operative.execute();
+
+        return os -> {
+            final PrintStream stream = new PrintStream(os);
+
+            if (!awaitCapacity) {
+                stream.printf("%s%n%s%n", operative.operation().getId(), launch.toString());
+                return;
+            }
+
+            final List<SpotInstanceState> spotInstanceStates = launch.awaitSpotRequest();
+            stream.printf("Spot Request: %s%n", Join.join(", ", spotInstanceStates));
+
+            final List<Instance> instances = launch.awaitInstances();
+
+            instances.forEach(instance -> Instances.print(stream, instance));
+        };
     }
 
     @Command
-    public static String run(final File script, @Option("name") String name,
+    public static StreamingOutput run(final File script, @Option("name") String name,
                              @Option("shutdown") @Default("false") final boolean shutdown,
                              @Option("instance-type") @Default("m3.medium") final String instanceType,
                              @Option("key-name") @Default("tomitribe_dev") final String keyName,
@@ -106,7 +128,8 @@ public enum Main {
                              @Option("spot-price") @Default("0.012") final String spotPrice,
                              @Option("instance-count") @Default("1") final int instanceCount,
                              @Option("spot-request-type") @Default("one-time") final String spotRequestType,
-                             @Option("zone") @Default("us-east-1c") final String zone
+                             @Option("zone") @Default("us-east-1c") final String zone,
+                             @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
         final Operative operative = new Operative((name == null) ? script.getName() : name);
@@ -130,7 +153,23 @@ public enum Main {
                 .withAvailabilityZoneGroup(zone);
 
 
-        return String.format("%s%n%s", operative.operation().getId(), operative.execute().toString());
+        final Operative.Launch launch = operative.execute();
+
+        return os -> {
+            final PrintStream stream = new PrintStream(os);
+
+            if (!awaitCapacity) {
+                stream.printf("%s%n%s%n", operative.operation().getId(), launch.toString());
+                return;
+            }
+
+            final List<SpotInstanceState> spotInstanceStates = launch.awaitSpotRequest();
+            stream.printf("Spot Request: %s%n", Join.join(", ", spotInstanceStates));
+
+            final List<Instance> instances = launch.awaitInstances();
+
+            instances.forEach(instance -> Instances.print(stream, instance));
+        };
     }
 
 }

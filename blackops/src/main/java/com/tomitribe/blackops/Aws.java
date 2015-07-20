@@ -11,8 +11,10 @@ package com.tomitribe.blackops;
 
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,5 +42,11 @@ public enum Aws {
             if ("Name".equals(tag.getKey())) return tag.getValue();
         }
         return null;
+    }
+
+    public static List<SpotInstanceState> getSpotInstanceStates(final DescribeSpotInstanceRequestsResult result) {
+        return (List<SpotInstanceState>) result.getSpotInstanceRequests().stream()
+                .map(spotInstanceRequest -> SpotInstanceState.fromValue(spotInstanceRequest.getState()))
+                .collect(Collectors.toList());
     }
 }

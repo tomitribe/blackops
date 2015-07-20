@@ -13,15 +13,20 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsRequest;
+import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
+import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.LaunchSpecification;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesRequest;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
+import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.ScheduledFuture;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.SECONDS;
 
@@ -73,33 +78,101 @@ public class Operative {
         return operation;
     }
 
-    public RequestSpotInstancesResult execute() {
+    public Launch execute() {
         specification.withUserData(operation.toUserData());
         request.setLaunchSpecification(specification);
-        return client.requestSpotInstances(request);
+        return new Launch(client.requestSpotInstances(request));
     }
 
     public class Launch {
 
         private final CountDownLatch expected;
         private final int instanceCount;
+        private final RequestSpotInstancesResult spotInstancesResult;
+        private final List<String> spotInstanceRequestIds;
 
-        public Launch() {
-            instanceCount = request.getInstanceCount();
-            expected = new CountDownLatch(instanceCount);
-
-            final ScheduledExecutorService pool = Executors.newScheduledThreadPool(1);
-
-            final ScheduledFuture<?> future = pool.scheduleAtFixedRate(this::check, 3, 3, SECONDS);
+        public Launch(final RequestSpotInstancesResult spotInstancesResult) {
+            this.instanceCount = request.getInstanceCount();
+            this.expected = new CountDownLatch(instanceCount);
+            this.spotInstancesResult = spotInstancesResult;
+            this.spotInstanceRequestIds = spotInstancesResult
+                    .getSpotInstanceRequests()
+                    .stream()
+                    .map(SpotInstanceRequest::getSpotInstanceRequestId)
+                    .collect(Collectors.toList());
         }
 
-        public void check() {
-            final DescribeInstancesResult result = client.describeInstances(
-                    new DescribeInstances()
-                            .withOperationId(operation.getId())
-                            .withState(InstanceStateName.Running)
-                            .getRequest()
-            );
+        public List<SpotInstanceState> awaitSpotRequest() {
+            return Await.check(() -> {
+                final DescribeSpotInstanceRequestsRequest request1 = new DescribeSpotInstanceRequestsRequest();
+                request1.withSpotInstanceRequestIds(spotInstanceRequestIds);
+
+                final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(request1);
+
+                final List<SpotInstanceState> spotInstanceStates = Aws.getSpotInstanceStates(result);
+
+                final int states = spotInstanceStates.size();
+
+                // If we don't have any entries yet, we should wait
+                if (states == 0) return null;
+
+                // If none of our entries our "Open", we're done waiting
+                final List<SpotInstanceState> finalStates = spotInstanceStates.stream()
+
+                        // Remove Open entries
+                        .filter(spotInstanceState -> spotInstanceState != SpotInstanceState.Open)
+
+                                // If we only have non-Open entries left, return false
+                        .collect(Collectors.toList());
+
+                return (finalStates.size() == spotInstanceStates.size()) ? finalStates : null;
+            });
+        }
+
+        public List<Instance> awaitInstances() {
+            return Await.check(() -> {
+                final DescribeInstancesResult result = client.describeInstances(
+                        new DescribeInstances()
+                                .withOperationId(operation.getId())
+                                .withState(InstanceStateName.Running)
+                                .getRequest()
+                );
+
+                final List<Instance> instances1 = Aws.getInstances(result);
+
+                final boolean finished = instances1.size() == instanceCount;
+
+                return finished ? instances1 : null;
+            });
+        }
+
+        public RequestSpotInstancesResult getSpotInstancesResult() {
+            return spotInstancesResult;
+        }
+
+        public List<String> getSpotInstanceRequestIds() {
+            return spotInstanceRequestIds;
+        }
+
+        @Override
+        public String toString() {
+            return spotInstancesResult.toString();
         }
     }
+
+    public static void main(String[] args) throws Exception {
+
+        final AtomicInteger count = new AtomicInteger();
+
+        final String check = Await.check(() -> {
+            System.out.print("\rTick " + count.incrementAndGet());
+            if (count.get() > 5) return "\rDone";
+            return null;
+        }, 1, 1, SECONDS);
+
+
+        System.out.println(check);
+    }
+
+
 }
