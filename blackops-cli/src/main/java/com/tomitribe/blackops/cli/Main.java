@@ -34,6 +34,11 @@ import java.util.List;
 public enum Main {
     ;
 
+    public static void main(String[] args) throws IOException {
+        final StreamingOutput output = exec("export > /tmp/foo.txt", "Test", false, "m3.medium", "tomitribe_dev", new String[]{"Ports 60000+10"}, "0.012", 4, "one-time", "us-east-1c", true);
+        output.write(System.out);
+    }
+
     @Command
     public static StreamingOutput encrypt(@Option({"public-key", "k"}) final File file) throws Exception {
         final PublicKey key = PEM.readPublicKey(IO.read(file));
@@ -131,6 +136,7 @@ public enum Main {
 
         return os -> {
             final PrintStream stream = new PrintStream(os);
+            stream.println(operative.operation().getId());
 
             if (!awaitCapacity) {
                 stream.printf("%s%n%s%n", operative.operation().getId(), launch.toString());

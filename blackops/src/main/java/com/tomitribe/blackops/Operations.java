@@ -27,6 +27,7 @@ import org.tomitribe.util.Join;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public enum Operations {
@@ -71,6 +72,8 @@ public enum Operations {
     }
 
     public static void awaitFulfillment(final List<SpotInstanceRequest> needed, final PrintStream out) {
+        final long start = System.currentTimeMillis();
+
         Await.check(() -> {
 
             final List<String> requestIds = needed.stream().map(SpotInstanceRequest::getSpotInstanceRequestId).collect(Collectors.toList());
@@ -80,7 +83,7 @@ public enum Operations {
 
             final Map<String, State> count = countSpotInstanceStates(result.getSpotInstanceRequests());
 
-            out.print("\r" + printStates(count));
+            out.printf("\r%s - %ss" + printStates(count), TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
 
             if (count.get("open") == null) {
 

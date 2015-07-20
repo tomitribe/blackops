@@ -46,7 +46,7 @@ public class State {
         final Map<String, State> map = new TreeMap<>();
 
         for (final T state : states) {
-            final String id = function.apply(state);
+            final String id = function.apply(state).toLowerCase();
 
             final State count = map.get(id);
 
