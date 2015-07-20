@@ -45,10 +45,10 @@ public class Operation {
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
         out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
-        tag("Name", name);
+        tag(ID, id);
+        tag("Name", (name == null) ? name : id);
         tag("shutdown", "false");
 
-        tag(ID, getId());
     }
 
     public String getId() {
