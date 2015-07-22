@@ -29,8 +29,12 @@ public class State {
         this.count.set(count);
     }
 
-    public AtomicInteger getCount() {
-        return count;
+    public String getName() {
+        return name;
+    }
+
+    public int getCount() {
+        return count.get();
     }
 
     public int incrementAndGet() {

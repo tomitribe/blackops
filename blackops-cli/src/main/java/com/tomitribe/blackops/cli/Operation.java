@@ -77,7 +77,7 @@ public class Operation {
         final Map<String, State> count = Aws.countInstanceStates(instances);
 
         final State state = count.get(InstanceStateName.Running.name().toLowerCase());
-        final int running = state != null ? state.getCount().get() : 0;
+        final int running = state != null ? state.getCount() : 0;
 
         final RequestSpotInstancesResult result = Operations.expandOperation(operationId, to - running);
 
