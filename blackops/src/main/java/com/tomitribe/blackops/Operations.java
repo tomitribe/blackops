@@ -22,7 +22,6 @@ import com.amazonaws.services.ec2.model.RequestSpotInstancesRequest;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
-import org.tomitribe.util.Join;
 
 import java.io.PrintStream;
 import java.util.List;
@@ -83,7 +82,7 @@ public enum Operations {
 
             final Map<String, State> count = countSpotInstanceStates(result.getSpotInstanceRequests());
 
-            out.printf("\r%s - %ss" + printStates(count), TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
+            out.printf("\r%s - %ss" + States.printStates(count), TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
 
             if (count.get("open") == null) {
 
@@ -96,12 +95,8 @@ public enum Operations {
         });
     }
 
-    public static String printStates(Map<String, State> count) {
-        return Join.join(", ", count.values());
-    }
-
     public static Map<String, State> countSpotInstanceStates(final List<SpotInstanceRequest> spotInstanceRequests) {
-        return State.count(spotInstanceRequests, SpotInstanceRequest::getState);
+        return States.count(spotInstanceRequests, SpotInstanceRequest::getState);
     }
 
 

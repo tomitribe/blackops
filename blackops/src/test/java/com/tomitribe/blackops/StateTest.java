@@ -20,29 +20,14 @@ import java.util.Map;
 public class StateTest extends Assert {
 
     @Test
-    public void testCount() throws Exception {
+    public void testToString() throws Exception {
+        final State red = new State("red");
+        red.incrementAndGet();
+        red.incrementAndGet();
+        red.incrementAndGet();
+        red.incrementAndGet();
 
-        final List<String> strings = Arrays.asList(
-            "green",
-            "green",
-            "red",
-            "red",
-            "red",
-            "red",
-            "blue",
-            "green",
-            "red"
-        );
-
-        final Map<String, State> count = State.count(strings, Object::toString);
-
-        assertEquals("red", count.get("red").getName());
-        assertEquals(5, count.get("red").getCount());
-
-        assertEquals("green", count.get("green").getName());
-        assertEquals(3, count.get("green").getCount());
-
-        assertEquals("blue", count.get("blue").getName());
-        assertEquals(1, count.get("blue").getCount());
+        assertEquals("red (4)", red.toString());
     }
+
 }

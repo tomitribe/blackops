@@ -9,11 +9,7 @@
  */
 package com.tomitribe.blackops;
 
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Function;
 
 public class State {
 
@@ -46,22 +42,4 @@ public class State {
         return String.format("%s (%s)", name, count.get());
     }
 
-    public static <T> Map<String, State> count(final List<T> states, final Function<T, String> function) {
-        final Map<String, State> map = new TreeMap<>();
-
-        for (final T state : states) {
-            final String id = function.apply(state).toLowerCase();
-
-            final State count = map.get(id);
-
-            if (count == null) {
-
-                map.put(id, new State(id, 1));
-
-            } else {
-                count.incrementAndGet();
-            }
-        }
-        return map;
-    }
 }

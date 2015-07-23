@@ -57,6 +57,6 @@ public enum Aws {
     }
 
     public static Map<String, State> countInstanceStates(List<Instance> instances) {
-        return State.count(instances, instance -> instance.getState().getName());
+        return States.count(instances, instance -> instance.getState().getName());
     }
 }
