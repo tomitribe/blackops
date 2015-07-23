@@ -15,7 +15,7 @@
   <parent>
     <groupId>com.tomitribe</groupId>
     <artifactId>tomitribe-parent</artifactId>
-    <version>5</version>
+    <version>6</version>
   </parent>
 
   <artifactId>blackops-parent</artifactId>

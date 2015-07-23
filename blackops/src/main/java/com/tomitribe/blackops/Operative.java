@@ -1,7 +1,7 @@
 /*
  * Tomitribe Confidential
  *
- * Copyright Tomitribe Corporation. 2014
+ * Copyright Tomitribe Corporation. 2015
  *
  * The source code for this program is not published or otherwise divested
  * of its trade secrets, irrespective of what has been deposited with the
@@ -25,10 +25,7 @@ import com.amazonaws.services.ec2.model.SpotInstanceState;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-
-import static java.util.concurrent.TimeUnit.SECONDS;
 
 /**
  * @version $Revision$ $Date$
@@ -47,11 +44,11 @@ public class Operative {
     public Operative(final String operationName, final String accessKey, final String secretKey) {
 
         specification = new LaunchSpecification()
-                .withInstanceType("m3.medium")
-                .withImageId("ami-5bf23530") // Operative 1.0
-                .withMonitoringEnabled(false)
-                .withKeyName("tomitribe_dev")
-                .withSecurityGroups("Ports 60000+10");
+            .withInstanceType("m3.medium")
+            .withImageId("ami-5bf23530") // Operative 1.0
+            .withMonitoringEnabled(false)
+            .withKeyName("tomitribe_dev")
+            .withSecurityGroups("Ports 60000+10");
 
         operation = new Operation(operationName, accessKey, secretKey);
         operation.tag("user.name", System.getProperty("user.name"));
@@ -59,11 +56,11 @@ public class Operative {
         client = new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey));
 
         request = new RequestSpotInstancesRequest()
-                .withSpotPrice("0.02")
-                .withInstanceCount(1)
-                .withType("one-time")
-                .withLaunchSpecification(specification)
-                .withAvailabilityZoneGroup("us-east-1c")
+            .withSpotPrice("0.02")
+            .withInstanceCount(1)
+            .withType("one-time")
+            .withLaunchSpecification(specification)
+            .withAvailabilityZoneGroup("us-east-1c")
         ;
     }
 
@@ -97,10 +94,10 @@ public class Operative {
             this.expected = new CountDownLatch(instanceCount);
             this.spotInstancesResult = spotInstancesResult;
             this.spotInstanceRequestIds = spotInstancesResult
-                    .getSpotInstanceRequests()
-                    .stream()
-                    .map(SpotInstanceRequest::getSpotInstanceRequestId)
-                    .collect(Collectors.toList());
+                .getSpotInstanceRequests()
+                .stream()
+                .map(SpotInstanceRequest::getSpotInstanceRequestId)
+                .collect(Collectors.toList());
         }
 
         public List<SpotInstanceState> awaitSpotRequest() {
@@ -120,11 +117,11 @@ public class Operative {
                 // If none of our entries our "Open", we're done waiting
                 final List<SpotInstanceState> finalStates = spotInstanceStates.stream()
 
-                        // Remove Open entries
-                        .filter(spotInstanceState -> spotInstanceState != SpotInstanceState.Open)
+                    // Remove Open entries
+                    .filter(spotInstanceState -> spotInstanceState != SpotInstanceState.Open)
 
-                                // If we only have non-Open entries left, return false
-                        .collect(Collectors.toList());
+                        // If we only have non-Open entries left, return false
+                    .collect(Collectors.toList());
 
                 return (finalStates.size() == spotInstanceStates.size()) ? finalStates : null;
             });
@@ -133,10 +130,10 @@ public class Operative {
         public List<Instance> awaitInstances() {
             return Await.check(() -> {
                 final DescribeInstancesResult result = client.describeInstances(
-                        new DescribeInstances()
-                                .withOperationId(operation.getId())
-                                .withState(InstanceStateName.Running)
-                                .getRequest()
+                    new DescribeInstances()
+                        .withOperationId(operation.getId())
+                        .withState(InstanceStateName.Running)
+                        .getRequest()
                 );
 
                 final List<Instance> instances1 = Aws.getInstances(result);

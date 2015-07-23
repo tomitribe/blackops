@@ -18,6 +18,7 @@ import java.util.concurrent.TimeoutException;
 import java.util.function.Supplier;
 
 public class Await {
+    private Await(){}
 
     public static <T> T check(final Supplier<T> supplier) {
         return check(supplier, 0, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);
