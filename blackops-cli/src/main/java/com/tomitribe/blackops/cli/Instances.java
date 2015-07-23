@@ -9,8 +9,6 @@
  */
 package com.tomitribe.blackops.cli;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Instance;
@@ -41,11 +39,10 @@ public class Instances {
 
     @Command
     public StreamingOutput list(final List<Tag> tag) throws Exception {
-        final AmazonEC2Client client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"));
 
         final DescribeInstancesRequest describeInstancesRequest = Aws.describeRunningInstances(tag);
 
-        final DescribeInstancesResult result = client.describeInstances(describeInstancesRequest);
+        final DescribeInstancesResult result = Aws.client().describeInstances(describeInstancesRequest);
 
         final List<Instance> instances = Aws.getInstances(result);
 

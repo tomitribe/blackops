@@ -9,6 +9,9 @@
  */
 package com.tomitribe.blackops;
 
+import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
@@ -19,10 +22,25 @@ import com.amazonaws.services.ec2.model.SpotInstanceState;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
-public enum Aws {
-    ;
+public class Aws {
+
+    private static final AtomicReference<AmazonEC2> ec2 = new AtomicReference<>(new AmazonEC2Client(
+            new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn")
+    ));
+
+    private Aws() {
+    }
+
+    public static AmazonEC2 client() {
+        return ec2.get();
+    }
+
+    public static void client(AmazonEC2 client) {
+        ec2.set(client);
+    }
 
     public static List<Instance> getInstances(final DescribeInstancesResult result) {
         return (List<Instance>) result.getReservations().stream()

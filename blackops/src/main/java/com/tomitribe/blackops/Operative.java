@@ -21,7 +21,6 @@ import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 
 import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.stream.Collectors;
 
 /**
@@ -41,11 +40,11 @@ public class Operative {
     public Operative(final String operationName, final String accessKey, final String secretKey) {
 
         specification = new LaunchSpecification()
-            .withInstanceType("m3.medium")
-            .withImageId("ami-5bf23530") // Operative 1.0
-            .withMonitoringEnabled(false)
-            .withKeyName("tomitribe_dev")
-            .withSecurityGroups("Ports 60000+10");
+                .withInstanceType("m3.medium")
+                .withImageId("ami-5bf23530") // Operative 1.0
+                .withMonitoringEnabled(false)
+                .withKeyName("tomitribe_dev")
+                .withSecurityGroups("Ports 60000+10");
 
         operation = new Operation(operationName, accessKey, secretKey);
         operation.tag("user.name", System.getProperty("user.name"));
@@ -53,11 +52,11 @@ public class Operative {
         client = new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey));
 
         request = new RequestSpotInstancesRequest()
-            .withSpotPrice("0.02")
-            .withInstanceCount(1)
-            .withType("one-time")
-            .withLaunchSpecification(specification)
-            .withAvailabilityZoneGroup("us-east-1c")
+                .withSpotPrice("0.02")
+                .withInstanceCount(1)
+                .withType("one-time")
+                .withLaunchSpecification(specification)
+                .withAvailabilityZoneGroup("us-east-1c")
         ;
     }
 
@@ -81,29 +80,28 @@ public class Operative {
 
     public class Launch {
 
-        private final CountDownLatch expected;
         private final int instanceCount;
         private final RequestSpotInstancesResult spotInstancesResult;
         private final List<String> spotInstanceRequestIds;
 
         public Launch(final RequestSpotInstancesResult spotInstancesResult) {
             this.instanceCount = request.getInstanceCount();
-            this.expected = new CountDownLatch(instanceCount);
             this.spotInstancesResult = spotInstancesResult;
             this.spotInstanceRequestIds = spotInstancesResult
-                .getSpotInstanceRequests()
-                .stream()
-                .map(SpotInstanceRequest::getSpotInstanceRequestId)
-                .collect(Collectors.toList());
+                    .getSpotInstanceRequests()
+                    .stream()
+                    .map(SpotInstanceRequest::getSpotInstanceRequestId)
+                    .collect(Collectors.toList());
         }
 
         public List<Instance> awaitInstances() {
+
             return Await.check(() -> {
                 final DescribeInstancesResult result = client.describeInstances(
-                    new DescribeInstances()
-                        .withOperationId(operation.getId())
-                        .withState(InstanceStateName.Running)
-                        .getRequest()
+                        new DescribeInstances()
+                                .withOperationId(operation.getId())
+                                .withState(InstanceStateName.Running)
+                                .getRequest()
                 );
 
                 final List<Instance> instances1 = Aws.getInstances(result);

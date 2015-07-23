@@ -9,8 +9,6 @@
  */
 package com.tomitribe.blackops;
 
-import com.amazonaws.auth.BasicAWSCredentials;
-import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstanceAttributeRequest;
 import com.amazonaws.services.ec2.model.DescribeInstanceAttributeResult;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
@@ -31,10 +29,8 @@ import java.util.stream.Collectors;
 public enum Operations {
     ;
 
-    static final AmazonEC2Client client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"));
-
     public static List<Instance> getInstances(final OperationId id) {
-        return Aws.getInstances(client.describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest()));
+        return Aws.getInstances(Aws.client().describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest()));
     }
 
     public static void terminateOperation(final OperationId id) {
@@ -46,12 +42,12 @@ public enum Operations {
             terminateInstancesRequest.withInstanceIds(instance.getInstanceId());
         }
 
-        client.terminateInstances(terminateInstancesRequest);
+        Aws.client().terminateInstances(terminateInstancesRequest);
     }
 
     public static void awaitFulfillment(final PrintStream out) {
         final DescribeSpotInstanceRequestsRequest describeSpotInstanceRequestsRequest = new DescribeSpotInstanceRequestsRequest();
-        final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(describeSpotInstanceRequestsRequest);
+        final DescribeSpotInstanceRequestsResult result = Aws.client().describeSpotInstanceRequests(describeSpotInstanceRequestsRequest);
 
         awaitFulfillment(out, result.getSpotInstanceRequests());
     }
@@ -68,7 +64,7 @@ public enum Operations {
             final DescribeSpotInstanceRequestsRequest request = new DescribeSpotInstanceRequestsRequest();
             request.withSpotInstanceRequestIds(requestIds);
 
-            final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(request);
+            final DescribeSpotInstanceRequestsResult result = Aws.client().describeSpotInstanceRequests(request);
 
             return countSpotInstanceStates(result.getSpotInstanceRequests());
         });
@@ -108,12 +104,12 @@ public enum Operations {
                 .withLaunchSpecification(launchSpecification)
                 .withAvailabilityZoneGroup(spotInstanceRequest.getAvailabilityZoneGroup());
 
-        return client.requestSpotInstances(request);
+        return Aws.client().requestSpotInstances(request);
     }
 
     public static LaunchSpecification getLaunchSpecification(final OperationId id) {
 
-        final DescribeInstancesResult result = client.describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest());
+        final DescribeInstancesResult result = Aws.client().describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest());
 
         for (final Instance instance : Aws.getInstances(result)) {
 
@@ -130,7 +126,7 @@ public enum Operations {
     }
 
     public static LaunchSpecification getLaunchSpecification(Instance instance) {
-        final DescribeSpotInstanceRequestsResult result1 = client.describeSpotInstanceRequests(
+        final DescribeSpotInstanceRequestsResult result1 = Aws.client().describeSpotInstanceRequests(
                 new DescribeSpotInstanceRequestsRequest()
                         .withSpotInstanceRequestIds(instance.getSpotInstanceRequestId())
         );
@@ -142,7 +138,7 @@ public enum Operations {
     }
 
     public static SpotInstanceRequest getSpotInstanceRequest(final Instance instance) {
-        final DescribeSpotInstanceRequestsResult result1 = client.describeSpotInstanceRequests(
+        final DescribeSpotInstanceRequestsResult result1 = Aws.client().describeSpotInstanceRequests(
                 new DescribeSpotInstanceRequestsRequest()
                         .withSpotInstanceRequestIds(instance.getSpotInstanceRequestId())
         );
@@ -159,7 +155,7 @@ public enum Operations {
         describeInstanceAttributeRequest.withAttribute("userData");
         describeInstanceAttributeRequest.withInstanceId(instance.getInstanceId());
 
-        final DescribeInstanceAttributeResult describeInstanceAttributeResult = client.describeInstanceAttribute(describeInstanceAttributeRequest);
+        final DescribeInstanceAttributeResult describeInstanceAttributeResult = Aws.client().describeInstanceAttribute(describeInstanceAttributeRequest);
         return describeInstanceAttributeResult.getInstanceAttribute().getUserData();
     }
 }

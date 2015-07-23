@@ -10,6 +10,7 @@
 package com.tomitribe.blackops.cli;
 
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
@@ -29,8 +30,6 @@ import java.util.Map;
 
 @Command
 public class Operation {
-
-    private final AmazonEC2Client client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"));
 
     @Command
     public void terminate(final OperationId operationId) {
