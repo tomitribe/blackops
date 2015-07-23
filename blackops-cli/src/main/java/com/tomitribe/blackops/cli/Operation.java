@@ -88,7 +88,7 @@ public class Operation {
     public static StreamingOutput awaitFulfillment(final RequestSpotInstancesResult result) {
         return os -> {
             final PrintStream stream = new PrintStream(os);
-            Operations.awaitFulfillment(result.getSpotInstanceRequests(), stream);
+            Operations.awaitFulfillment(stream, result.getSpotInstanceRequests());
         };
     }
 }

@@ -26,7 +26,6 @@ import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public enum Operations {
@@ -35,10 +34,7 @@ public enum Operations {
     static final AmazonEC2Client client = new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"));
 
     public static List<Instance> getInstances(final OperationId id) {
-
-        final DescribeInstancesResult result = client.describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest());
-
-        return Aws.getInstances(result);
+        return Aws.getInstances(client.describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest()));
     }
 
     public static void terminateOperation(final OperationId id) {
@@ -53,45 +49,28 @@ public enum Operations {
         client.terminateInstances(terminateInstancesRequest);
     }
 
-
-    public static void main(String[] args) {
-        final PrintStream out = System.out;
-
-
-    }
-
     public static void awaitFulfillment(final PrintStream out) {
         final DescribeSpotInstanceRequestsRequest describeSpotInstanceRequestsRequest = new DescribeSpotInstanceRequestsRequest();
         final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(describeSpotInstanceRequestsRequest);
 
-        final List<SpotInstanceRequest> spotInstanceRequests = result.getSpotInstanceRequests();
-
-
-        awaitFulfillment(spotInstanceRequests, out);
+        awaitFulfillment(out, result.getSpotInstanceRequests());
     }
 
-    public static void awaitFulfillment(final List<SpotInstanceRequest> needed, final PrintStream out) {
-        final long start = System.currentTimeMillis();
-
-        Await.check(() -> {
-
+    /**
+     * Requests the current status of a set of SpotInstanceRequest ids
+     *
+     * The wait condition is considered met if none of the spot instances are in the "open" state
+     */
+    public static void awaitFulfillment(final PrintStream out, final List<SpotInstanceRequest> needed) {
+        Await.await(out, states -> !states.containsKey("open"), () -> {
             final List<String> requestIds = needed.stream().map(SpotInstanceRequest::getSpotInstanceRequestId).collect(Collectors.toList());
 
-            final DescribeSpotInstanceRequestsRequest describeSpotInstanceRequestsRequest = new DescribeSpotInstanceRequestsRequest().withSpotInstanceRequestIds(requestIds);
-            final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(describeSpotInstanceRequestsRequest);
+            final DescribeSpotInstanceRequestsRequest request = new DescribeSpotInstanceRequestsRequest();
+            request.withSpotInstanceRequestIds(requestIds);
 
-            final Map<String, State> count = countSpotInstanceStates(result.getSpotInstanceRequests());
+            final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(request);
 
-            out.printf("\r%s - %ss" + States.printStates(count), TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
-
-            if (count.get("open") == null) {
-
-                return "Done";
-
-            } else {
-
-                return null;
-            }
+            return countSpotInstanceStates(result.getSpotInstanceRequests());
         });
     }
 

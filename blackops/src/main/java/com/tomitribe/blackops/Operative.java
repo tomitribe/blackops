@@ -13,15 +13,12 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
-import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsRequest;
-import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.LaunchSpecification;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesRequest;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
-import com.amazonaws.services.ec2.model.SpotInstanceState;
 
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
@@ -98,33 +95,6 @@ public class Operative {
                 .stream()
                 .map(SpotInstanceRequest::getSpotInstanceRequestId)
                 .collect(Collectors.toList());
-        }
-
-        public List<SpotInstanceState> awaitSpotRequest() {
-            return Await.check(() -> {
-                final DescribeSpotInstanceRequestsRequest request1 = new DescribeSpotInstanceRequestsRequest();
-                request1.withSpotInstanceRequestIds(spotInstanceRequestIds);
-
-                final DescribeSpotInstanceRequestsResult result = client.describeSpotInstanceRequests(request1);
-
-                final List<SpotInstanceState> spotInstanceStates = Aws.getSpotInstanceStates(result);
-
-                final int states = spotInstanceStates.size();
-
-                // If we don't have any entries yet, we should wait
-                if (states == 0) return null;
-
-                // If none of our entries our "Open", we're done waiting
-                final List<SpotInstanceState> finalStates = spotInstanceStates.stream()
-
-                    // Remove Open entries
-                    .filter(spotInstanceState -> spotInstanceState != SpotInstanceState.Open)
-
-                        // If we only have non-Open entries left, return false
-                    .collect(Collectors.toList());
-
-                return (finalStates.size() == spotInstanceStates.size()) ? finalStates : null;
-            });
         }
 
         public List<Instance> awaitInstances() {

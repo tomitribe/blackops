@@ -9,12 +9,15 @@
  */
 package com.tomitribe.blackops;
 
+import java.io.PrintStream;
+import java.util.Map;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Await {
@@ -76,6 +79,25 @@ public class Await {
         }
 
         throw new IllegalStateException();
+    }
+
+    public static void await(final PrintStream out, final Predicate<Map<String, State>> predicate, final Supplier<Map<String, State>> supplier) {
+        await(out, predicate, supplier, 0, 3, TimeUnit.SECONDS);
+    }
+
+    public static void await(final PrintStream out, final Predicate<Map<String, State>> predicate, final Supplier<Map<String, State>> supplier,
+                             final int initialDelay, final int period, final TimeUnit unit) {
+
+        final long start = System.currentTimeMillis();
+
+        check(() -> {
+
+            final Map<String, State> states = supplier.get();
+
+            out.printf("\r%s - %ss" + States.printStates(states), TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis() - start));
+
+            return predicate.test(states) ? "Done" : null;
+        }, initialDelay, period, unit);
     }
 
 

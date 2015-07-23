@@ -144,7 +144,7 @@ public enum Main {
                 return;
             }
 
-            Operations.awaitFulfillment(launch.getSpotInstancesResult().getSpotInstanceRequests(), stream);
+            Operations.awaitFulfillment(stream, launch.getSpotInstancesResult().getSpotInstanceRequests());
 
             final List<Instance> instances = launch.awaitInstances();
 
