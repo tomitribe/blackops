@@ -19,7 +19,6 @@ import org.tomitribe.crest.api.StreamingOutput;
 import org.tomitribe.util.Join;
 
 import java.io.PrintStream;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +27,7 @@ import java.util.stream.Collectors;
 public class Instances {
 
     public static void main(String[] args) throws Exception {
-        final StreamingOutput list = new Instances().list(Arrays.asList(new Tag("none", null)));
+        final StreamingOutput list = new Instances().list(Collections.singletonList(new Tag("none", null)));
         list.write(System.out);
     }
 

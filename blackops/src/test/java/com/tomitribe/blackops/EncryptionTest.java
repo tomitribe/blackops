@@ -10,7 +10,6 @@
 package com.tomitribe.blackops;
 
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.tomitribe.util.IO;
 

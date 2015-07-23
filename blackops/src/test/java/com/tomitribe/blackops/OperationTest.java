@@ -84,8 +84,7 @@ public class OperationTest extends Assert {
     public void shutdownAfter() throws Exception {
         final Operation operation = new Operation("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
                 .shutdownAfter(10, TimeUnit.MINUTES)
-                .script("touch /tmp/foo\n")
-                ;
+                .script("touch /tmp/foo\n");
 
         final String actual = toString(operation);
 

@@ -21,7 +21,8 @@ import java.util.function.Predicate;
 import java.util.function.Supplier;
 
 public class Await {
-    private Await(){}
+    private Await() {
+    }
 
     public static <T> T check(final Supplier<T> supplier) {
         return check(supplier, 0, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);

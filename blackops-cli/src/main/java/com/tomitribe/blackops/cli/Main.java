@@ -34,8 +34,8 @@ public enum Main {
 
     public static void main(String[] args) throws IOException {
         final StreamingOutput output = exec("export > /tmp/foo.txt", "Test",
-            false, "m3.medium", "tomitribe_dev", new String[]{"Ports 60000+10"},
-            "0.012", 4, "one-time", "us-east-1c", true);
+                false, "m3.medium", "tomitribe_dev", new String[]{"Ports 60000+10"},
+                "0.012", 4, "one-time", "us-east-1c", true);
         output.write(System.out);
     }
 
@@ -114,23 +114,23 @@ public enum Main {
 
 
     public static StreamingOutput execute(
-        boolean shutdown, String instanceType, String keyName, String[] securityGroups, String spotPrice,
-        int instanceCount, String spotRequestType, String zone, boolean awaitCapacity, Operative operative) {
+            boolean shutdown, String instanceType, String keyName, String[] securityGroups, String spotPrice,
+            int instanceCount, String spotRequestType, String zone, boolean awaitCapacity, Operative operative) {
         if (shutdown) {
             operative.operation().shutdown();
         }
 
         operative.specification()
-            .withInstanceType(InstanceType.fromValue(instanceType))
-            .withKeyName(keyName)
-            .withSecurityGroups(securityGroups)
+                .withInstanceType(InstanceType.fromValue(instanceType))
+                .withKeyName(keyName)
+                .withSecurityGroups(securityGroups)
         ;
 
         operative.request()
-            .withSpotPrice(spotPrice)
-            .withInstanceCount(instanceCount)
-            .withType(spotRequestType)
-            .withAvailabilityZoneGroup(zone);
+                .withSpotPrice(spotPrice)
+                .withInstanceCount(instanceCount)
+                .withType(spotRequestType)
+                .withAvailabilityZoneGroup(zone);
 
 
         final Operative.Launch launch = operative.execute();

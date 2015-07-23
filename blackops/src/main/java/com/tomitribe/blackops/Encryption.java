@@ -24,7 +24,7 @@ import java.security.PublicKey;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
-public enum  Encryption {
+public enum Encryption {
     ;
 
     public static byte[] decrypt(byte[] message, final PrivateKey privateKey) {
