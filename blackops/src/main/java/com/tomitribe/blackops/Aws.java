@@ -38,12 +38,12 @@ public class Aws {
         return ec2.get();
     }
 
-    public static void client(AmazonEC2 client) {
+    public static void client(final AmazonEC2 client) {
         ec2.set(client);
     }
 
     public static List<Instance> getInstances(final DescribeInstancesResult result) {
-        return (List<Instance>) result.getReservations().stream()
+        return result.getReservations().stream()
                 .flatMap(reservation -> reservation.getInstances().stream())
                 .sorted((o1, o2) -> o2.getLaunchTime().compareTo(o1.getLaunchTime()))
                 .collect(Collectors.toList());
@@ -69,7 +69,7 @@ public class Aws {
     }
 
     public static List<SpotInstanceState> getSpotInstanceStates(final List<SpotInstanceRequest> spotInstanceRequests) {
-        return (List<SpotInstanceState>) spotInstanceRequests.stream()
+        return spotInstanceRequests.stream()
                 .map(spotInstanceRequest -> SpotInstanceState.fromValue(spotInstanceRequest.getState()))
                 .collect(Collectors.toList());
     }
