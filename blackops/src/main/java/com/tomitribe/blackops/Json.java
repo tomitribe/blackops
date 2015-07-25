@@ -11,8 +11,10 @@ package com.tomitribe.blackops;
 
 import org.apache.johnzon.mapper.Mapper;
 import org.apache.johnzon.mapper.MapperBuilder;
+import org.tomitribe.util.IO;
 import org.tomitribe.util.PrintString;
 
+import java.lang.reflect.Type;
 import java.util.Comparator;
 
 public class Json {
@@ -26,5 +28,10 @@ public class Json {
         final PrintString string = new PrintString();
         mapper.writeObject(object, string);
         return string.toString();
+    }
+
+    public static String fromString(final String json, final Type clazz) {
+        final Mapper mapper = new MapperBuilder().build();
+        return mapper.readObject(IO.read(json), clazz);
     }
 }
