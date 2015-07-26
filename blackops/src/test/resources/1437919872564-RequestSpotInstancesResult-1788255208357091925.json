@@ -1,0 +1,144 @@
+{
+  "spotInstanceRequests":[
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"20150726071112-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02eg705h",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"20150726071112-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"20150726071112-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02elb8ae",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"20150726071112-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"20150726071112-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02en40wb",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"20150726071112-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"20150726071112-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02ephalc",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"20150726071112-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    }
+  ]
+}

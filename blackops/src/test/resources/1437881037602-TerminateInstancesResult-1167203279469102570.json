@@ -1,0 +1,15 @@
+{
+  "terminatingInstances":[
+    {
+      "currentState":{
+        "code":32,
+        "name":"shutting-down"
+      },
+      "instanceId":"i-90b43b79",
+      "previousState":{
+        "code":16,
+        "name":"running"
+      }
+    }
+  ]
+}

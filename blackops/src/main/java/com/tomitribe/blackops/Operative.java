@@ -49,7 +49,7 @@ public class Operative {
         operation = new Operation(operationName, accessKey, secretKey);
         operation.tag("user.name", System.getProperty("user.name"));
 
-        client = new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey));
+        client = EC2ResponseLogger.wrap(new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey)));
 
         request = new RequestSpotInstancesRequest()
                 .withSpotPrice("0.02")

@@ -17,36 +17,26 @@ import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import org.junit.Assert;
 import org.junit.Test;
 
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.Date;
 
-public class JsonLoggerTest extends Assert {
+public class EC2ResponseLoggerTest extends Assert {
 
     @Test
     public void test() throws Exception {
 
-        final AmazonEC2Adapter client = new AmazonEC2Adapter() {
+        final AmazonEC2 amazonEC2 = EC2ResponseLogger.wrap(new AmazonEC2Adapter() {
             @Override
             public RequestSpotInstancesResult requestSpotInstances(RequestSpotInstancesRequest requestSpotInstancesRequest) throws AmazonClientException {
                 return new RequestSpotInstancesResult().withSpotInstanceRequests(
-                    new SpotInstanceRequest()
-                        .withInstanceId("asdf12345")
-                        .withSpotPrice("0.0008")
-                        .withCreateTime(new Date(1437861848)),
-                    new SpotInstanceRequest()
-                        .withInstanceId("qwert34576")
-                        .withSpotPrice("0.0109")
-                        .withCreateTime(new Date(1434861848))
+                        new SpotInstanceRequest()
+                                .withInstanceId("asdf12345")
+                                .withSpotPrice("0.0008")
+                                .withCreateTime(new Date(1437861848)),
+                        new SpotInstanceRequest()
+                                .withInstanceId("qwert34576")
+                                .withSpotPrice("0.0109")
+                                .withCreateTime(new Date(1434861848))
                 );
-            }
-        };
-        final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-        final AmazonEC2 amazonEC2 = (AmazonEC2) Proxy.newProxyInstance(contextClassLoader, new Class[]{AmazonEC2.class}, new InvocationHandler() {
-            @Override
-            public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
-                return method.invoke(client, args);
             }
         });
 

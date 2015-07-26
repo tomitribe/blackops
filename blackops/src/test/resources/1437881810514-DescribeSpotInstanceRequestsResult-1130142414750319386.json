@@ -1,0 +1,41 @@
+{
+  "spotInstanceRequests":[
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"20150725191238-0700",
+      "instanceId":"i-90b43b79",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "launchedAvailabilityZone":"us-east-1b",
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02ehdb1r",
+      "spotPrice":"0.012000",
+      "state":"closed",
+      "status":{
+        "code":"instance-terminated-by-user",
+        "message":"Spot Instance terminated due to user-initiated termination.",
+        "updateTime":"20150725202434-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    }
+  ]
+}

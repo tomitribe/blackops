@@ -39,19 +39,18 @@
     <dependency>
       <groupId>org.apache.johnzon</groupId>
       <artifactId>johnzon-core</artifactId>
-      <version>0.5-incubating</version>
+      <version>0.9-incubating-SNAPSHOT</version>
     </dependency>
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-json_1.0_spec</artifactId>
       <version>1.0-alpha-1</version>
-      <scope>provided</scope>
       <!-- or compile if your environment doesn't provide it -->
     </dependency>
     <dependency>
       <groupId>org.apache.johnzon</groupId>
       <artifactId>johnzon-mapper</artifactId>
-      <version>0.5-incubating</version>
+      <version>0.9-incubating-SNAPSHOT</version>
     </dependency>
   </dependencies>
 
