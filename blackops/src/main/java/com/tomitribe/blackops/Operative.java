@@ -29,7 +29,7 @@ import java.util.stream.Collectors;
 public class Operative {
 
     private final LaunchSpecification specification;
-    private final Operation operation;
+    private final UserData userData;
     private final AmazonEC2 client;
     private final RequestSpotInstancesRequest request;
 
@@ -46,8 +46,8 @@ public class Operative {
                 .withKeyName("tomitribe_dev")
                 .withSecurityGroups("Ports 60000+10");
 
-        operation = new Operation(operationName, accessKey, secretKey);
-        operation.tag("user.name", System.getProperty("user.name"));
+        userData = new UserData(operationName, accessKey, secretKey);
+        userData.tag("user.name", System.getProperty("user.name"));
 
         client = EC2ResponseLogger.wrap(new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey)));
 
@@ -68,12 +68,12 @@ public class Operative {
         return specification;
     }
 
-    public Operation operation() {
-        return operation;
+    public UserData operation() {
+        return userData;
     }
 
     public Launch execute() {
-        specification.withUserData(operation.toUserData());
+        specification.withUserData(userData.toUserData());
         request.setLaunchSpecification(specification);
         return new Launch(client.requestSpotInstances(request));
     }
@@ -99,7 +99,7 @@ public class Operative {
             return Await.check(() -> {
                 final DescribeInstancesResult result = client.describeInstances(
                         new DescribeInstances()
-                                .withOperationId(operation.getId())
+                                .withOperationId(userData.getId())
                                 .withState(InstanceStateName.Running)
                                 .getRequest()
                 );

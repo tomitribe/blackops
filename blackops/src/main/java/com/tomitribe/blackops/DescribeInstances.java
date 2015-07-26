@@ -48,7 +48,8 @@ public class DescribeInstances {
     }
 
     public DescribeInstances withOperationId(final String id) {
-        return withTag(Operation.ID, id);
+        request.withFilters(new OperationId(id).asFilter());
+        return this;
     }
 
     public DescribeInstancesRequest getRequest() {

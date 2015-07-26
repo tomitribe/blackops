@@ -9,6 +9,8 @@
  */
 package com.tomitribe.blackops;
 
+import com.amazonaws.services.ec2.model.Filter;
+
 public class OperationId {
     private final String id;
 
@@ -18,5 +20,10 @@ public class OperationId {
 
     public String get() {
         return id;
+    }
+
+
+    public Filter asFilter() {
+        return new Filter("tag:" + UserData.ID).withValues(id);
     }
 }
