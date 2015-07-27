@@ -15,6 +15,7 @@ import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
+import com.amazonaws.services.ec2.model.Filter;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
@@ -24,6 +25,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Aws {
 
@@ -112,5 +114,10 @@ public class Aws {
 
     public static Map<String, State> countSpotInstanceRequestStates(List<SpotInstanceRequest> spotInstanceRequests) {
         return States.count(spotInstanceRequests, SpotInstanceRequest::getState);
+    }
+
+    public static Filter asFilter(InstanceStateName... state) {
+        final String[] values = Stream.of(state).map(InstanceStateName::toString).toArray(String[]::new);
+        return new Filter("instance-state-name").withValues(values);
     }
 }

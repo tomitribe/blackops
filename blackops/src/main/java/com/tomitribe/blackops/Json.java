@@ -28,7 +28,7 @@ public class Json {
 
         try {
             final PrintString out = new PrintString();
-            mapper.writeValue(out, object);
+            mapper.writerWithDefaultPrettyPrinter().writeValue(out, object);
             return out.toString();
         } catch (IOException e) {
             throw new RuntimeException(e);

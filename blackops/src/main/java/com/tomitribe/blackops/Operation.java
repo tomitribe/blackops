@@ -10,15 +10,26 @@
 package com.tomitribe.blackops;
 
 import com.amazonaws.services.ec2.AmazonEC2;
+import com.amazonaws.services.ec2.model.CancelSpotInstanceRequestsRequest;
+import com.amazonaws.services.ec2.model.CancelSpotInstanceRequestsResult;
+import com.amazonaws.services.ec2.model.CancelledSpotInstanceRequest;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsRequest;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceStateChange;
+import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.amazonaws.services.ec2.model.Tag;
+import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
+import com.amazonaws.services.ec2.model.TerminateInstancesResult;
 
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
+
+import static com.amazonaws.services.ec2.model.InstanceStateName.Pending;
+import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
 
 /**
  * This class is intentionally stateless.  All state is in EC2 itself.
@@ -37,13 +48,16 @@ public class Operation {
         this.ec2 = ec2;
     }
 
-    public List<Instance> getInstances() {
-        final DescribeInstances describeInstances = new DescribeInstances().withOperationId(id.get());
+    public List<Instance> getInstances(final InstanceStateName... states) {
+        final DescribeInstances describeInstances = new DescribeInstances()
+                .withOperationId(id.get())
+                .withState(states);
+
         return Aws.getInstances(ec2.describeInstances(describeInstances.getRequest()));
     }
 
-    public List<String> getInstanceIds() {
-        return Aws.getInstanceIds(getInstances());
+    public List<String> getInstanceIds(final InstanceStateName... states) {
+        return Aws.getInstanceIds(getInstances(states));
     }
 
     public List<SpotInstanceRequest> getSpotInstanceRequests() {
@@ -56,12 +70,22 @@ public class Operation {
         return Aws.getSpotInstanceRequestIds(getSpotInstanceRequests());
     }
 
+    /**
+     * Obtains the Public DNS names of the running instances
+     *
+     * Only running instances have a Public DNS
+     */
     public List<String> getPublicDnsNames() {
-        return getInstances().stream().map(Instance::getPublicDnsName).collect(Collectors.toList());
+        return getInstances(Running).stream().map(Instance::getPublicDnsName).collect(Collectors.toList());
     }
 
-    public List<String> getPrivateDnsNames() {
-        return getInstances().stream().map(Instance::getPrivateDnsName).collect(Collectors.toList());
+    /**
+     * Obtains the Private DNS names of the running instances
+     *
+     * Only running instances have a Private DNS
+     */
+    public List<String> getPrivateDnsNames(final InstanceStateName... states) {
+        return getInstances(Running).stream().map(Instance::getPrivateDnsName).collect(Collectors.toList());
     }
 
     public List<Tag> getTags() {
@@ -72,12 +96,41 @@ public class Operation {
                 .collect(Collectors.toList());
     }
 
-    public Map<String, State> countInstanceStates() {
-        return Aws.countInstanceStates(getInstances());
+    public Map<String, State> countInstanceStates(final InstanceStateName... states) {
+        return Aws.countInstanceStates(getInstances(states));
     }
 
     public Map<String, State> countSpotInstanceRequestStates() {
         return Aws.countSpotInstanceRequestStates(getSpotInstanceRequests());
+    }
+
+    public List<InstanceStateChange> terminateInstances() {
+        final TerminateInstancesRequest terminateInstancesRequest = new TerminateInstancesRequest(getInstanceIds());
+        final TerminateInstancesResult result = ec2.terminateInstances(terminateInstancesRequest);
+        return result.getTerminatingInstances();
+    }
+
+    public List<CancelledSpotInstanceRequest> cancelSpotInstanceRequests() {
+        final CancelSpotInstanceRequestsRequest cancelSpotInstanceRequestsRequest = new CancelSpotInstanceRequestsRequest(getSpotInstanceRequestIds());
+        final CancelSpotInstanceRequestsResult cancelSpotInstanceRequestsResult = ec2.cancelSpotInstanceRequests(cancelSpotInstanceRequestsRequest);
+        return cancelSpotInstanceRequestsResult.getCancelledSpotInstanceRequests();
+    }
+
+    public void expandCapacityTo(final int size) {
+        final int needed = getCapacity() - size;
+
+        if (needed > 0) {
+            Operations.expandOperation(id, needed);
+        }
+    }
+
+    public int getCapacity() {
+        final Map<String, State> instanceStates = countInstanceStates();
+        final int running = States.get(Running.toString(), instanceStates);
+        final int pending = States.get(Pending.toString(), instanceStates);
+        final int open = States.get(SpotInstanceState.Open.toString(), countSpotInstanceRequestStates());
+
+        return running + pending + open;
     }
 
 }

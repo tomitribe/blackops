@@ -9,6 +9,10 @@
  */
 package com.tomitribe.blackops;
 
+import com.amazonaws.services.ec2.model.Instance;
+import org.junit.Assert;
+
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,5 +41,16 @@ public class AssertGeneration {
                     System.out.println("}");
                 }
         );
+    }
+
+    public static void generateInstanceAssert(List<Instance> instances) {
+        instances.forEach(next -> System.out.printf("assertInstance(\"%s\", \"%s\", \"%s\", \"%s\", iterator.next());%n", next.getInstanceId(), next.getSpotInstanceRequestId(), next.getState().getName(), next.getPublicDnsName()));
+    }
+
+    public static void assertInstance(String instanceId, String spotRequestId, String state, String publicDns, Instance instance) {
+        Assert.assertEquals(instanceId, instance.getInstanceId());
+        Assert.assertEquals(spotRequestId, instance.getSpotInstanceRequestId());
+        Assert.assertEquals(state, instance.getState().getName());
+        Assert.assertEquals(publicDns, instance.getPublicDnsName());
     }
 }

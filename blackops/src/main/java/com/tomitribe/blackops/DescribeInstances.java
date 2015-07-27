@@ -21,8 +21,9 @@ public class DescribeInstances {
         return withTag(new Tag(key, value));
     }
 
-    public DescribeInstances withState(final InstanceStateName state) {
-        request.withFilters(new Filter("instance-state-name").withValues(state.toString()));
+    public DescribeInstances withState(final InstanceStateName... state) {
+        final Filter filter = Aws.asFilter(state);
+        request.withFilters(filter);
         return this;
     }
 

@@ -16,9 +16,14 @@ import com.amazonaws.services.ec2.model.Tag;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+
+import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
+import static com.amazonaws.services.ec2.model.InstanceStateName.Terminated;
+import static com.tomitribe.blackops.AssertGeneration.assertInstance;
 
 public class OperationTest extends Assert {
 
@@ -328,4 +333,58 @@ public class OperationTest extends Assert {
 
     }
 
+    @Test
+    public void testTerminateInstances() throws Exception {
+
+    }
+
+    @Test
+    public void testCancelSpotInstanceRequests() throws Exception {
+
+    }
+
+    @Test
+    public void testExpandCapacityTo() throws Exception {
+    }
+
+    @Test
+    public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
+
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+
+        final List<Instance> instances = operation.getInstances(Running);
+        final Iterator<Instance> iterator = instances.iterator();
+        assertInstance("i-63159a8a", "sir-02ekm3qz", "running", "ec2-54-237-127-17.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-22159acb", "sir-02ejzb35", "running", "ec2-54-237-122-168.compute-1.amazonaws.com", iterator.next());
+        assertEquals(2, instances.size());
+    }
+
+    @Test
+    public void testGetInstancesRunningAndTerminated() throws IOException, ClassNotFoundException {
+
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437975624121-DescribeInstancesResult-4067508740594260620.json");
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+
+        final List<Instance> instances = operation.getInstances(Running, Terminated);
+
+        final Iterator<Instance> iterator = instances.iterator();
+        assertInstance("i-63159a8a", "sir-02ekm3qz", "running", "ec2-54-237-127-17.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-22159acb", "sir-02ejzb35", "running", "ec2-54-237-122-168.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-d8159a31", "sir-02enlfak", "terminated", "", iterator.next());
+        assertEquals(3, instances.size());
+    }
+
+    @Test
+    public void testGetCapacity() throws Exception {
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson(
+                "1437971901821-DescribeInstancesResult-1080335200219996607.json",
+                "1437971902131-DescribeSpotInstanceRequestsResult-4039278516847321614.json"
+        );
+
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+
+        final int capacity = operation.getCapacity();
+        assertEquals(3, capacity);
+    }
 }

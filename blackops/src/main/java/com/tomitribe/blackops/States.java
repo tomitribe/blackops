@@ -47,4 +47,9 @@ public class States {
     public static String printStates(final Collection<State> states) {
         return Join.join(", ", states);
     }
+
+    public static int get(String name, Map<String, State> states) {
+        final State running = states.get(name);
+        return running != null ? running.getCount() : 0;
+    }
 }
