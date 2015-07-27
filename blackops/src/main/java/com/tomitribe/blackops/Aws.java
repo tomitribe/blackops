@@ -109,4 +109,8 @@ public class Aws {
     public static List<String> getInstanceIds(List<Instance> instances) {
         return instances.stream().map(Instance::getInstanceId).collect(Collectors.toList());
     }
+
+    public static Map<String, State> countSpotInstanceRequestStates(List<SpotInstanceRequest> spotInstanceRequests) {
+        return States.count(spotInstanceRequests, SpotInstanceRequest::getState);
+    }
 }

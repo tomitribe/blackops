@@ -17,6 +17,7 @@ import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.Tag;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 /**
@@ -69,6 +70,14 @@ public class Operation {
                 .distinct()
                 .sorted((o1, o2) -> o1.getKey().compareTo(o2.getKey()))
                 .collect(Collectors.toList());
+    }
+
+    public Map<String, State> countInstanceStates() {
+        return Aws.countInstanceStates(getInstances());
+    }
+
+    public Map<String, State> countSpotInstanceRequestStates() {
+        return Aws.countSpotInstanceRequestStates(getSpotInstanceRequests());
     }
 
 }

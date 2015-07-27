@@ -18,6 +18,7 @@ import org.junit.Test;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 
 public class OperationTest extends Assert {
 
@@ -62,7 +63,7 @@ public class OperationTest extends Assert {
     }
 
     @Test
-    public void testGetSpotInstanceRequets() throws Exception {
+    public void testGetSpotInstanceRequests() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437881181099-DescribeSpotInstanceRequestsResult-8210936666888035389.json");
 
         final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
@@ -266,5 +267,65 @@ public class OperationTest extends Assert {
 //        spotInstanceRequestIds.forEach(next -> System.out.printf("assertEquals(\"%s\", iterator.next());%n", next));
     }
 
+
+    @Test
+    public void testCountInstanceStates() throws Exception {
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
+
+        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+
+        final Map<String, State> states = operation.countInstanceStates();
+
+        final Iterator<Map.Entry<String, State>> iterator = states.entrySet().iterator();
+
+        {
+            final Map.Entry<String, State> entry = iterator.next();
+            assertEquals("running", entry.getKey());
+            assertEquals("running", entry.getValue().getName());
+            assertEquals(6, entry.getValue().getCount());
+            assertEquals("running (6)", entry.getValue().toString());
+        }
+        {
+            final Map.Entry<String, State> entry = iterator.next();
+            assertEquals("terminated", entry.getKey());
+            assertEquals("terminated", entry.getValue().getName());
+            assertEquals(4, entry.getValue().getCount());
+            assertEquals("terminated (4)", entry.getValue().toString());
+        }
+    }
+
+    @Test
+    public void testCountSpotInstanceRequestStates() throws Exception {
+
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437881181099-DescribeSpotInstanceRequestsResult-8210936666888035389.json");
+
+        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+
+        final Map<String, State> states = operation.countSpotInstanceRequestStates();
+        final Iterator<Map.Entry<String, State>> iterator = states.entrySet().iterator();
+
+        {
+            final Map.Entry<String, State> entry = iterator.next();
+            assertEquals("active", entry.getKey());
+            assertEquals("active", entry.getValue().getName());
+            assertEquals(7, entry.getValue().getCount());
+            assertEquals("active (7)", entry.getValue().toString());
+        }
+        {
+            final Map.Entry<String, State> entry = iterator.next();
+            assertEquals("closed", entry.getKey());
+            assertEquals("closed", entry.getValue().getName());
+            assertEquals(4, entry.getValue().getCount());
+            assertEquals("closed (4)", entry.getValue().toString());
+        }
+        {
+            final Map.Entry<String, State> entry = iterator.next();
+            assertEquals("open", entry.getKey());
+            assertEquals("open", entry.getValue().getName());
+            assertEquals(3, entry.getValue().getCount());
+            assertEquals("open (3)", entry.getValue().toString());
+        }
+
+    }
 
 }
