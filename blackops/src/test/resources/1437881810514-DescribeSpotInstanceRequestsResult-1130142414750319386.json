@@ -2,7 +2,7 @@
   "spotInstanceRequests":[
     {
       "availabilityZoneGroup":"us-east-1c",
-      "createTime":"20150725191238-0700",
+      "createTime":"2015-07-25T19:12:38.000-0700",
       "instanceId":"i-90b43b79",
       "launchSpecification":{
         "allSecurityGroups":[
@@ -31,7 +31,7 @@
       "status":{
         "code":"instance-terminated-by-user",
         "message":"Spot Instance terminated due to user-initiated termination.",
-        "updateTime":"20150725202434-0700"
+        "updateTime":"2015-07-25T20:24:34.000-0700"
       },
       "tags":[
       ],

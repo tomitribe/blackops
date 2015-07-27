@@ -13,7 +13,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150722162728-0700",
+                "attachTime":"2015-07-22T16:27:28.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-2ef70dcf"
@@ -31,7 +31,7 @@
           "instanceId":"i-18080dcb",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150722162726-0700",
+          "launchTime":"2015-07-22T16:27:26.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -43,7 +43,7 @@
                 "publicIp":"52.3.201.45"
               },
               "attachment":{
-                "attachTime":"20150722162726-0700",
+                "attachTime":"2015-07-22T16:27:26.000-0700",
                 "attachmentId":"eni-attach-c49c3fa0",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -168,7 +168,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150213050351-0800",
+                "attachTime":"2015-02-13T05:03:51.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-e997afa2"
@@ -182,7 +182,7 @@
           "instanceId":"i-f458f10e",
           "instanceType":"m3.large",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150213050348-0800",
+          "launchTime":"2015-02-13T05:03:48.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -194,7 +194,7 @@
                 "publicIp":"54.173.2.236"
               },
               "attachment":{
-                "attachTime":"20150213050348-0800",
+                "attachTime":"2015-02-13T05:03:48.000-0800",
                 "attachmentId":"eni-attach-106a0072",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -282,7 +282,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150120074036-0800",
+                "attachTime":"2015-01-20T07:40:36.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-85b5c1ce"
@@ -296,7 +296,7 @@
           "instanceId":"i-6107029a",
           "instanceType":"t2.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150120074032-0800",
+          "launchTime":"2015-01-20T07:40:32.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -308,7 +308,7 @@
                 "publicIp":"54.172.141.94"
               },
               "attachment":{
-                "attachTime":"20150120074032-0800",
+                "attachTime":"2015-01-20T07:40:32.000-0800",
                 "attachmentId":"eni-attach-1f47f87d",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -411,7 +411,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6d0138a4"
@@ -426,7 +426,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -495,7 +495,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150618072223-0700",
+                "attachTime":"2015-06-18T07:22:23.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-b6dca658"
@@ -509,7 +509,7 @@
           "instanceId":"i-e3d03030",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150618072220-0700",
+          "launchTime":"2015-06-18T07:22:20.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -521,7 +521,7 @@
                 "publicIp":"54.152.39.251"
               },
               "attachment":{
-                "attachTime":"20150618072220-0700",
+                "attachTime":"2015-06-18T07:22:20.000-0700",
                 "attachmentId":"eni-attach-54fbc631",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -609,7 +609,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150506034243-0700",
+                "attachTime":"2015-05-06T03:42:43.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-32aa8324"
@@ -627,7 +627,7 @@
           "instanceId":"i-243a61d9",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150506034240-0700",
+          "launchTime":"2015-05-06T03:42:40.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -639,7 +639,7 @@
                 "publicIp":"52.5.72.110"
               },
               "attachment":{
-                "attachTime":"20150506034240-0700",
+                "attachTime":"2015-05-06T03:42:40.000-0700",
                 "attachmentId":"eni-attach-8aa11eef",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -765,7 +765,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6a0138a3"
@@ -780,7 +780,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -854,7 +854,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012938-0700",
+                "attachTime":"2015-07-20T01:29:38.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6f0138a6"
@@ -869,7 +869,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -938,7 +938,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150702160649-0700",
+                "attachTime":"2015-07-02T16:06:49.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-4818ac06"
@@ -952,14 +952,14 @@
           "instanceId":"i-ed1dac04",
           "instanceType":"c4.4xlarge",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150724021839-0700",
+          "launchTime":"2015-07-24T02:18:39.000-0700",
           "monitoring":{
             "state":"disabled"
           },
           "networkInterfaces":[
             {
               "attachment":{
-                "attachTime":"20150702160647-0700",
+                "attachTime":"2015-07-02T16:06:47.000-0700",
                 "attachmentId":"eni-attach-8e48c1ee",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1035,7 +1035,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150702160649-0700",
+                "attachTime":"2015-07-02T16:06:49.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-921fabdc"
@@ -1049,14 +1049,14 @@
           "instanceId":"i-ee1dac07",
           "instanceType":"c4.4xlarge",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150724021839-0700",
+          "launchTime":"2015-07-24T02:18:39.000-0700",
           "monitoring":{
             "state":"disabled"
           },
           "networkInterfaces":[
             {
               "attachment":{
-                "attachTime":"20150702160647-0700",
+                "attachTime":"2015-07-02T16:06:47.000-0700",
                 "attachmentId":"eni-attach-8c48c1ec",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1147,7 +1147,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150522132239-0700",
+                "attachTime":"2015-05-22T13:22:39.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-07c71be9"
@@ -1166,7 +1166,7 @@
           "instanceType":"t1.micro",
           "kernelId":"aki-919dcaf8",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150522132235-0700",
+          "launchTime":"2015-05-22T13:22:35.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1246,7 +1246,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150513131847-0700",
+                "attachTime":"2015-05-13T13:18:47.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-1e4fb3f0"
@@ -1260,7 +1260,7 @@
           "instanceId":"i-96393e6b",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150513131843-0700",
+          "launchTime":"2015-05-13T13:18:43.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1272,7 +1272,7 @@
                 "publicIp":"52.7.183.33"
               },
               "attachment":{
-                "attachTime":"20150513131843-0700",
+                "attachTime":"2015-05-13T13:18:43.000-0700",
                 "attachmentId":"eni-attach-06991163",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1360,7 +1360,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150512011256-0700",
+                "attachTime":"2015-05-12T01:12:56.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-4ca455a2"
@@ -1378,7 +1378,7 @@
           "instanceId":"i-4882beb5",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150512011252-0700",
+          "launchTime":"2015-05-12T01:12:52.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1390,7 +1390,7 @@
                 "publicIp":"52.6.31.113"
               },
               "attachment":{
-                "attachTime":"20150512011252-0700",
+                "attachTime":"2015-05-12T01:12:52.000-0700",
                 "attachmentId":"eni-attach-c124a9a4",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1511,7 +1511,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150715014143-0700",
+                "attachTime":"2015-07-15T01:41:43.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-f6c9fb3f"
@@ -1525,7 +1525,7 @@
           "instanceId":"i-13ea50fa",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150715014139-0700",
+          "launchTime":"2015-07-15T01:41:39.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1537,7 +1537,7 @@
                 "publicIp":"52.0.79.201"
               },
               "attachment":{
-                "attachTime":"20150715014139-0700",
+                "attachTime":"2015-07-15T01:41:39.000-0700",
                 "attachmentId":"eni-attach-a8a131c8",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1630,7 +1630,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150529011016-0700",
+                "attachTime":"2015-05-29T01:10:16.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-ff0cdcb1"
@@ -1644,7 +1644,7 @@
           "instanceId":"i-623fef8b",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150529011013-0700",
+          "launchTime":"2015-05-29T01:10:13.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1695,7 +1695,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150706040817-0700",
+                "attachTime":"2015-07-06T04:08:17.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-564440b8"
@@ -1713,7 +1713,7 @@
           "instanceId":"i-0d8614de",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150706040814-0700",
+          "launchTime":"2015-07-06T04:08:14.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1725,7 +1725,7 @@
                 "publicIp":"54.88.128.248"
               },
               "attachment":{
-                "attachTime":"20150706040814-0700",
+                "attachTime":"2015-07-06T04:08:14.000-0700",
                 "attachmentId":"eni-attach-905ab0f4",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -1846,7 +1846,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150416075431-0700",
+                "attachTime":"2015-04-16T07:54:31.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-768be760"
@@ -1864,7 +1864,7 @@
           "instanceId":"i-aa048357",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150416075428-0700",
+          "launchTime":"2015-04-16T07:54:28.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -1876,7 +1876,7 @@
                 "publicIp":"52.6.42.116"
               },
               "attachment":{
-                "attachTime":"20150416075428-0700",
+                "attachTime":"2015-04-16T07:54:28.000-0700",
                 "attachmentId":"eni-attach-1c62a179",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2002,7 +2002,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150706152624-0700",
+                "attachTime":"2015-07-06T15:26:24.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-ce676120"
@@ -2021,7 +2021,7 @@
           "instanceType":"t1.micro",
           "kernelId":"aki-919dcaf8",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150706152621-0700",
+          "launchTime":"2015-07-06T15:26:21.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2101,7 +2101,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150702154249-0700",
+                "attachTime":"2015-07-02T15:42:49.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-c7cdfd29"
@@ -2115,7 +2115,7 @@
           "instanceId":"i-1c39bdcf",
           "instanceType":"m4.large",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150702154247-0700",
+          "launchTime":"2015-07-02T15:42:47.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2127,7 +2127,7 @@
                 "publicIp":"54.165.194.39"
               },
               "attachment":{
-                "attachTime":"20150702154247-0700",
+                "attachTime":"2015-07-02T15:42:47.000-0700",
                 "attachmentId":"eni-attach-8b997aef",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2220,7 +2220,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-5d013894"
@@ -2235,7 +2235,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2304,7 +2304,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150312141215-0700",
+                "attachTime":"2015-03-12T14:12:15.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-08425a47"
@@ -2318,7 +2318,7 @@
           "instanceId":"i-840b41ab",
           "instanceType":"c4.xlarge",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150312141058-0700",
+          "launchTime":"2015-03-12T14:10:58.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2330,7 +2330,7 @@
                 "publicIp":"54.174.3.77"
               },
               "attachment":{
-                "attachTime":"20150312141058-0700",
+                "attachTime":"2015-03-12T14:10:58.000-0700",
                 "attachmentId":"eni-attach-0c75b76c",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2418,7 +2418,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150430174732-0700",
+                "attachTime":"2015-04-30T17:47:32.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-1282dc04"
@@ -2436,7 +2436,7 @@
           "instanceId":"i-6657149b",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150430174729-0700",
+          "launchTime":"2015-04-30T17:47:29.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2448,7 +2448,7 @@
                 "publicIp":"52.6.233.56"
               },
               "attachment":{
-                "attachTime":"20150430174729-0700",
+                "attachTime":"2015-04-30T17:47:29.000-0700",
                 "attachmentId":"eni-attach-8e6bc3eb",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2569,7 +2569,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150119030913-0800",
+                "attachTime":"2015-01-19T03:09:13.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-f383ebb8"
@@ -2583,7 +2583,7 @@
           "instanceId":"i-ec211e17",
           "instanceType":"t2.micro",
           "keyName":"tribe-lab",
-          "launchTime":"20150119030909-0800",
+          "launchTime":"2015-01-19T03:09:09.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -2595,7 +2595,7 @@
                 "publicIp":"54.165.89.69"
               },
               "attachment":{
-                "attachTime":"20150119030909-0800",
+                "attachTime":"2015-01-19T03:09:09.000-0800",
                 "attachmentId":"eni-attach-9cf845fe",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2683,7 +2683,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150723124734-0700",
+                "attachTime":"2015-07-23T12:47:34.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-e24f8803"
@@ -2701,7 +2701,7 @@
           "instanceId":"i-daebeb09",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150723124731-0700",
+          "launchTime":"2015-07-23T12:47:31.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2713,7 +2713,7 @@
                 "publicIp":"52.1.65.198"
               },
               "attachment":{
-                "attachTime":"20150723124731-0700",
+                "attachTime":"2015-07-23T12:47:31.000-0700",
                 "attachmentId":"eni-attach-71892515",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2838,7 +2838,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150430175823-0700",
+                "attachTime":"2015-04-30T17:58:23.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-b1bde3a7"
@@ -2856,7 +2856,7 @@
           "instanceId":"i-635d1e9e",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150430175819-0700",
+          "launchTime":"2015-04-30T17:58:19.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -2868,7 +2868,7 @@
                 "publicIp":"52.6.7.108"
               },
               "attachment":{
-                "attachTime":"20150430175819-0700",
+                "attachTime":"2015-04-30T17:58:19.000-0700",
                 "attachmentId":"eni-attach-5b61c93e",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -2989,7 +2989,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150629224610-0700",
+                "attachTime":"2015-06-29T22:46:10.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-dd8fa033"
@@ -3003,7 +3003,7 @@
           "instanceId":"i-382c87eb",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150629224606-0700",
+          "launchTime":"2015-06-29T22:46:06.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3015,7 +3015,7 @@
                 "publicIp":"54.175.21.191"
               },
               "attachment":{
-                "attachTime":"20150629224606-0700",
+                "attachTime":"2015-06-29T22:46:06.000-0700",
                 "attachmentId":"eni-attach-a5adb4c0",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3103,7 +3103,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150703054541-0700",
+                "attachTime":"2015-07-03T05:45:41.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-f1b90ebf"
@@ -3112,7 +3112,7 @@
             {
               "deviceName":"/dev/sdc",
               "ebs":{
-                "attachTime":"20150703054541-0700",
+                "attachTime":"2015-07-03T05:45:41.000-0700",
                 "deleteOnTermination":false,
                 "status":"attached",
                 "volumeId":"vol-94b90eda"
@@ -3127,7 +3127,7 @@
           "instanceType":"m3.xlarge",
           "kernelId":"aki-88aa75e1",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150703054537-0700",
+          "launchTime":"2015-07-03T05:45:37.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3139,7 +3139,7 @@
                 "publicIp":"52.1.244.142"
               },
               "attachment":{
-                "attachTime":"20150703054537-0700",
+                "attachTime":"2015-07-03T05:45:37.000-0700",
                 "attachmentId":"eni-attach-cd1099ad",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3227,7 +3227,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150616065111-0700",
+                "attachTime":"2015-06-16T06:51:11.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-78b71036"
@@ -3241,7 +3241,7 @@
           "instanceId":"i-eb5bfd02",
           "instanceType":"t2.medium",
           "keyName":"tckrun_keypair",
-          "launchTime":"20150616065109-0700",
+          "launchTime":"2015-06-16T06:51:09.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3253,7 +3253,7 @@
                 "publicIp":"54.164.170.240"
               },
               "attachment":{
-                "attachTime":"20150616065109-0700",
+                "attachTime":"2015-06-16T06:51:09.000-0700",
                 "attachmentId":"eni-attach-432a9123",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3346,7 +3346,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012935-0700",
+                "attachTime":"2015-07-20T01:29:35.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-030138ca"
@@ -3361,7 +3361,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3430,7 +3430,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150119033638-0800",
+                "attachTime":"2015-01-19T03:36:38.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6391f928"
@@ -3444,7 +3444,7 @@
           "instanceId":"i-7f0e3184",
           "instanceType":"t2.micro",
           "keyName":"tribe-lab",
-          "launchTime":"20150312140237-0700",
+          "launchTime":"2015-03-12T14:02:37.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3456,7 +3456,7 @@
                 "publicIp":"54.152.206.148"
               },
               "attachment":{
-                "attachTime":"20150119033635-0800",
+                "attachTime":"2015-01-19T03:36:35.000-0800",
                 "attachmentId":"eni-attach-cbf34ea9",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3544,7 +3544,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150327074148-0700",
+                "attachTime":"2015-03-27T07:41:48.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-c1ee548b"
@@ -3558,7 +3558,7 @@
           "instanceId":"i-dd4aa520",
           "instanceType":"t2.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150327074145-0700",
+          "launchTime":"2015-03-27T07:41:45.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3570,7 +3570,7 @@
                 "publicIp":"52.4.22.36"
               },
               "attachment":{
-                "attachTime":"20150327074145-0700",
+                "attachTime":"2015-03-27T07:41:45.000-0700",
                 "attachmentId":"eni-attach-f42b3896",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3663,7 +3663,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20150330062851-0700",
+                "attachTime":"2015-03-30T06:28:51.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-f6e86bbc"
@@ -3677,7 +3677,7 @@
           "instanceId":"i-1d1bebe0",
           "instanceType":"m3.large",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150330062847-0700",
+          "launchTime":"2015-03-30T06:28:47.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3732,7 +3732,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150716071221-0700",
+                "attachTime":"2015-07-16T07:12:21.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-89a03463"
@@ -3747,7 +3747,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150716071219-0700",
+          "launchTime":"2015-07-16T07:12:19.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -3759,7 +3759,7 @@
                 "publicIp":"52.2.31.202"
               },
               "attachment":{
-                "attachTime":"20150716071219-0700",
+                "attachTime":"2015-07-16T07:12:19.000-0700",
                 "attachmentId":"eni-attach-4324c73d",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3845,7 +3845,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150114114940-0800",
+                "attachTime":"2015-01-14T11:49:40.000-0800",
                 "deleteOnTermination":false,
                 "status":"attached",
                 "volumeId":"vol-e515fafe"
@@ -3859,7 +3859,7 @@
           "instanceId":"i-4d31c2bc",
           "instanceType":"t2.medium",
           "keyName":"tckrun_keypair",
-          "launchTime":"20150114114936-0800",
+          "launchTime":"2015-01-14T11:49:36.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -3871,7 +3871,7 @@
                 "publicIp":"54.88.34.34"
               },
               "attachment":{
-                "attachTime":"20150114114936-0800",
+                "attachTime":"2015-01-14T11:49:36.000-0800",
                 "attachmentId":"eni-attach-0f313772",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -3964,7 +3964,7 @@
             {
               "deviceName":"/dev/sda1",
               "ebs":{
-                "attachTime":"20131229133327-0800",
+                "attachTime":"2013-12-29T13:33:27.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-bf9285c8"
@@ -3979,7 +3979,7 @@
           "instanceType":"t1.micro",
           "kernelId":"aki-88aa75e1",
           "keyName":"tomitribe_dev",
-          "launchTime":"20131229133325-0800",
+          "launchTime":"2013-12-29T13:33:25.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -4038,7 +4038,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150123072302-0800",
+                "attachTime":"2015-01-23T07:23:02.000-0800",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-d05d239b"
@@ -4052,7 +4052,7 @@
           "instanceId":"i-9e595265",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150123072259-0800",
+          "launchTime":"2015-01-23T07:22:59.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -4064,7 +4064,7 @@
                 "publicIp":"54.175.25.71"
               },
               "attachment":{
-                "attachTime":"20150123072259-0800",
+                "attachTime":"2015-01-23T07:22:59.000-0800",
                 "attachmentId":"eni-attach-449e1a26",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -4152,7 +4152,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150127052136-0800",
+                "attachTime":"2015-01-27T05:21:36.000-0800",
                 "deleteOnTermination":false,
                 "status":"attached",
                 "volumeId":"vol-e8f7b7a3"
@@ -4166,7 +4166,7 @@
           "instanceId":"i-77120a8c",
           "instanceType":"t2.medium",
           "keyName":"tckrun_keypair",
-          "launchTime":"20150127052133-0800",
+          "launchTime":"2015-01-27T05:21:33.000-0800",
           "monitoring":{
             "state":"disabled"
           },
@@ -4178,7 +4178,7 @@
                 "publicIp":"54.86.45.2"
               },
               "attachment":{
-                "attachTime":"20150127052133-0800",
+                "attachTime":"2015-01-27T05:21:33.000-0800",
                 "attachmentId":"eni-attach-eebe338c",
                 "deleteOnTermination":false,
                 "deviceIndex":0,
@@ -4271,7 +4271,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012937-0700",
+                "attachTime":"2015-07-20T01:29:37.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-640138ad"
@@ -4286,7 +4286,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -4355,7 +4355,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150702161026-0700",
+                "attachTime":"2015-07-02T16:10:26.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-5618ac18"
@@ -4369,14 +4369,14 @@
           "instanceId":"i-a41aab4d",
           "instanceType":"c4.8xlarge",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150702161021-0700",
+          "launchTime":"2015-07-02T16:10:21.000-0700",
           "monitoring":{
             "state":"disabled"
           },
           "networkInterfaces":[
             {
               "attachment":{
-                "attachTime":"20150702161021-0700",
+                "attachTime":"2015-07-02T16:10:21.000-0700",
                 "attachmentId":"eni-attach-8f48c1ef",
                 "deleteOnTermination":true,
                 "deviceIndex":0,
@@ -4462,7 +4462,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150512011011-0700",
+                "attachTime":"2015-05-12T01:10:11.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-cea55420"
@@ -4480,7 +4480,7 @@
           "instanceId":"i-4087bbbd",
           "instanceType":"t2.micro",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150512011007-0700",
+          "launchTime":"2015-05-12T01:10:07.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -4492,7 +4492,7 @@
                 "publicIp":"52.6.185.217"
               },
               "attachment":{
-                "attachTime":"20150512011007-0700",
+                "attachTime":"2015-05-12T01:10:07.000-0700",
                 "attachmentId":"eni-attach-5d25a838",
                 "deleteOnTermination":true,
                 "deviceIndex":0,

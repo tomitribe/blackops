@@ -9,29 +9,38 @@
  */
 package com.tomitribe.blackops;
 
-import org.apache.johnzon.mapper.Mapper;
-import org.apache.johnzon.mapper.MapperBuilder;
-import org.tomitribe.util.IO;
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.PropertyAccessor;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.tomitribe.util.PrintString;
 
-import java.lang.reflect.Type;
-import java.util.Comparator;
+import java.io.IOException;
 
 public class Json {
 
     public static String toString(final Object object) {
-        final Mapper mapper = new MapperBuilder()
-            .setPretty(true)
-            .setAttributeOrder(Comparator.<String>naturalOrder())
-            .build();
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
 
-        final PrintString string = new PrintString();
-        mapper.writeObject(object, string);
-        return string.toString();
+        try {
+            final PrintString out = new PrintString();
+            mapper.writeValue(out, object);
+            return out.toString();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public static String fromString(final String json, final Type clazz) {
-        final Mapper mapper = new MapperBuilder().build();
-        return mapper.readObject(IO.read(json), clazz);
+    public static <T> T fromString(final String json, final Class<T> clazz) {
+        final ObjectMapper mapper = new ObjectMapper();
+        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);
+        mapper.setVisibility(PropertyAccessor.FIELD, JsonAutoDetect.Visibility.ANY);
+
+        try {
+            return mapper.reader().forType(clazz).readValue(json.getBytes());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

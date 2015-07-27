@@ -24,7 +24,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150725192040-0700",
+          "launchTime":"2015-07-25T19:20:40.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -100,7 +100,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012935-0700",
+                "attachTime":"2015-07-20T01:29:35.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-030138ca"
@@ -115,7 +115,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -189,7 +189,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6d0138a4"
@@ -204,7 +204,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -278,7 +278,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6a0138a3"
@@ -293,7 +293,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -367,7 +367,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012937-0700",
+                "attachTime":"2015-07-20T01:29:37.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-640138ad"
@@ -382,7 +382,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -456,7 +456,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012938-0700",
+                "attachTime":"2015-07-20T01:29:38.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-6f0138a6"
@@ -471,7 +471,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -545,7 +545,7 @@
             {
               "deviceName":"/dev/xvda",
               "ebs":{
-                "attachTime":"20150720012936-0700",
+                "attachTime":"2015-07-20T01:29:36.000-0700",
                 "deleteOnTermination":true,
                 "status":"attached",
                 "volumeId":"vol-5d013894"
@@ -560,7 +560,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150720012934-0700",
+          "launchTime":"2015-07-20T01:29:34.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -640,7 +640,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150725192040-0700",
+          "launchTime":"2015-07-25T19:20:40.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -722,7 +722,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150725192040-0700",
+          "launchTime":"2015-07-25T19:20:40.000-0700",
           "monitoring":{
             "state":"disabled"
           },
@@ -804,7 +804,7 @@
           "instanceLifecycle":"spot",
           "instanceType":"m3.medium",
           "keyName":"tomitribe_dev",
-          "launchTime":"20150725192040-0700",
+          "launchTime":"2015-07-25T19:20:40.000-0700",
           "monitoring":{
             "state":"disabled"
           },
