@@ -18,6 +18,9 @@ import java.io.IOException;
 
 public class Json {
 
+    private Json() {
+    }
+
     public static String toString(final Object object) {
         final ObjectMapper mapper = new ObjectMapper();
         mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.NONE);

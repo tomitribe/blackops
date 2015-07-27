@@ -18,6 +18,9 @@ import java.lang.reflect.Proxy;
 
 public class EC2ResponseLogger {
 
+    private EC2ResponseLogger() {
+    }
+
     public static AmazonEC2 wrap(final AmazonEC2 client) {
 
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();

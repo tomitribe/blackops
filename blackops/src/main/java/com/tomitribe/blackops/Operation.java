@@ -10,15 +10,21 @@
 package com.tomitribe.blackops;
 
 import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsRequest;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.Tag;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * This class is intentionally stateless.  All state is in EC2 itself.
+ *
+ * Adding maps, counters, lists or other items that would require updating
+ * this object's fields would break the intended design of this class.
+ */
 public class Operation {
 
     private final OperationId id;
@@ -31,14 +37,22 @@ public class Operation {
     }
 
     public List<Instance> getInstances() {
-        final DescribeInstancesResult result = ec2.describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest());
-        return Aws.getInstances(result);
+        final DescribeInstances describeInstances = new DescribeInstances().withOperationId(id.get());
+        return Aws.getInstances(ec2.describeInstances(describeInstances.getRequest()));
     }
 
-    public List<SpotInstanceRequest> getSpotInstanceRequets() {
+    public List<String> getInstanceIds() {
+        return Aws.getInstanceIds(getInstances());
+    }
+
+    public List<SpotInstanceRequest> getSpotInstanceRequests() {
         final DescribeSpotInstanceRequestsRequest request = new DescribeSpotInstanceRequestsRequest().withFilters(id.asFilter());
         final DescribeSpotInstanceRequestsResult result = ec2.describeSpotInstanceRequests(request);
         return result.getSpotInstanceRequests();
+    }
+
+    public List<String> getSpotInstanceRequestIds() {
+        return Aws.getSpotInstanceRequestIds(getSpotInstanceRequests());
     }
 
     public List<String> getPublicDnsNames() {
@@ -47,6 +61,14 @@ public class Operation {
 
     public List<String> getPrivateDnsNames() {
         return getInstances().stream().map(Instance::getPrivateDnsName).collect(Collectors.toList());
+    }
+
+    public List<Tag> getTags() {
+        return getInstances().stream()
+                .flatMap(instance -> instance.getTags().stream())
+                .distinct()
+                .sorted((o1, o2) -> o1.getKey().compareTo(o2.getKey()))
+                .collect(Collectors.toList());
     }
 
 }

@@ -12,16 +12,13 @@ package com.tomitribe.blackops;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
-import com.amazonaws.services.ec2.model.CreateTagsRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
-import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsRequest;
 import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.SpotInstanceState;
-import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 
 import java.util.List;
 import java.util.Map;
@@ -60,6 +57,7 @@ public class Aws {
 
 //        client().terminateInstances(new TerminateInstancesRequest().withInstanceIds("i-90b43b79"));
     }
+
     public static AmazonEC2 client() {
         return ec2.get();
     }
@@ -102,5 +100,13 @@ public class Aws {
 
     public static Map<String, State> countInstanceStates(List<Instance> instances) {
         return States.count(instances, instance -> instance.getState().getName());
+    }
+
+    public static List<String> getSpotInstanceRequestIds(List<SpotInstanceRequest> spotInstanceRequests) {
+        return spotInstanceRequests.stream().map(SpotInstanceRequest::getSpotInstanceRequestId).collect(Collectors.toList());
+    }
+
+    public static List<String> getInstanceIds(List<Instance> instances) {
+        return instances.stream().map(Instance::getInstanceId).collect(Collectors.toList());
     }
 }
