@@ -23,6 +23,7 @@ import java.util.regex.Pattern;
 
 public class OperationId {
 
+    public static final String ID = "operation-id";
     private static final Pattern format = Pattern.compile("op-[a-z0-9]{13}");
     private final String id;
 
@@ -65,11 +66,11 @@ public class OperationId {
     }
 
     public Filter asFilter() {
-        return new Filter("tag:" + UserData.ID).withValues(id);
+        return new Filter("tag:" + ID).withValues(id);
     }
 
     public com.amazonaws.services.ec2.model.Tag asTag() {
-        return new com.amazonaws.services.ec2.model.Tag(UserData.ID, id);
+        return new com.amazonaws.services.ec2.model.Tag(ID, id);
     }
 
     @Override

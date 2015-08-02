@@ -10,20 +10,21 @@
 package com.tomitribe.blackops;
 
 import org.tomitribe.util.IO;
+import org.tomitribe.util.Longs;
 import org.tomitribe.util.PrintString;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class UserData {
-
+    // TODO Make Name required
+    // TODO Allow scripts to have args
 
     public static final String PUBLIC_PEM = "-----BEGIN PUBLIC KEY-----\n" +
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9C7Fi7EJAgvxU7PybJNP\n" +
@@ -35,42 +36,35 @@ public class UserData {
             "0QIDAQAB\n" +
             "-----END PUBLIC KEY-----\n";
 
-    public static final String ID = "operation-id";
-
     private final PrintString out = new PrintString();
-    private final String id = UserData.generateId();
+    private final OperationId id = OperationId.generate();
 
     public UserData(final String name, final String accessKey, final String secretKey) {
         out.print("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n");
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
         out.printf("function me {(export AWS_ACCESS_KEY=\"%s\"; export AWS_SECRET_KEY=\"%s\"; /opt/aws/bin/\"$@\";)}\n", accessKey, secretKey);
-        tag("Name", (name != null) ? name : id);
+        tag("Name", (name != null) ? name : id.get());
         tag("shutdown", "false");
-        tag(ID, id);
+        tag(id.asTag());
 
     }
 
     public String getId() {
-        return id;
+        return id.get();
     }
 
-    private static String generateId() {
-        try {
-            final ByteArrayOutputStream out = new ByteArrayOutputStream();
-            System.getProperties().store(out, "" + System.currentTimeMillis() + new Random().nextDouble());
-            out.flush();
-            final MessageDigest sha1 = MessageDigest.getInstance("SHA");
-            final byte[] digest = sha1.digest(out.toByteArray());
-            return Hex.toString(digest);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }
+    public OperationId getOperationId() {
+        return id;
     }
 
     public UserData tag(final String name, final String value) {
         out.printf("me ec2-create-tags \"$ID\" --tag \"%s=%s\"\n", name, value);
         return this;
+    }
+
+    public UserData tag(com.amazonaws.services.ec2.model.Tag tag) {
+        return tag(tag.getKey(), tag.getValue());
     }
 
     /**
