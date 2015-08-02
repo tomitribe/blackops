@@ -26,7 +26,12 @@ public class EC2ResponseLogger {
         final ClassLoader loader = Thread.currentThread().getContextClassLoader();
         final Class[] interfaces = {AmazonEC2.class};
 
-        return (AmazonEC2) Proxy.newProxyInstance(loader, interfaces, (proxy, method, args) -> record(method.invoke(client, args)));
+        return (AmazonEC2) Proxy.newProxyInstance(loader, interfaces, (proxy, method, args) -> {
+            if (args != null && args.length == 1) {
+                record(args[0]);
+            }
+            return record(method.invoke(client, args));
+        });
     }
 
     public static Object record(final Object object) throws IOException {
@@ -34,8 +39,7 @@ public class EC2ResponseLogger {
 
         final File file = File.createTempFile(System.currentTimeMillis() + "-" + object.getClass().getSimpleName() + "-", ".json");
         System.out.println(file.getAbsolutePath());
-        final String json = Json.toString(object);
-        IO.copy(IO.read(json), file);
+        IO.copy(IO.read(Json.toString(object)), file);
         return object;
     }
 }
