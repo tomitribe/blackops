@@ -30,7 +30,7 @@ public enum Operations {
     ;
 
     public static List<Instance> getInstances(final OperationId id) {
-        return Aws.getInstances(Aws.client().describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest()));
+        return Aws.getInstances(Aws.client().describeInstances(new DescribeInstances().withOperationId(id).getRequest()));
     }
 
     public static void terminateOperation(final OperationId id) {
@@ -109,7 +109,7 @@ public enum Operations {
 
     public static LaunchSpecification getLaunchSpecification(final OperationId id) {
 
-        final DescribeInstancesResult result = Aws.client().describeInstances(new DescribeInstances().withOperationId(id.get()).getRequest());
+        final DescribeInstancesResult result = Aws.client().describeInstances(new DescribeInstances().withOperationId(id).getRequest());
 
         for (final Instance instance : Aws.getInstances(result)) {
 

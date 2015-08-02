@@ -22,8 +22,9 @@ public class DescribeInstances {
     }
 
     public DescribeInstances withState(final InstanceStateName... state) {
-        final Filter filter = Aws.asFilter(state);
-        request.withFilters(filter);
+        if (state.length > 0) {
+            request.withFilters(Aws.asFilter(state));
+        }
         return this;
     }
 
@@ -48,8 +49,8 @@ public class DescribeInstances {
         return this;
     }
 
-    public DescribeInstances withOperationId(final String id) {
-        request.withFilters(new OperationId(id).asFilter());
+    public DescribeInstances withOperationId(final OperationId operationId) {
+        request.withFilters(operationId.asFilter());
         return this;
     }
 
