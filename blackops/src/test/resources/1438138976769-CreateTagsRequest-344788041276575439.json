@@ -1,0 +1,14 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "resources" : [ "sir-02en40wb", "sir-02eg705h", "sir-02elb8ae", "sir-02ephalc" ],
+  "tags" : [ {
+    "key" : "operation-id",
+    "value" : "a546d12a78d381e7723f3edad41913c9f75c9e8a"
+  } ]
+}

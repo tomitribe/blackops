@@ -12,6 +12,7 @@ package com.tomitribe.blackops;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.amazonaws.services.ec2.model.Tag;
 import org.junit.Assert;
 import org.junit.Test;
@@ -23,7 +24,8 @@ import java.util.Map;
 
 import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
 import static com.amazonaws.services.ec2.model.InstanceStateName.Terminated;
-import static com.tomitribe.blackops.AssertGeneration.assertInstance;
+import static com.tomitribe.blackops.Assertions.assertInstance;
+import static com.tomitribe.blackops.Assertions.assertSpotInstanceRequest;
 
 public class OperationTest extends Assert {
 
@@ -73,10 +75,10 @@ public class OperationTest extends Assert {
 
         final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
 
-        final List<SpotInstanceRequest> spotInstanceRequets = operation.getSpotInstanceRequests();
+        final List<SpotInstanceRequest> spotInstanceRequests = operation.getSpotInstanceRequests();
 
         {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequets.iterator();
+            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
             assertEquals("sir-02efzkef", iterator.next().getSpotInstanceRequestId());
             assertEquals("sir-02ep34v9", iterator.next().getSpotInstanceRequestId());
             assertEquals("sir-02ep7rs7", iterator.next().getSpotInstanceRequestId());
@@ -93,7 +95,7 @@ public class OperationTest extends Assert {
             assertEquals("sir-02enlfak", iterator.next().getSpotInstanceRequestId());
         }
         {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequets.iterator();
+            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
             assertEquals("active", iterator.next().getState());
             assertEquals("active", iterator.next().getState());
             assertEquals("active", iterator.next().getState());
@@ -111,7 +113,7 @@ public class OperationTest extends Assert {
         }
 
         {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequets.iterator();
+            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
             assertEquals("i-7d0c83d5", iterator.next().getInstanceId());
             assertEquals("i-42cc4dab", iterator.next().getInstanceId());
             assertEquals("i-bbce4f52", iterator.next().getInstanceId());
@@ -129,7 +131,7 @@ public class OperationTest extends Assert {
         }
 
         {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequets.iterator();
+            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
             assertEquals(1, iterator.next().getTags().size());
             assertEquals(0, iterator.next().getTags().size());
             assertEquals(0, iterator.next().getTags().size());
@@ -345,13 +347,35 @@ public class OperationTest extends Assert {
 
     @Test
     public void testExpandCapacityTo() throws Exception {
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), Aws.client());
+
+        operation.expandCapacityTo(6);
+        while (operation.getInstances(Running).size() != 6) {
+            Thread.sleep(2000);
+            operation.getCapacity();
+        }
+    }
+
+    @Test
+    public void testGetSpotRequestsWithState() throws IOException, ClassNotFoundException {
+
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson(
+                "1437983911113-DescribeSpotInstanceRequestsResult-1056579400495271272.json"
+        );
+
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+
+        final List<SpotInstanceRequest> requests = operation.getSpotInstanceRequests(SpotInstanceState.Cancelled);
+
+        final Iterator<SpotInstanceRequest> iterator = requests.iterator();
+        assertSpotInstanceRequest("sir-02enlfak", "cancelled", "i-d8159a31", iterator.next());
     }
 
     @Test
     public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
 
-        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+//        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
+        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), Aws.client());
 
         final List<Instance> instances = operation.getInstances(Running);
         final Iterator<Instance> iterator = instances.iterator();

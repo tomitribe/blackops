@@ -12,6 +12,7 @@ package com.tomitribe.blackops;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
+import com.amazonaws.services.ec2.model.CreateTagsRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
@@ -26,18 +27,18 @@ import java.util.stream.Collectors;
 /**
  * @version $Revision$ $Date$
  */
-public class Operative {
+public class OperationBuilder {
 
     private final LaunchSpecification specification;
     private final UserData userData;
     private final AmazonEC2 client;
     private final RequestSpotInstancesRequest request;
 
-    public Operative(final String operationName) {
-        this(operationName, "AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn");
+    public OperationBuilder(final String operationName) {
+        this(operationName, "AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn", EC2ResponseLogger.wrap(new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"))));
     }
 
-    public Operative(final String operationName, final String accessKey, final String secretKey) {
+    public OperationBuilder(final String operationName, final String accessKey, final String secretKey, final AmazonEC2 client) {
 
         specification = new LaunchSpecification()
                 .withInstanceType("m3.medium")
@@ -49,7 +50,7 @@ public class Operative {
         userData = new UserData(operationName, accessKey, secretKey);
         userData.tag("user.name", System.getProperty("user.name"));
 
-        client = EC2ResponseLogger.wrap(new AmazonEC2Client(new BasicAWSCredentials(accessKey, secretKey)));
+        this.client = client;
 
         request = new RequestSpotInstancesRequest()
                 .withSpotPrice("0.02")
@@ -72,10 +73,34 @@ public class Operative {
         return userData;
     }
 
+    public Operation build() {
+        specification.withUserData(userData.toUserData());
+        request.setLaunchSpecification(specification);
+
+        // Request the Spot Instances
+        final RequestSpotInstancesResult result = client.requestSpotInstances(request);
+
+        // Tag the Spot Instance requests
+        client.createTags(new CreateTagsRequest()
+                        .withTags(userData.getOperationId().asTag())
+                        .withResources(Aws.getSpotInstanceRequestIds(result.getSpotInstanceRequests()))
+        );
+
+        return new Operation(userData.getOperationId(), client);
+    }
+
     public Launch execute() {
         specification.withUserData(userData.toUserData());
         request.setLaunchSpecification(specification);
-        return new Launch(client.requestSpotInstances(request));
+        final RequestSpotInstancesResult spotInstancesResult = client.requestSpotInstances(request);
+
+        // Tag the spot instance requests
+        client.createTags(new CreateTagsRequest()
+                        .withTags(userData.getOperationId().asTag())
+                        .withResources(Aws.getSpotInstanceRequestIds(spotInstancesResult.getSpotInstanceRequests()))
+        );
+
+        return new Launch(spotInstancesResult);
     }
 
     public class Launch {
@@ -99,7 +124,7 @@ public class Operative {
             return Await.check(() -> {
                 final DescribeInstancesResult result = client.describeInstances(
                         new DescribeInstances()
-                                .withOperationId(userData.getId())
+                                .withOperationId(userData.getOperationId())
                                 .withState(InstanceStateName.Running)
                                 .getRequest()
                 );

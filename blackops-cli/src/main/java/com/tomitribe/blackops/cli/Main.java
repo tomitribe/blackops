@@ -13,7 +13,7 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceType;
 import com.tomitribe.blackops.Encryption;
 import com.tomitribe.blackops.Operations;
-import com.tomitribe.blackops.Operative;
+import com.tomitribe.blackops.OperationBuilder;
 import com.tomitribe.blackops.PEM;
 import org.tomitribe.crest.api.Command;
 import org.tomitribe.crest.api.Default;
@@ -85,11 +85,11 @@ public enum Main {
                                        @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
-        final Operative operative = new Operative(name);
+        final OperationBuilder operationBuilder = new OperationBuilder(name);
 
-        operative.operation().script(script);
+        operationBuilder.operation().script(script);
 
-        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operative);
+        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operationBuilder);
     }
 
     @Command
@@ -105,42 +105,42 @@ public enum Main {
                                       @Option("await-capacity") @Default("false") final boolean awaitCapacity
     ) throws IOException {
 
-        final Operative operative = new Operative((name == null) ? script.getName() : name);
+        final OperationBuilder operationBuilder = new OperationBuilder((name == null) ? script.getName() : name);
 
-        operative.operation().script(script);
+        operationBuilder.operation().script(script);
 
-        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operative);
+        return execute(shutdown, instanceType, keyName, securityGroups, spotPrice, instanceCount, spotRequestType, zone, awaitCapacity, operationBuilder);
     }
 
 
     public static StreamingOutput execute(
             boolean shutdown, String instanceType, String keyName, String[] securityGroups, String spotPrice,
-            int instanceCount, String spotRequestType, String zone, boolean awaitCapacity, Operative operative) {
+            int instanceCount, String spotRequestType, String zone, boolean awaitCapacity, OperationBuilder operationBuilder) {
         if (shutdown) {
-            operative.operation().shutdown();
+            operationBuilder.operation().shutdown();
         }
 
-        operative.specification()
+        operationBuilder.specification()
                 .withInstanceType(InstanceType.fromValue(instanceType))
                 .withKeyName(keyName)
                 .withSecurityGroups(securityGroups)
         ;
 
-        operative.request()
+        operationBuilder.request()
                 .withSpotPrice(spotPrice)
                 .withInstanceCount(instanceCount)
                 .withType(spotRequestType)
                 .withAvailabilityZoneGroup(zone);
 
 
-        final Operative.Launch launch = operative.execute();
+        final OperationBuilder.Launch launch = operationBuilder.execute();
 
         return os -> {
             final PrintStream stream = new PrintStream(os);
-            stream.println(operative.operation().getId());
+            stream.println(operationBuilder.operation().getId());
 
             if (!awaitCapacity) {
-                stream.printf("%s%n%s%n", operative.operation().getId(), launch.toString());
+                stream.printf("%s%n%s%n", operationBuilder.operation().getId(), launch.toString());
                 return;
             }
 

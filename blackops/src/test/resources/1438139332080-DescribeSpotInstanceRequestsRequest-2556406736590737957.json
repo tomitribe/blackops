@@ -1,0 +1,14 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "spotInstanceRequestIds" : null,
+  "filters" : [ {
+    "name" : "tag:operation-id",
+    "values" : [ "a546d12a78d381e7723f3edad41913c9f75c9e8a" ]
+  } ]
+}

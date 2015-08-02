@@ -1,0 +1,179 @@
+{
+  "spotInstanceRequests" : [ {
+    "spotInstanceRequestId" : "sir-02eg705h",
+    "spotPrice" : "0.012000",
+    "type" : "one-time",
+    "state" : "active",
+    "fault" : null,
+    "status" : {
+      "code" : "fulfilled",
+      "updateTime" : 1437920386000,
+      "message" : "Your Spot request is fulfilled."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : "i-a6149b4f",
+    "createTime" : 1437919872000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : [ {
+      "key" : "operation-id",
+      "value" : "a546d12a78d381e7723f3edad41913c9f75c9e8a"
+    } ],
+    "launchedAvailabilityZone" : "us-east-1b"
+  }, {
+    "spotInstanceRequestId" : "sir-02elb8ae",
+    "spotPrice" : "0.012000",
+    "type" : "one-time",
+    "state" : "active",
+    "fault" : null,
+    "status" : {
+      "code" : "fulfilled",
+      "updateTime" : 1437920384000,
+      "message" : "Your Spot request is fulfilled."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : "i-62159a8b",
+    "createTime" : 1437919872000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : [ {
+      "key" : "operation-id",
+      "value" : "a546d12a78d381e7723f3edad41913c9f75c9e8a"
+    } ],
+    "launchedAvailabilityZone" : "us-east-1b"
+  }, {
+    "spotInstanceRequestId" : "sir-02en40wb",
+    "spotPrice" : "0.012000",
+    "type" : "one-time",
+    "state" : "active",
+    "fault" : null,
+    "status" : {
+      "code" : "fulfilled",
+      "updateTime" : 1437920386000,
+      "message" : "Your Spot request is fulfilled."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : "i-d9159a30",
+    "createTime" : 1437919872000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : [ {
+      "key" : "operation-id",
+      "value" : "a546d12a78d381e7723f3edad41913c9f75c9e8a"
+    } ],
+    "launchedAvailabilityZone" : "us-east-1b"
+  }, {
+    "spotInstanceRequestId" : "sir-02ephalc",
+    "spotPrice" : "0.012000",
+    "type" : "one-time",
+    "state" : "active",
+    "fault" : null,
+    "status" : {
+      "code" : "fulfilled",
+      "updateTime" : 1437920384000,
+      "message" : "Your Spot request is fulfilled."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : "i-23159aca",
+    "createTime" : 1437919872000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : [ {
+      "key" : "operation-id",
+      "value" : "a546d12a78d381e7723f3edad41913c9f75c9e8a"
+    } ],
+    "launchedAvailabilityZone" : "us-east-1b"
+  } ]
+}

@@ -50,7 +50,7 @@ public class Operation {
 
     public List<Instance> getInstances(final InstanceStateName... states) {
         final DescribeInstances describeInstances = new DescribeInstances()
-                .withOperationId(id.get())
+                .withOperationId(id)
                 .withState(states);
 
         return Aws.getInstances(ec2.describeInstances(describeInstances.getRequest()));
@@ -60,8 +60,13 @@ public class Operation {
         return Aws.getInstanceIds(getInstances(states));
     }
 
-    public List<SpotInstanceRequest> getSpotInstanceRequests() {
+    public List<SpotInstanceRequest> getSpotInstanceRequests(final SpotInstanceState... states) {
         final DescribeSpotInstanceRequestsRequest request = new DescribeSpotInstanceRequestsRequest().withFilters(id.asFilter());
+
+        if (states.length > 0) {
+            request.withFilters(Aws.asFilter(states));
+        }
+
         final DescribeSpotInstanceRequestsResult result = ec2.describeSpotInstanceRequests(request);
         return result.getSpotInstanceRequests();
     }
@@ -84,7 +89,7 @@ public class Operation {
      *
      * Only running instances have a Private DNS
      */
-    public List<String> getPrivateDnsNames(final InstanceStateName... states) {
+    public List<String> getPrivateDnsNames() {
         return getInstances(Running).stream().map(Instance::getPrivateDnsName).collect(Collectors.toList());
     }
 
@@ -125,12 +130,10 @@ public class Operation {
     }
 
     public int getCapacity() {
-        final Map<String, State> instanceStates = countInstanceStates();
-        final int running = States.get(Running.toString(), instanceStates);
-        final int pending = States.get(Pending.toString(), instanceStates);
-        final int open = States.get(SpotInstanceState.Open.toString(), countSpotInstanceRequestStates());
+        final int instances = getInstances(Running, Pending).size();
+        final int requests = getSpotInstanceRequests(SpotInstanceState.Open).size();
 
-        return running + pending + open;
+        return instances + requests;
     }
 
 }

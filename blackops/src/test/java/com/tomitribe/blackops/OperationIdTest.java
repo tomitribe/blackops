@@ -153,7 +153,6 @@ public class OperationIdTest extends Assert {
         final OperationId three = OperationId.parse("op-aaaaaaaaaaaab");
 
         assertEquals(one, one);
-        assertEquals(one, one);
         assertEquals(one, two);
         assertNotEquals(one, three);
         assertNotEquals(one, null);
