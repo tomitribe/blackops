@@ -12,14 +12,8 @@ package com.tomitribe.blackops;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.AmazonEC2Client;
-import com.amazonaws.services.ec2.model.CreateTagsRequest;
-import com.amazonaws.services.ec2.model.DescribeInstancesResult;
-import com.amazonaws.services.ec2.model.Instance;
-import com.amazonaws.services.ec2.model.InstanceStateName;
-import com.amazonaws.services.ec2.model.LaunchSpecification;
-import com.amazonaws.services.ec2.model.RequestSpotInstancesRequest;
-import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
-import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.*;
+import com.amazonaws.services.ec2.model.Tag;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -83,6 +77,7 @@ public class OperationBuilder {
         // Tag the Spot Instance requests
         client.createTags(new CreateTagsRequest()
                         .withTags(userData.getOperationId().asTag())
+                        .withTags(new Tag("Name", userData.getName()))
                         .withResources(Aws.getSpotInstanceRequestIds(result.getSpotInstanceRequests()))
         );
 

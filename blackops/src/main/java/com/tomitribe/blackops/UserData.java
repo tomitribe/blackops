@@ -38,8 +38,10 @@ public class UserData {
 
     private final PrintString out = new PrintString();
     private final OperationId id = OperationId.generate();
+    private final String name;
 
     public UserData(final String name, final String accessKey, final String secretKey) {
+        this.name = name;
         out.print("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n");
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
@@ -48,6 +50,10 @@ public class UserData {
         tag("shutdown", "false");
         tag(id.asTag());
 
+    }
+
+    public String getName() {
+        return name;
     }
 
     public String getId() {
