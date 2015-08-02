@@ -39,7 +39,7 @@ public class MockEC2Client {
     }
 
     public static Object loadResponse(String name) {
-        final ClassLoader classLoader = OperationTest.class.getClassLoader();
+        final ClassLoader classLoader = MockEC2Client.class.getClassLoader();
         try {
             final String type = name.split("-")[1];
             final URL resource = classLoader.getResource(name);
