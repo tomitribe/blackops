@@ -10,20 +10,18 @@
 package com.tomitribe.blackops;
 
 import org.tomitribe.util.IO;
-import org.tomitribe.util.Longs;
 import org.tomitribe.util.PrintString;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.security.NoSuchAlgorithmException;
 import java.security.PublicKey;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
+import static java.util.Objects.requireNonNull;
+
 public class UserData {
-    // TODO Make Name required
     // TODO Allow scripts to have args
 
     public static final String PUBLIC_PEM = "-----BEGIN PUBLIC KEY-----\n" +
@@ -41,7 +39,10 @@ public class UserData {
     private final String name;
 
     public UserData(final String name, final String accessKey, final String secretKey) {
-        this.name = name;
+        this.name = requireNonNull(name, "Name cannot be null");
+        requireNonNull(accessKey, "accessKey");
+        requireNonNull(secretKey, "secretKey");
+
         out.print("export ID=$(curl -s http://169.254.169.254/latest/meta-data/instance-id)\n");
         // Command executed in a subshell so subsequent commands cannot read the AWS_SECRET_KEY
         // This includes any Java Processes which may print System.getenv() such as crest-connector demos
