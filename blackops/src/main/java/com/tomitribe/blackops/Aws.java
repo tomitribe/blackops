@@ -31,7 +31,7 @@ public class Aws {
 
     private static final AtomicReference<AmazonEC2> ec2 = new AtomicReference<>(
             EC2ResponseLogger.wrap(
-                    new AmazonEC2Client(new BasicAWSCredentials("AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"))
+                    new AmazonEC2Client(new BasicAWSCredentials("AKIAIOXCE42MYQIB2XYQ", "jwGIwvEGINy8t4wP2h4kCZiXOOUr/69uWvLyFNTi"))
             )
     );
 
@@ -39,12 +39,24 @@ public class Aws {
     }
 
     public static void main(String[] args) {
+
+        final Operation operation = new Operation(new OperationId("a546d12a78d381e7723f3edad41913c9f75c9e8a"), client());
+
+        final Instance next = operation.getInstances().iterator().next();
+        Operations.getUserData(next);
+//        operation.getSpotInstanceRequests()
+//                .forEach(System.out::println);
+
+
+//        final List<Instance> instances = operation.getInstances(InstanceStateName.Running);
+//        instances.forEach(System.out::println);
+
 //        client().describeSpotInstanceRequests();
 //        client().describeSpotInstanceRequests(new DescribeSpotInstanceRequestsRequest().withSpotInstanceRequestIds("sir-02emmkv4"));
 
 //        client().createTags(new CreateTagsRequest()
-//                .withTags(new com.amazonaws.services.ec2.model.Tag("operation-id", "834a27d7cb74cc5e99068bd395bbe9d45a42e871"))
-//                .withResources("sir-02emmkv4")
+//                .withTags(new com.amazonaws.services.ec2.model.Tag("operation-id", "a546d12a78d381e7723f3edad41913c9f75c9e8a"))
+//                .withResources(instances.stream().map(Instance::getSpotInstanceRequestId).collect(Collectors.toList()))
 //        );
 //        client().describeInstances(new DescribeInstancesRequest());
 //        final DescribeInstancesResult instancesResult = client().describeInstances(new DescribeInstances().withTag("operation-id", null).getRequest());
@@ -119,5 +131,10 @@ public class Aws {
     public static Filter asFilter(InstanceStateName... state) {
         final String[] values = Stream.of(state).map(InstanceStateName::toString).toArray(String[]::new);
         return new Filter("instance-state-name").withValues(values);
+    }
+
+    public static Filter asFilter(SpotInstanceState... state) {
+        final String[] values = Stream.of(state).map(SpotInstanceState::toString).toArray(String[]::new);
+        return new Filter("state").withValues(values);
     }
 }
