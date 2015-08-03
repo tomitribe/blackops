@@ -15,6 +15,7 @@ import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.amazonaws.services.ec2.model.Tag;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -33,7 +34,7 @@ public class OperationTest extends Assert {
     public void testGetInstances() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Instance> instances = operation.getInstances();
 
@@ -73,7 +74,7 @@ public class OperationTest extends Assert {
     public void testGetSpotInstanceRequests() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437881181099-DescribeSpotInstanceRequestsResult-8210936666888035389.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<SpotInstanceRequest> spotInstanceRequests = operation.getSpotInstanceRequests();
 
@@ -153,7 +154,7 @@ public class OperationTest extends Assert {
     public void testGetPublicDnsNames() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<String> publicDnsNames = operation.getPublicDnsNames();
 
@@ -176,7 +177,7 @@ public class OperationTest extends Assert {
     public void testGetPrivateDnsNames() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<String> privateDnsNames = operation.getPrivateDnsNames();
 
@@ -199,7 +200,7 @@ public class OperationTest extends Assert {
     public void testGetTags() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Tag> tags = operation.getTags();
 
@@ -230,7 +231,7 @@ public class OperationTest extends Assert {
     public void testGetInstanceIds() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<String> instanceIds = operation.getInstanceIds();
         final Iterator<String> iterator = instanceIds.iterator();
@@ -252,7 +253,7 @@ public class OperationTest extends Assert {
     public void testGetSpotInstanceRequestIds() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437881181099-DescribeSpotInstanceRequestsResult-8210936666888035389.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<String> spotInstanceRequestIds = operation.getSpotInstanceRequestIds();
         final Iterator<String> iterator = spotInstanceRequestIds.iterator();
@@ -279,7 +280,7 @@ public class OperationTest extends Assert {
     public void testCountInstanceStates() throws Exception {
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437882646414-DescribeInstancesResult-264183782752925532.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final Map<String, State> states = operation.countInstanceStates();
 
@@ -306,7 +307,7 @@ public class OperationTest extends Assert {
 
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437881181099-DescribeSpotInstanceRequestsResult-8210936666888035389.json");
 
-        final Operation operation = new Operation(new OperationId("asdfghjk234567"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final Map<String, State> states = operation.countSpotInstanceRequestStates();
         final Iterator<Map.Entry<String, State>> iterator = states.entrySet().iterator();
@@ -346,6 +347,7 @@ public class OperationTest extends Assert {
     }
 
     @Test
+    @Ignore
     public void testExpandCapacityTo() throws Exception {
         final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), Aws.client());
 
@@ -372,6 +374,7 @@ public class OperationTest extends Assert {
     }
 
     @Test
+    @Ignore
     public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
 
 //        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
