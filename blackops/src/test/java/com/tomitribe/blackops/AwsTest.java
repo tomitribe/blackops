@@ -1,6 +1,22 @@
+/*
+ * Tomitribe Confidential
+ *
+ * Copyright Tomitribe Corporation. 2015
+ *
+ * The source code for this program is not published or otherwise divested
+ * of its trade secrets, irrespective of what has been deposited with the
+ * U.S. Copyright Office.
+ */
 package com.tomitribe.blackops;
 
-import com.amazonaws.services.ec2.model.*;
+import com.amazonaws.services.ec2.model.DescribeInstancesResult;
+import com.amazonaws.services.ec2.model.DescribeSpotInstanceRequestsResult;
+import com.amazonaws.services.ec2.model.Filter;
+import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.InstanceState;
+import com.amazonaws.services.ec2.model.InstanceStateName;
+import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.amazonaws.services.ec2.model.Tag;
 import org.junit.Assert;
 import org.junit.Test;

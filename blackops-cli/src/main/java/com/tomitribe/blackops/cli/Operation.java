@@ -20,7 +20,6 @@ import org.tomitribe.crest.api.Command;
 import org.tomitribe.crest.api.StreamingOutput;
 import org.tomitribe.util.Join;
 
-import java.io.IOException;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;

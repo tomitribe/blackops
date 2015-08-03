@@ -14,7 +14,6 @@ import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import org.junit.Test;
 
-import javax.xml.bind.annotation.XmlRootElement;
 import java.util.Arrays;
 
 public class MarshallerTest {

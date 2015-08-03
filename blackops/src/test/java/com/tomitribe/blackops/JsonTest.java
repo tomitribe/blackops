@@ -20,16 +20,16 @@ public class JsonTest extends Assert {
     public void test() throws Exception {
 
         final RequestSpotInstancesRequest request = new RequestSpotInstancesRequest()
-            .withSpotPrice("0.02")
-            .withInstanceCount(1)
-            .withType("one-time")
-            .withAvailabilityZoneGroup("us-east-1c")
-            .withLaunchSpecification(new LaunchSpecification()
-                .withInstanceType("m3.medium")
-                .withImageId("ami-5bf23530") // Operative 1.0
-                .withMonitoringEnabled(false)
-                .withKeyName("tomitribe_dev")
-                .withSecurityGroups("Ports 60000+10"));
+                .withSpotPrice("0.02")
+                .withInstanceCount(1)
+                .withType("one-time")
+                .withAvailabilityZoneGroup("us-east-1c")
+                .withLaunchSpecification(new LaunchSpecification()
+                        .withInstanceType("m3.medium")
+                        .withImageId("ami-5bf23530") // Operative 1.0
+                        .withMonitoringEnabled(false)
+                        .withKeyName("tomitribe_dev")
+                        .withSecurityGroups("Ports 60000+10"));
 
         final String json = Json.toString(request);
         System.out.println(json);
