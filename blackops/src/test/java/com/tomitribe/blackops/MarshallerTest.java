@@ -45,24 +45,4 @@ public class MarshallerTest {
         System.out.println(s);
 
     }
-
-    @XmlRootElement
-    public static class Request {
-        private RequestSpotInstancesResult result;
-
-        public Request(RequestSpotInstancesResult result) {
-            this.result = result;
-        }
-
-        public Request() {
-        }
-
-        public RequestSpotInstancesResult getResult() {
-            return result;
-        }
-
-        public void setResult(RequestSpotInstancesResult result) {
-            this.result = result;
-        }
-    }
 }
