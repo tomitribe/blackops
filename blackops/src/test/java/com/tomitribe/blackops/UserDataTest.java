@@ -19,7 +19,7 @@ public class UserDataTest extends Assert {
     @Test
     public void minimum() throws Exception {
         final UserData userData = new UserData("Jane Bond", "6b76b6c83f77fcbdc7cbaec", "ab350c4aabf4c4a3d85affefbdf339c3")
-                .script("touch /tmp/foo\n");
+                .script("touch /tmp/foo");
 
         final String actual = toString(userData);
 
@@ -39,7 +39,7 @@ public class UserDataTest extends Assert {
         final UserData userData = new UserData("Jane Bond", "6b76b6c83f77fcbdc7cbaec", "ab350c4aabf4c4a3d85affefbdf339c3")
                 .script("for n in \"$@\"; do\n" +
                         "    echo \"Arg '$n'\"\n" +
-                        "done\n", "one", "two", "three");
+                        "done", "one", "two", "three");
 
         final String actual = toString(userData);
 
@@ -61,7 +61,7 @@ public class UserDataTest extends Assert {
         final UserData userData = new UserData("Jane Bond", "6b76b6c83f77fcbdc7cbaec", "ab350c4aabf4c4a3d85affefbdf339c3")
                 .script("#!/some/path/bash -v -x -l\nfor n in \"$@\"; do\n" +
                         "    echo \"Arg '$n'\"\n" +
-                        "done\n", "one", "two", "three");
+                        "done", "one", "two", "three");
 
         final String actual = toString(userData);
 
@@ -71,7 +71,7 @@ public class UserDataTest extends Assert {
                 "me ec2-create-tags \"$ID\" --tag \"shutdown=false\"\n" +
                 "me ec2-create-tags \"$ID\" --tag \"operation-id=op-zh3dd6bdacf7f\"\n" +
                 "\n" +
-                "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | bash -l -s \"one\" \"two\" \"three\"\n" +
+                "cat <<'2dc013eefa7a33ad833c0eb36ba47428' | /some/path/bash -v -x -l -s \"one\" \"two\" \"three\"\n" +
                 "for n in \"$@\"; do\n" +
                 "    echo \"Arg '$n'\"\n" +
                 "done\n" +
@@ -83,8 +83,8 @@ public class UserDataTest extends Assert {
         final UserData userData = new UserData("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
                 .tag("Color", "Orange")
                 .tag("Shape", "Circle")
-                .script("#!/usr/bin/perl -w\nprint \"Hello, Perl\\n\";\n")
-                .script("touch /tmp/foo\n")
+                .script("#!/usr/bin/perl -w\nprint \"Hello, Perl\\n\";")
+                .script("touch /tmp/foo")
                 .tag("Name", "Jane Bond - Finished")
                 .shutdown();
 
@@ -128,7 +128,7 @@ public class UserDataTest extends Assert {
     public void shutdownAfter() throws Exception {
         final UserData userData = new UserData("Jane Bond", "83f77f6b76b6ccbdc7cbaec", "ab354aac4a3d85affe0cfbbf4df339c3")
                 .shutdownAfter(10, TimeUnit.MINUTES)
-                .script("touch /tmp/foo\n");
+                .script("touch /tmp/foo");
 
         final String actual = toString(userData);
 
