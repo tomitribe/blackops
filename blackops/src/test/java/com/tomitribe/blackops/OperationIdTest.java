@@ -90,7 +90,6 @@ public class OperationIdTest extends Assert {
      * parse() or generate()
      */
     @Test
-    @Ignore("Still have code using the public constructor")
     public void testNoPublicConstructor() throws Exception {
         Stream.of(OperationId.class.getDeclaredConstructors())
                 .forEach(constructor -> assertFalse(Modifier.isPublic(constructor.getModifiers())));

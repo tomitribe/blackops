@@ -27,8 +27,7 @@ public class OperationId {
     private static final Pattern format = Pattern.compile("op-[a-z0-9]{13}");
     private final String id;
 
-    @Deprecated
-    public OperationId(String id) {
+    private OperationId(String id) {
         this.id = id;
     }
 

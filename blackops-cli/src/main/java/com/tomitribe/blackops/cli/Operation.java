@@ -42,15 +42,6 @@ public class Operation {
         return Join.join(", ", count.values());
     }
 
-    public static void main(String[] args) throws IOException {
-
-        final Operation operation = new Operation();
-        final StreamingOutput expand =
-                operation.expand(new OperationId("13cc97275e0a9c75a4c60d01024d3faee3850635"), 20);
-
-        expand.write(System.out);
-    }
-
     @Command
     public StreamingOutput instances(final OperationId operationId) {
         final List<Instance> instances = Operations.getInstances(operationId);

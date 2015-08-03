@@ -22,8 +22,8 @@ public class OperationBuilderTest extends Assert {
         final OperationBuilder builder = new OperationBuilder("OperationBuilderTest", accessKey, secretKey, client);
 
         builder.operation().script("date > /tmp/foo.txt");
-        builder.specification().withInstanceType(InstanceType.T2Micro);
-        builder.request().withInstanceCount(3);
+        builder.specification().withInstanceType(InstanceType.M3Medium);
+        builder.request().withInstanceCount(4);
 
         final Operation operation = builder.build();
 

@@ -349,7 +349,7 @@ public class OperationTest extends Assert {
     @Test
     @Ignore
     public void testExpandCapacityTo() throws Exception {
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), Aws.client());
+        final Operation operation = new Operation(OperationId.generate(), Aws.client());
 
         operation.expandCapacityTo(6);
         while (operation.getInstances(Running).size() != 6) {
@@ -365,7 +365,7 @@ public class OperationTest extends Assert {
                 "1437983911113-DescribeSpotInstanceRequestsResult-1056579400495271272.json"
         );
 
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<SpotInstanceRequest> requests = operation.getSpotInstanceRequests(SpotInstanceState.Cancelled);
 
@@ -378,7 +378,7 @@ public class OperationTest extends Assert {
     public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
 
 //        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), Aws.client());
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), Aws.client());
 
         final List<Instance> instances = operation.getInstances(Running);
         final Iterator<Instance> iterator = instances.iterator();
@@ -391,7 +391,7 @@ public class OperationTest extends Assert {
     public void testGetInstancesRunningAndTerminated() throws IOException, ClassNotFoundException {
 
         final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437975624121-DescribeInstancesResult-4067508740594260620.json");
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Instance> instances = operation.getInstances(Running, Terminated);
 
@@ -409,7 +409,7 @@ public class OperationTest extends Assert {
                 "1437971902131-DescribeSpotInstanceRequestsResult-4039278516847321614.json"
         );
 
-        final Operation operation = new Operation(new OperationId("996b6ab72504b272af10937bd805ad934455a3df"), amazonEC2);
+        final Operation operation = new Operation(OperationId.generate(), amazonEC2);
 
         final int capacity = operation.getCapacity();
         assertEquals(3, capacity);
