@@ -10,6 +10,7 @@
 package com.tomitribe.blackops;
 
 import org.tomitribe.util.IO;
+import org.tomitribe.util.Join;
 import org.tomitribe.util.PrintString;
 
 import java.io.ByteArrayInputStream;
@@ -22,7 +23,6 @@ import java.util.concurrent.TimeUnit;
 import static java.util.Objects.requireNonNull;
 
 public class UserData {
-    // TODO Allow scripts to have args
 
     public static final String PUBLIC_PEM = "-----BEGIN PUBLIC KEY-----\n" +
             "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA9C7Fi7EJAgvxU7PybJNP\n" +
@@ -96,49 +96,81 @@ public class UserData {
         return this;
     }
 
-    public UserData script(final URL script) throws IOException {
+    public UserData script(final URL script, final String... args) throws IOException {
         tag("script", script.toExternalForm());
         try {
-            return script(IO.readBytes(script));
+            return script(IO.slurp(script), args);
         } finally {
             tag("exit", "$?");
         }
     }
 
-    public UserData script(final File script) throws IOException {
+    public UserData script(final File script, final String... args) throws IOException {
         tag("script", script.getName());
         try {
-            return script(IO.readBytes(script));
+            return script(IO.slurp(script), args);
         } finally {
             tag("exit", "$?");
         }
     }
 
-    public UserData script(final String script) throws IOException {
-        return script(script.getBytes());
-    }
-
-    public UserData script(final byte[] script) throws IOException {
+    public UserData script(final String script, final String... args) throws IOException {
         out.print("\ncat <<'2dc013eefa7a33ad833c0eb36ba47428' | ");
 
-        int length = script.length;
-
-        if (script[script.length - 1] == '\n') {
-            length--;
-        }
-
-        // Use the interpreter of the script
-        if ('#' == script[0] && '!' == script[1]) {
-            out.write(script, 2, length - 2);
-        } else {
-            // Use Bash
-            out.print("bash -l\n");
-            out.write(script, 0, length);
-        }
+        out.print(toPipedExecutable(script, args));
 
         out.print("\n2dc013eefa7a33ad833c0eb36ba47428\n");
 
         return this;
+    }
+
+    public static String toPipedExecutable(String script, String... args) {
+
+        // Quote and join the args
+        String argsList = toArgsString(args);
+        if (argsList.length() != 0) {
+            argsList = " -s " + argsList;
+        }
+
+        if (script.startsWith("#!")) {
+
+            // chop off the '#!'
+            script = script.substring(2);
+
+            // No args to add?
+            if (argsList.length() == 0) {
+                return script;
+            }
+
+            // We have to add the args to the script contents
+
+            // Split off the shebang line from the script
+            final int i = script.indexOf('\n');
+            String shebang = script.substring(0, i);
+            script = script.substring(i);
+
+            // We only support adding args for bash and sh
+            if (!shebang.contains("/bash") && !shebang.contains("/sh")) {
+                throw new IllegalStateException("Can only add args to bash or sh scripts");
+            }
+
+            // No good, there is already a -s arg list
+            if (shebang.contains(" -s ")) {
+                throw new IllegalStateException(String.format("Script already contains a -s args list: '%s'", shebang));
+            }
+
+            return String.format("%s%s%s", shebang, argsList, script);
+        } else {
+            return String.format("bash -l%s\n%s", argsList, script);
+        }
+    }
+
+    public static String toArgsString(String... args) {
+        for (int i = 0; i < args.length; i++) {
+            args[i] = "\"" + args[i] + "\"";
+        }
+
+        return Join.join(" ", args);
     }
 
     public String toUserData() {
