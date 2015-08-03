@@ -38,40 +38,6 @@ public class Aws {
     private Aws() {
     }
 
-    public static void main(String[] args) {
-
-        final Operation operation = new Operation(new OperationId("a546d12a78d381e7723f3edad41913c9f75c9e8a"), client());
-
-        final Instance next = operation.getInstances().iterator().next();
-        Operations.getUserData(next);
-//        operation.getSpotInstanceRequests()
-//                .forEach(System.out::println);
-
-
-//        final List<Instance> instances = operation.getInstances(InstanceStateName.Running);
-//        instances.forEach(System.out::println);
-
-//        client().describeSpotInstanceRequests();
-//        client().describeSpotInstanceRequests(new DescribeSpotInstanceRequestsRequest().withSpotInstanceRequestIds("sir-02emmkv4"));
-
-//        client().createTags(new CreateTagsRequest()
-//                .withTags(new com.amazonaws.services.ec2.model.Tag("operation-id", "a546d12a78d381e7723f3edad41913c9f75c9e8a"))
-//                .withResources(instances.stream().map(Instance::getSpotInstanceRequestId).collect(Collectors.toList()))
-//        );
-//        client().describeInstances(new DescribeInstancesRequest());
-//        final DescribeInstancesResult instancesResult = client().describeInstances(new DescribeInstances().withTag("operation-id", null).getRequest());
-//
-//        final TerminateInstancesRequest terminateInstancesRequest = new TerminateInstancesRequest();
-//
-//        final List<Instance> instances = getInstances(instancesResult);
-//        for (final Instance instance : instances) {
-//            terminateInstancesRequest.withInstanceIds(instance.getInstanceId());
-//        }
-//        client().terminateInstances(terminateInstancesRequest);
-
-//        client().terminateInstances(new TerminateInstancesRequest().withInstanceIds("i-90b43b79"));
-    }
-
     public static AmazonEC2 client() {
         return ec2.get();
     }
