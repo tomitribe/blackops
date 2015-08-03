@@ -147,26 +147,6 @@ public class UserDataTest extends Assert {
     }
 
     @Test
-    public void testGetInstances() throws Exception {
-
-    }
-
-    @Test
-    public void testGetSpotInstanceRequets() throws Exception {
-
-    }
-
-    @Test
-    public void testGetPublicDnsNames() throws Exception {
-
-    }
-
-    @Test
-    public void testGetPrivateDnsNames() throws Exception {
-
-    }
-
-    @Test
     public void toPipedExecutable() throws Exception {
         {
             final String actual = UserData.toPipedExecutable("" +
