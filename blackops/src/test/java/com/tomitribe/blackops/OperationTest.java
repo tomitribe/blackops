@@ -372,11 +372,10 @@ public class OperationTest extends Assert {
     }
 
     @Test
-    @Ignore
     public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
 
-//        final AmazonEC2 amazonEC2 = MockEC2Client.fromJson("1437973924919-DescribeInstancesResult-3441359101519037860.json");
-        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), Aws.client());
+        final AmazonEC2 amazonEC2 = MockEC2Client.fromCurrentTestMethod();
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Instance> instances = operation.getInstances(Running);
         final Iterator<Instance> iterator = instances.iterator();
