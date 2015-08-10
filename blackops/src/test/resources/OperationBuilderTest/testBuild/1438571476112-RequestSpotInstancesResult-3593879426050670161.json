@@ -1,0 +1,167 @@
+{
+  "spotInstanceRequests" : [ {
+    "spotInstanceRequestId" : "sir-024z243a",
+    "spotPrice" : "0.020000",
+    "type" : "one-time",
+    "state" : "open",
+    "fault" : null,
+    "status" : {
+      "code" : "pending-evaluation",
+      "updateTime" : 1438571476000,
+      "message" : "Your Spot request has been submitted for review, and is pending evaluation."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : null,
+    "createTime" : 1438571475000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : null,
+    "launchedAvailabilityZone" : null
+  }, {
+    "spotInstanceRequestId" : "sir-0251ct2e",
+    "spotPrice" : "0.020000",
+    "type" : "one-time",
+    "state" : "open",
+    "fault" : null,
+    "status" : {
+      "code" : "pending-evaluation",
+      "updateTime" : 1438571476000,
+      "message" : "Your Spot request has been submitted for review, and is pending evaluation."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : null,
+    "createTime" : 1438571475000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : null,
+    "launchedAvailabilityZone" : null
+  }, {
+    "spotInstanceRequestId" : "sir-0253df5n",
+    "spotPrice" : "0.020000",
+    "type" : "one-time",
+    "state" : "open",
+    "fault" : null,
+    "status" : {
+      "code" : "pending-evaluation",
+      "updateTime" : 1438571476000,
+      "message" : "Your Spot request has been submitted for review, and is pending evaluation."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : null,
+    "createTime" : 1438571475000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : null,
+    "launchedAvailabilityZone" : null
+  }, {
+    "spotInstanceRequestId" : "sir-0254b6va",
+    "spotPrice" : "0.020000",
+    "type" : "one-time",
+    "state" : "open",
+    "fault" : null,
+    "status" : {
+      "code" : "pending-evaluation",
+      "updateTime" : 1438571476000,
+      "message" : "Your Spot request has been submitted for review, and is pending evaluation."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : null,
+    "createTime" : 1438571475000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : null,
+    "launchedAvailabilityZone" : null
+  } ]
+}

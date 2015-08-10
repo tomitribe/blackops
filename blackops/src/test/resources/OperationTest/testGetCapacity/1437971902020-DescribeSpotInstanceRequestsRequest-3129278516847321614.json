@@ -1,0 +1,17 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "spotInstanceRequestIds" : null,
+  "filters" : [ {
+    "name" : "tag:operation-id",
+    "values" : [ "op-xxxxxxxxxxxxx" ]
+  }, {
+    "name" : "state",
+    "values" : [ "open" ]
+  } ]
+}

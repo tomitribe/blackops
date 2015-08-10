@@ -1,0 +1,35 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "spotPrice" : "0.02",
+  "clientToken" : null,
+  "instanceCount" : 4,
+  "type" : "one-time",
+  "validFrom" : null,
+  "validUntil" : null,
+  "launchGroup" : null,
+  "availabilityZoneGroup" : "us-east-1c",
+  "launchSpecification" : {
+    "imageId" : "ami-5bf23530",
+    "keyName" : "tomitribe_dev",
+    "allSecurityGroups" : null,
+    "securityGroups" : [ "Ports 60000+10" ],
+    "userData" : "AdTA1Ebpld5SeiM3yjdAfZQjlmcS6ksF/uiZAUuHjyWkQ+fjoRWtuV+zHtf8Mud7W2Y6aXxq91hStngpGgmWeFRTrcfZ8kUKLrCxxZyAUE7xT7wBepfgUA6X0yHVQGGZ5r0xCL64iJUE4ZxQMN/xevmf2A9a/w01eUazVyp7iToulLuaCMmG9XFWnVz0zasDBC7ggPrD3KO9TLFP9Gqo/tGm8AS6WZ5KLjVCtj/090TELSpHjM+/eUgTynSctV/zg5jth0ULqA5pGizHpdhv0TAJ+9l2y7+67W9FM+/76q80iQ3aSYWqMKaaHPtfrORUIf93XwwLm+MKrZNEQ04aUqFA0XL4x4+7HoCFYgkIsiGElIATntr01OxlPRcZVAQq0QFXtNcHFZ4ROeRmUdjU7GxjHGvdG99oqU6+QQ7LRjYUxZuL3niYLYGV457O672Tv3b+vtLYUZkYwKqoLAj12q0OJAv1htyXyGSYYyAFJ4I9y8ywaQAnNnHgklD+u6Msf1EahqgsXwlsKGrgiESxgy1P+tm9y6NuFnbvaziWA0InsGcg/SdYHmZ88iSH4R4bzjjUTliz8EpWaUYuAFHS+O7BdQUbHUEntq5FdUlasSMDU3sQTwn2uC6zcLLaQW3inxZGO2mCoDNVRQqm3C9Za4CHRZGAwHh3P63JXMo2mNBAgucNjl0L2ApB99gGJQZ7vkTCsvFOCwUm3uRdVjnDXXNCnhQwFAn3SDjcpq9YEvGBkWIHBIr2FHsUG54VSXfEezsy+aRcT9l1l12Hfoxl0paWIrXpikAUbbPbe/uaLwcUOF58Vc54gChOJNcH3VebrkOjIZgTt6UqGNynW/q6/MnG8ocsZNOcvAwO6g2mkxk=",
+    "addressingType" : null,
+    "instanceType" : "m3.medium",
+    "placement" : null,
+    "kernelId" : null,
+    "ramdiskId" : null,
+    "blockDeviceMappings" : null,
+    "monitoringEnabled" : false,
+    "subnetId" : null,
+    "networkInterfaces" : null,
+    "iamInstanceProfile" : null,
+    "ebsOptimized" : null
+  }
+}

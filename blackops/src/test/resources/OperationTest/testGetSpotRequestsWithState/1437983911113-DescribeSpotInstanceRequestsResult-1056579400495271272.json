@@ -1,0 +1,47 @@
+{
+  "spotInstanceRequests" : [ {
+    "spotInstanceRequestId" : "sir-02enlfak",
+    "spotPrice" : "0.012000",
+    "type" : "one-time",
+    "state" : "cancelled",
+    "fault" : null,
+    "status" : {
+      "code" : "instance-terminated-by-user",
+      "updateTime" : 1437974040000,
+      "message" : "Spot Instance terminated due to user-initiated termination."
+    },
+    "validFrom" : null,
+    "validUntil" : null,
+    "launchGroup" : null,
+    "availabilityZoneGroup" : "us-east-1c",
+    "launchSpecification" : {
+      "imageId" : "ami-5bf23530",
+      "keyName" : "tomitribe_dev",
+      "allSecurityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "securityGroups" : [ "Ports 60000+10" ],
+      "userData" : null,
+      "addressingType" : null,
+      "instanceType" : "m3.medium",
+      "placement" : null,
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "blockDeviceMappings" : null,
+      "monitoringEnabled" : false,
+      "subnetId" : null,
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : null
+    },
+    "instanceId" : "i-d8159a31",
+    "createTime" : 1437919904000,
+    "productDescription" : "Linux/UNIX",
+    "tags" : [ {
+      "key" : "operation-id",
+      "value" : "996b6ab72504b272af10937bd805ad934455a3df"
+    } ],
+    "launchedAvailabilityZone" : "us-east-1b"
+  } ]
+}

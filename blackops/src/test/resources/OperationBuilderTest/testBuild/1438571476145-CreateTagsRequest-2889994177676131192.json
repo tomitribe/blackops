@@ -1,0 +1,17 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "resources" : [ "sir-024z243a", "sir-0251ct2e", "sir-0253df5n", "sir-0254b6va" ],
+  "tags" : [ {
+    "key" : "operation-id",
+    "value" : "op-zmabl4eodc66o"
+  }, {
+    "key" : "Name",
+    "value" : "OperationBuilderTest"
+  } ]
+}

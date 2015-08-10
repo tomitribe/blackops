@@ -1,0 +1,19 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "instanceIds" : null,
+  "filters" : [ {
+    "name" : "tag:operation-id",
+    "values" : [ "op-xxxxxxxxxxxxx" ]
+  }, {
+    "name" : "instance-state-name",
+    "values" : [ "running", "pending" ]
+  } ],
+  "nextToken" : null,
+  "maxResults" : null
+}

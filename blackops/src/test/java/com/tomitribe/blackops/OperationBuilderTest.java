@@ -16,17 +16,19 @@ import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import java.util.Iterator;
 import java.util.List;
+
+import static com.tomitribe.blackops.Assertions.assertSpotInstanceRequest;
 
 public class OperationBuilderTest extends Assert {
 
     @Test
-    @Ignore
     public void testBuild() throws Exception {
-        final String accessKey = "AKIAJZ4VDNQFF7757XMQ";
-        final String secretKey = "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";
+        final AmazonEC2 client = MockEC2Client.fromCurrentTestMethod();
 
-        final AmazonEC2 client = Aws.client();
+        final String accessKey = Aws.credentials.getAWSAccessKeyId();
+        final String secretKey = Aws.credentials.getAWSSecretKey();
         final OperationBuilder builder = new OperationBuilder("OperationBuilderTest", accessKey, secretKey, client);
 
         builder.operation().script("date > /tmp/foo.txt");
@@ -36,6 +38,12 @@ public class OperationBuilderTest extends Assert {
         final Operation operation = builder.build();
 
         final List<SpotInstanceRequest> list = operation.getSpotInstanceRequests();
+
+        final Iterator<SpotInstanceRequest> iterator = list.iterator();
+        assertSpotInstanceRequest("sir-024z243a", "open", null, iterator.next());
+        assertSpotInstanceRequest("sir-0251ct2e", "open", null, iterator.next());
+        assertSpotInstanceRequest("sir-0253df5n", "open", null, iterator.next());
+        assertSpotInstanceRequest("sir-0254b6va", "open", null, iterator.next());
 
     }
 }

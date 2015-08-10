@@ -9,9 +9,7 @@
  */
 package com.tomitribe.blackops;
 
-import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.AmazonEC2Client;
 import com.amazonaws.services.ec2.model.CreateTagsRequest;
 import com.amazonaws.services.ec2.model.DescribeInstancesResult;
 import com.amazonaws.services.ec2.model.Instance;
@@ -36,9 +34,7 @@ public class OperationBuilder {
     private final RequestSpotInstancesRequest request;
 
     public OperationBuilder(final String operationName) {
-        this(operationName, "AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn",
-                EC2ResponseLogger.wrap(new AmazonEC2Client(new BasicAWSCredentials(
-                        "AKIAJZ4VDNQFF7757XMQ", "7cMdI//R716nejxxD3eIQCsWaJVZT4upPC2FgbDn"))));
+        this(operationName, Aws.credentials.getAWSAccessKeyId(), Aws.credentials.getAWSSecretKey(), Aws.client());
     }
 
     public OperationBuilder(final String operationName, final String accessKey, final String secretKey, final AmazonEC2 client) {

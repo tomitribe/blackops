@@ -29,9 +29,10 @@ import java.util.stream.Stream;
 
 public class Aws {
 
+    public static final BasicAWSCredentials credentials = new BasicAWSCredentials("AKIAIOXCE42MYQIB2XYQ", "jwGIwvEGINy8t4wP2h4kCZiXOOUr/69uWvLyFNTi");
     private static final AtomicReference<AmazonEC2> ec2 = new AtomicReference<>(
             EC2ResponseLogger.wrap(
-                    new AmazonEC2Client(new BasicAWSCredentials("AKIAIOXCE42MYQIB2XYQ", "jwGIwvEGINy8t4wP2h4kCZiXOOUr/69uWvLyFNTi"))
+                    new AmazonEC2Client(credentials)
             )
     );
 

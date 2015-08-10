@@ -12,7 +12,9 @@ package com.tomitribe.blackops;
 import com.amazonaws.services.ec2.AmazonEC2;
 import org.junit.Assert;
 import org.tomitribe.util.IO;
+import org.tomitribe.util.reflect.StackTraceElements;
 
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
@@ -53,6 +55,7 @@ public class MockEC2Client {
     }
 
     private static void compare(final Object expected, final Object actual) {
+        Assert.assertEquals(expected.getClass(), actual.getClass());
         final String jsonA = normalize(Json.toString(expected));
         final String jsonB = normalize(Json.toString(actual));
         Assert.assertEquals(jsonA, jsonB);
@@ -80,6 +83,28 @@ public class MockEC2Client {
         return create(Stream.of(resources).map(MockEC2Client::load).toArray());
     }
 
+    public static AmazonEC2 fromCurrentTestMethod() {
+        try {
+            final StackTraceElement callingMethod = StackTraceElements.getCallingMethod();
+            final Class<?> clazz = StackTraceElements.asClass(callingMethod);
+
+            return fromTestMethod(clazz, callingMethod.getMethodName());
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+    public static AmazonEC2 fromTestMethod(final Class clazz, final String method) {
+        final File base = EC2ResponseLogger.getBase(clazz, method);
+
+        return create(Stream.of(base.listFiles())
+                .filter(File::isFile)
+                .filter(file -> file.getName().endsWith(".json"))
+                .sorted(File::compareTo)
+                .map(MockEC2Client::load)
+                .toArray());
+    }
+
     public static Object load(String name) {
         final ClassLoader classLoader = MockEC2Client.class.getClassLoader();
         try {
@@ -91,4 +116,16 @@ public class MockEC2Client {
             throw new IllegalStateException(e);
         }
     }
+
+    public static Object load(File file) {
+        final ClassLoader classLoader = MockEC2Client.class.getClassLoader();
+        try {
+            final String type = file.getName().split("-")[1];
+            final Class clazz = classLoader.loadClass("com.amazonaws.services.ec2.model." + type);
+            return Json.fromString(IO.slurp(file), clazz);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
 }

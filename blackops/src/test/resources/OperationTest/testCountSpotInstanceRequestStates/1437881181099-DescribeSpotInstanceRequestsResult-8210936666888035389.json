@@ -198,6 +198,14 @@
         "updateTime":"2015-07-20T01:29:34.000-0700"
       },
       "tags":[
+        {
+          "key":"operation-id",
+          "value":"20c401df6e75209b2bcbf6a1ec6949bd172f53d6"
+        },
+        {
+          "key":"Name",
+          "value":"orange.sh"
+        }
       ],
       "type":"one-time"
     },
@@ -278,6 +286,7 @@
     {
       "availabilityZoneGroup":"us-east-1c",
       "createTime":"2015-07-25T19:12:38.000-0700",
+      "instanceId":"i-90b43b79",
       "launchSpecification":{
         "allSecurityGroups":[
           {
@@ -297,14 +306,15 @@
           "Ports 60000+10"
         ]
       },
+      "launchedAvailabilityZone":"us-east-1b",
       "productDescription":"Linux/UNIX",
       "spotInstanceRequestId":"sir-02ehdb1r",
       "spotPrice":"0.012000",
-      "state":"open",
+      "state":"closed",
       "status":{
-        "code":"pending-evaluation",
-        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
-        "updateTime":"2015-07-25T19:12:38.000-0700"
+        "code":"instance-terminated-by-user",
+        "message":"Spot Instance terminated due to user-initiated termination.",
+        "updateTime":"2015-07-25T20:24:34.000-0700"
       },
       "tags":[
       ],
@@ -313,6 +323,7 @@
     {
       "availabilityZoneGroup":"us-east-1c",
       "createTime":"2015-07-25T19:12:38.000-0700",
+      "instanceId":"i-91b43b78",
       "launchSpecification":{
         "allSecurityGroups":[
           {
@@ -332,14 +343,15 @@
           "Ports 60000+10"
         ]
       },
+      "launchedAvailabilityZone":"us-east-1b",
       "productDescription":"Linux/UNIX",
       "spotInstanceRequestId":"sir-02ehmelq",
       "spotPrice":"0.012000",
-      "state":"open",
+      "state":"closed",
       "status":{
-        "code":"pending-evaluation",
-        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
-        "updateTime":"2015-07-25T19:12:38.000-0700"
+        "code":"instance-terminated-by-user",
+        "message":"Spot Instance terminated due to user-initiated termination.",
+        "updateTime":"2015-07-25T20:24:34.000-0700"
       },
       "tags":[
       ],
@@ -348,6 +360,7 @@
     {
       "availabilityZoneGroup":"us-east-1c",
       "createTime":"2015-07-25T19:12:38.000-0700",
+      "instanceId":"i-1eb33cf7",
       "launchSpecification":{
         "allSecurityGroups":[
           {
@@ -367,14 +380,15 @@
           "Ports 60000+10"
         ]
       },
+      "launchedAvailabilityZone":"us-east-1b",
       "productDescription":"Linux/UNIX",
       "spotInstanceRequestId":"sir-02elghja",
       "spotPrice":"0.012000",
-      "state":"open",
+      "state":"closed",
       "status":{
-        "code":"pending-evaluation",
-        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
-        "updateTime":"2015-07-25T19:12:38.000-0700"
+        "code":"instance-terminated-by-user",
+        "message":"Spot Instance terminated due to user-initiated termination.",
+        "updateTime":"2015-07-25T20:24:34.000-0700"
       },
       "tags":[
       ],
@@ -383,6 +397,43 @@
     {
       "availabilityZoneGroup":"us-east-1c",
       "createTime":"2015-07-25T19:12:38.000-0700",
+      "instanceId":"i-3bb03fd2",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "launchedAvailabilityZone":"us-east-1b",
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02enh0sr",
+      "spotPrice":"0.012000",
+      "state":"closed",
+      "status":{
+        "code":"instance-terminated-by-user",
+        "message":"Spot Instance terminated due to user-initiated termination.",
+        "updateTime":"2015-07-25T20:24:34.000-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"2015-07-26T07:11:43.000-0700",
       "launchSpecification":{
         "allSecurityGroups":[
           {
@@ -403,13 +454,83 @@
         ]
       },
       "productDescription":"Linux/UNIX",
-      "spotInstanceRequestId":"sir-02enh0sr",
+      "spotInstanceRequestId":"sir-02ejzb35",
       "spotPrice":"0.012000",
       "state":"open",
       "status":{
         "code":"pending-evaluation",
         "message":"Your Spot request has been submitted for review, and is pending evaluation.",
-        "updateTime":"2015-07-25T19:12:38.000-0700"
+        "updateTime":"2015-07-26T07:11:44.000-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"2015-07-26T07:11:43.000-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02ekm3qz",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"2015-07-26T07:11:44.000-0700"
+      },
+      "tags":[
+      ],
+      "type":"one-time"
+    },
+    {
+      "availabilityZoneGroup":"us-east-1c",
+      "createTime":"2015-07-26T07:11:43.000-0700",
+      "launchSpecification":{
+        "allSecurityGroups":[
+          {
+            "groupId":"sg-47cf452a",
+            "groupName":"Ports 60000+10"
+          }
+        ],
+        "blockDeviceMappings":[
+        ],
+        "imageId":"ami-5bf23530",
+        "instanceType":"m3.medium",
+        "keyName":"tomitribe_dev",
+        "monitoringEnabled":false,
+        "networkInterfaces":[
+        ],
+        "securityGroups":[
+          "Ports 60000+10"
+        ]
+      },
+      "productDescription":"Linux/UNIX",
+      "spotInstanceRequestId":"sir-02enlfak",
+      "spotPrice":"0.012000",
+      "state":"open",
+      "status":{
+        "code":"pending-evaluation",
+        "message":"Your Spot request has been submitted for review, and is pending evaluation.",
+        "updateTime":"2015-07-26T07:11:44.000-0700"
       },
       "tags":[
       ],
