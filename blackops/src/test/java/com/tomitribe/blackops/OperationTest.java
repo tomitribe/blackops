@@ -10,10 +10,7 @@
 package com.tomitribe.blackops;
 
 import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.model.Instance;
-import com.amazonaws.services.ec2.model.SpotInstanceRequest;
-import com.amazonaws.services.ec2.model.SpotInstanceState;
-import com.amazonaws.services.ec2.model.Tag;
+import com.amazonaws.services.ec2.model.*;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -28,6 +25,7 @@ import static com.amazonaws.services.ec2.model.InstanceStateName.Terminated;
 import static com.tomitribe.blackops.Assertions.assertInstance;
 import static com.tomitribe.blackops.Assertions.assertSpotInstanceRequest;
 import static com.tomitribe.blackops.Assertions.assertState;
+import static com.tomitribe.blackops.Assertions.assertTag;
 
 public class OperationTest extends Assert {
 
@@ -127,29 +125,16 @@ public class OperationTest extends Assert {
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
-        final List<Tag> tags = operation.getTags();
-
-        {
-            final Iterator<Tag> iterator = tags.iterator();
-            assertEquals("Name", iterator.next().getKey());
-            assertEquals("Name", iterator.next().getKey());
-            assertEquals("operation-id", iterator.next().getKey());
-            assertEquals("operation-id", iterator.next().getKey());
-            assertEquals("operation-id", iterator.next().getKey());
-            assertEquals("shutdown", iterator.next().getKey());
-            assertEquals("user.name", iterator.next().getKey());
-        }
-
-        {
-            final Iterator<Tag> iterator = tags.iterator();
-            assertEquals("20c401df6e75209b2bcbf6a1ec6949bd172f53d6", iterator.next().getValue());
-            assertEquals("null", iterator.next().getValue());
-            assertEquals("20c401df6e75209b2bcbf6a1ec6949bd172f53d6", iterator.next().getValue());
-            assertEquals("834a27d7cb74cc5e99068bd395bbe9d45a42e871", iterator.next().getValue());
-            assertEquals("816058206985f37d95f8b9f091dd35d78f048db5", iterator.next().getValue());
-            assertEquals("false", iterator.next().getValue());
-            assertEquals("dblevins", iterator.next().getValue());
-        }
+        final List<com.amazonaws.services.ec2.model.Tag> tags = operation.getTags();
+        final Iterator<com.amazonaws.services.ec2.model.Tag> iterator = tags.iterator();
+        assertTag("Name", "20c401df6e75209b2bcbf6a1ec6949bd172f53d6", iterator.next());
+        assertTag("Name", "null", iterator.next());
+        assertTag("operation-id", "20c401df6e75209b2bcbf6a1ec6949bd172f53d6", iterator.next());
+        assertTag("operation-id", "834a27d7cb74cc5e99068bd395bbe9d45a42e871", iterator.next());
+        assertTag("operation-id", "816058206985f37d95f8b9f091dd35d78f048db5", iterator.next());
+        assertTag("shutdown", "false", iterator.next());
+        assertTag("user.name", "dblevins", iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     @Test

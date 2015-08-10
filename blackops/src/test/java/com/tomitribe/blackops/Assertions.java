@@ -9,9 +9,7 @@
  */
 package com.tomitribe.blackops;
 
-import com.amazonaws.services.ec2.model.Filter;
-import com.amazonaws.services.ec2.model.Instance;
-import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.*;
 import org.junit.Assert;
 
 import java.util.Iterator;
@@ -46,6 +44,11 @@ public class Assertions {
         Assert.assertEquals(spotRequestId, instance.getSpotInstanceRequestId());
         Assert.assertEquals(state, instance.getState().getName());
         Assert.assertEquals(publicDns, instance.getPublicDnsName());
+    }
+
+    public static void assertTag(final String key, final String value, final com.amazonaws.services.ec2.model.Tag instance) {
+        Assert.assertEquals(key, instance.getKey());
+        Assert.assertEquals(value, instance.getValue());
     }
 
     public static void assertSpotInstanceRequest(String spotRequestInstanceId, String state, String instanceId, SpotInstanceRequest request) {
@@ -85,6 +88,11 @@ public class Assertions {
 
     public static void generateEnumAssertions(List<? extends Enum> ids) {
         ids.forEach(s -> System.out.printf("assertEquals(%s.%s, iterator.next());%n", s.getDeclaringClass().getSimpleName(), s.name()));
+        System.out.println("assertFalse(iterator.hasNext());");
+    }
+
+    public static void generateTagAssertions(List<com.amazonaws.services.ec2.model.Tag> tags) {
+        tags.stream().forEach(tag -> System.out.printf("assertTag(\"%s\", \"%s\", iterator.next());%n", tag.getKey(), tag.getValue()));
         System.out.println("assertFalse(iterator.hasNext());");
     }
 }
