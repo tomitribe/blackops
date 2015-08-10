@@ -9,7 +9,7 @@
   "instanceIds" : null,
   "filters" : [ {
     "name" : "tag:operation-id",
-    "values" : [ "op-xxxxxxxxxxxxx" ]
+    "values" : [ "op-xn8w64hsg3dmb" ]
   }, {
     "name" : "instance-state-name",
     "values" : [ "running" ]

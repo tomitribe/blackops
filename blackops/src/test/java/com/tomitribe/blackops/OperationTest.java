@@ -32,10 +32,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetInstances() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -75,10 +72,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetSpotInstanceRequests() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -158,10 +152,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetPublicDnsNames() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -184,10 +175,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetPrivateDnsNames() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -210,10 +198,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetTags() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -244,10 +229,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetInstanceIds() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -269,10 +251,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetSpotInstanceRequestIds() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -299,10 +278,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testCountInstanceStates() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -328,11 +304,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testCountSpotInstanceRequestStates() throws Exception {
-
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -387,11 +359,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetSpotRequestsWithState() throws IOException, ClassNotFoundException {
-
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -403,10 +371,7 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetInstancesRunning() throws IOException, ClassNotFoundException {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
@@ -419,11 +384,8 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetInstancesRunningAndTerminated() throws IOException, ClassNotFoundException {
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Instance> instances = operation.getInstances(Running, Terminated);
@@ -437,12 +399,9 @@ public class OperationTest extends Assert {
 
     @Test
     public void testGetCapacity() throws Exception {
-        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod()
-                .withFilter(MockData::maskUserData)
-                .withFilter(MockData::maskOperationId)
-                .build();
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
 
-        final Operation operation = new Operation(OperationId.generate(), amazonEC2);
+        final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final int capacity = operation.getCapacity();
         assertEquals(3, capacity);

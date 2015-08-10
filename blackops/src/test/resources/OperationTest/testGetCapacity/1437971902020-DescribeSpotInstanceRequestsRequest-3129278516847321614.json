@@ -9,7 +9,7 @@
   "spotInstanceRequestIds" : null,
   "filters" : [ {
     "name" : "tag:operation-id",
-    "values" : [ "op-xxxxxxxxxxxxx" ]
+    "values" : [ "op-xn8w64hsg3dmb" ]
   }, {
     "name" : "state",
     "values" : [ "open" ]
