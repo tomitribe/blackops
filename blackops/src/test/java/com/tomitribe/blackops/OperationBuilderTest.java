@@ -13,7 +13,6 @@ import com.amazonaws.services.ec2.AmazonEC2;
 import com.amazonaws.services.ec2.model.InstanceType;
 import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Iterator;
@@ -25,7 +24,10 @@ public class OperationBuilderTest extends Assert {
 
     @Test
     public void testBuild() throws Exception {
-        final AmazonEC2 client = MockEC2Client.fromCurrentTestMethod();
+        final AmazonEC2 client = AmazonEC2Builder.fromCurrentTestMethod()
+                .withFilter(MockData::maskUserData)
+                .withFilter(MockData::maskOperationId)
+                .build();
 
         final String accessKey = Aws.credentials.getAWSAccessKeyId();
         final String secretKey = Aws.credentials.getAWSSecretKey();

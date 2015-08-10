@@ -33,7 +33,7 @@ public class AwsTest extends Assert {
 
     @Test
     public void testGetInstances() throws Exception {
-        final DescribeInstancesResult o = (DescribeInstancesResult) MockEC2Client.load("1437880318802-DescribeInstancesResult-8872862273707674404.json");
+        final DescribeInstancesResult o = (DescribeInstancesResult) MockData.load("1437880318802-DescribeInstancesResult-8872862273707674404.json");
         final List<Instance> instances = Aws.getInstances(o);
         Assertions.generateInstanceAssert(instances);
 
