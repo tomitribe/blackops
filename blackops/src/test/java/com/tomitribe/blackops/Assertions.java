@@ -38,6 +38,7 @@ public class Assertions {
     public static void generateInstanceAssert(final List<Instance> instances) {
         instances.forEach(next -> System.out.printf("assertInstance(\"%s\", \"%s\", \"%s\", \"%s\", iterator.next());%n",
                 next.getInstanceId(), next.getSpotInstanceRequestId(), next.getState().getName(), next.getPublicDnsName()));
+        System.out.println("assertFalse(iterator.hasNext());");
     }
 
     public static void assertInstance(final String instanceId, final String spotRequestId, final String state, final String publicDns, final Instance instance) {
@@ -55,6 +56,7 @@ public class Assertions {
 
     public static void generateSpotInstanceRequestAssertions(List<SpotInstanceRequest> requests) {
         requests.forEach(next -> System.out.printf("assertSpotInstanceRequest(\"%s\",\"%s\",\"%s\", iterator.next());%n", next.getSpotInstanceRequestId(), next.getState(), next.getInstanceId()));
+        System.out.println("assertFalse(iterator.hasNext());");
     }
 
     public static void assertState(String name, int count, Map.Entry<String, State> entry) {
@@ -73,6 +75,7 @@ public class Assertions {
 
     public static void generateStateAsserts(Map<String, State> states) {
         states.entrySet().forEach(entry -> System.out.printf("assertState(\"%s\", %s, iterator.next());%n", entry.getKey(), entry.getValue().getCount()));
+        System.out.println("assertFalse(iterator.hasNext());");
     }
 
     public static void generateStringAssertions(List<String> ids) {

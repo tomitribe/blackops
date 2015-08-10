@@ -27,6 +27,7 @@ import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
 import static com.amazonaws.services.ec2.model.InstanceStateName.Terminated;
 import static com.tomitribe.blackops.Assertions.assertInstance;
 import static com.tomitribe.blackops.Assertions.assertSpotInstanceRequest;
+import static com.tomitribe.blackops.Assertions.assertState;
 
 public class OperationTest extends Assert {
 
@@ -37,37 +38,18 @@ public class OperationTest extends Assert {
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<Instance> instances = operation.getInstances();
-
-
-        { // check instance ids
-            final Iterator<Instance> iterator = instances.iterator();
-            assertEquals("i-90b43b79", iterator.next().getInstanceId());
-            assertEquals("i-3bb03fd2", iterator.next().getInstanceId());
-            assertEquals("i-91b43b78", iterator.next().getInstanceId());
-            assertEquals("i-1eb33cf7", iterator.next().getInstanceId());
-            assertEquals("i-eccc4d05", iterator.next().getInstanceId());
-            assertEquals("i-efcc4d06", iterator.next().getInstanceId());
-            assertEquals("i-42cc4dab", iterator.next().getInstanceId());
-            assertEquals("i-32ce4fdb", iterator.next().getInstanceId());
-            assertEquals("i-bbce4f52", iterator.next().getInstanceId());
-            assertEquals("i-83cf4e6a", iterator.next().getInstanceId());
-        }
-
-        { // check instance ids
-            final Iterator<Instance> iterator = instances.iterator();
-            assertEquals("terminated", iterator.next().getState().getName());
-            assertEquals("terminated", iterator.next().getState().getName());
-            assertEquals("terminated", iterator.next().getState().getName());
-            assertEquals("terminated", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-            assertEquals("running", iterator.next().getState().getName());
-        }
-
-//        instances.forEach(instance -> System.out.printf("assertEquals(\"%s\", iterator.next().getState().getName());%n", instance.getState().getName()));
+        final Iterator<Instance> iterator = instances.iterator();
+        assertInstance("i-90b43b79", "sir-02ehdb1r", "terminated", "", iterator.next());
+        assertInstance("i-3bb03fd2", "sir-02enh0sr", "terminated", "", iterator.next());
+        assertInstance("i-91b43b78", "sir-02ehmelq", "terminated", "", iterator.next());
+        assertInstance("i-1eb33cf7", "sir-02elghja", "terminated", "", iterator.next());
+        assertInstance("i-eccc4d05", "sir-02eh6zfl", "running", "ec2-54-237-110-193.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-efcc4d06", "sir-02egthbr", "running", "ec2-54-90-58-137.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-42cc4dab", "sir-02ep34v9", "running", "ec2-54-237-26-16.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-32ce4fdb", "sir-02emmkv4", "running", "ec2-54-237-8-49.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-bbce4f52", "sir-02ep7rs7", "running", "ec2-54-237-69-184.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-83cf4e6a", "sir-02eldnx3", "running", "ec2-54-157-138-7.compute-1.amazonaws.com", iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -77,77 +59,22 @@ public class OperationTest extends Assert {
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final List<SpotInstanceRequest> spotInstanceRequests = operation.getSpotInstanceRequests();
-
-        {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
-            assertEquals("sir-02efzkef", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ep34v9", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ep7rs7", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02egthbr", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02eh6zfl", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02eldnx3", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02emmkv4", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ehdb1r", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ehmelq", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02elghja", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02enh0sr", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ejzb35", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02ekm3qz", iterator.next().getSpotInstanceRequestId());
-            assertEquals("sir-02enlfak", iterator.next().getSpotInstanceRequestId());
-        }
-        {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("active", iterator.next().getState());
-            assertEquals("closed", iterator.next().getState());
-            assertEquals("closed", iterator.next().getState());
-            assertEquals("closed", iterator.next().getState());
-            assertEquals("closed", iterator.next().getState());
-            assertEquals("open", iterator.next().getState());
-            assertEquals("open", iterator.next().getState());
-            assertEquals("open", iterator.next().getState());
-        }
-
-        {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
-            assertEquals("i-7d0c83d5", iterator.next().getInstanceId());
-            assertEquals("i-42cc4dab", iterator.next().getInstanceId());
-            assertEquals("i-bbce4f52", iterator.next().getInstanceId());
-            assertEquals("i-efcc4d06", iterator.next().getInstanceId());
-            assertEquals("i-eccc4d05", iterator.next().getInstanceId());
-            assertEquals("i-83cf4e6a", iterator.next().getInstanceId());
-            assertEquals("i-32ce4fdb", iterator.next().getInstanceId());
-            assertEquals("i-90b43b79", iterator.next().getInstanceId());
-            assertEquals("i-91b43b78", iterator.next().getInstanceId());
-            assertEquals("i-1eb33cf7", iterator.next().getInstanceId());
-            assertEquals("i-3bb03fd2", iterator.next().getInstanceId());
-            assertEquals(null, iterator.next().getInstanceId());
-            assertEquals(null, iterator.next().getInstanceId());
-            assertEquals(null, iterator.next().getInstanceId());
-        }
-
-        {
-            final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
-            assertEquals(1, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(2, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-            assertEquals(0, iterator.next().getTags().size());
-        }
+        final Iterator<SpotInstanceRequest> iterator = spotInstanceRequests.iterator();
+        assertSpotInstanceRequest("sir-02efzkef", "active", "i-7d0c83d5", iterator.next());
+        assertSpotInstanceRequest("sir-02ep34v9", "active", "i-42cc4dab", iterator.next());
+        assertSpotInstanceRequest("sir-02ep7rs7", "active", "i-bbce4f52", iterator.next());
+        assertSpotInstanceRequest("sir-02egthbr", "active", "i-efcc4d06", iterator.next());
+        assertSpotInstanceRequest("sir-02eh6zfl", "active", "i-eccc4d05", iterator.next());
+        assertSpotInstanceRequest("sir-02eldnx3", "active", "i-83cf4e6a", iterator.next());
+        assertSpotInstanceRequest("sir-02emmkv4", "active", "i-32ce4fdb", iterator.next());
+        assertSpotInstanceRequest("sir-02ehdb1r", "closed", "i-90b43b79", iterator.next());
+        assertSpotInstanceRequest("sir-02ehmelq", "closed", "i-91b43b78", iterator.next());
+        assertSpotInstanceRequest("sir-02elghja", "closed", "i-1eb33cf7", iterator.next());
+        assertSpotInstanceRequest("sir-02enh0sr", "closed", "i-3bb03fd2", iterator.next());
+        assertSpotInstanceRequest("sir-02ejzb35", "open", null, iterator.next());
+        assertSpotInstanceRequest("sir-02ekm3qz", "open", null, iterator.next());
+        assertSpotInstanceRequest("sir-02enlfak", "open", null, iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -169,8 +96,7 @@ public class OperationTest extends Assert {
         assertEquals("ec2-54-237-8-49.compute-1.amazonaws.com", iterator.next());
         assertEquals("ec2-54-237-69-184.compute-1.amazonaws.com", iterator.next());
         assertEquals("ec2-54-157-138-7.compute-1.amazonaws.com", iterator.next());
-
-//        publicDnsNames.forEach(next -> System.out.printf("assertEquals(\"%s\", iterator.next());%n", next));
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -192,8 +118,7 @@ public class OperationTest extends Assert {
         assertEquals("ip-10-7-181-228.ec2.internal", iterator.next());
         assertEquals("ip-10-203-203-46.ec2.internal", iterator.next());
         assertEquals("ip-10-109-180-253.ec2.internal", iterator.next());
-
-//        privateDnsNames.forEach(next -> System.out.printf("assertEquals(\"%s\", iterator.next());%n", next));
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -245,8 +170,7 @@ public class OperationTest extends Assert {
         assertEquals("i-32ce4fdb", iterator.next());
         assertEquals("i-bbce4f52", iterator.next());
         assertEquals("i-83cf4e6a", iterator.next());
-
-//        instanceIds.forEach(next -> System.out.printf("assertEquals(\"%s\", iterator.next());%n", next));
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -271,8 +195,7 @@ public class OperationTest extends Assert {
         assertEquals("sir-02ejzb35", iterator.next());
         assertEquals("sir-02ekm3qz", iterator.next());
         assertEquals("sir-02enlfak", iterator.next());
-
-//        spotInstanceRequestIds.forEach(next -> System.out.printf("assertEquals(\"%s\", iterator.next());%n", next));
+        assertFalse(iterator.hasNext());
     }
 
 
@@ -285,21 +208,9 @@ public class OperationTest extends Assert {
         final Map<String, State> states = operation.countInstanceStates();
 
         final Iterator<Map.Entry<String, State>> iterator = states.entrySet().iterator();
-
-        {
-            final Map.Entry<String, State> entry = iterator.next();
-            assertEquals("running", entry.getKey());
-            assertEquals("running", entry.getValue().getName());
-            assertEquals(6, entry.getValue().getCount());
-            assertEquals("running (6)", entry.getValue().toString());
-        }
-        {
-            final Map.Entry<String, State> entry = iterator.next();
-            assertEquals("terminated", entry.getKey());
-            assertEquals("terminated", entry.getValue().getName());
-            assertEquals(4, entry.getValue().getCount());
-            assertEquals("terminated (4)", entry.getValue().toString());
-        }
+        assertState("running", 6, iterator.next());
+        assertState("terminated", 4, iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -309,30 +220,12 @@ public class OperationTest extends Assert {
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
         final Map<String, State> states = operation.countSpotInstanceRequestStates();
+
         final Iterator<Map.Entry<String, State>> iterator = states.entrySet().iterator();
-
-        {
-            final Map.Entry<String, State> entry = iterator.next();
-            assertEquals("active", entry.getKey());
-            assertEquals("active", entry.getValue().getName());
-            assertEquals(7, entry.getValue().getCount());
-            assertEquals("active (7)", entry.getValue().toString());
-        }
-        {
-            final Map.Entry<String, State> entry = iterator.next();
-            assertEquals("closed", entry.getKey());
-            assertEquals("closed", entry.getValue().getName());
-            assertEquals(4, entry.getValue().getCount());
-            assertEquals("closed (4)", entry.getValue().toString());
-        }
-        {
-            final Map.Entry<String, State> entry = iterator.next();
-            assertEquals("open", entry.getKey());
-            assertEquals("open", entry.getValue().getName());
-            assertEquals(3, entry.getValue().getCount());
-            assertEquals("open (3)", entry.getValue().toString());
-        }
-
+        assertState("active", 7, iterator.next());
+        assertState("closed", 4, iterator.next());
+        assertState("open", 3, iterator.next());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -379,7 +272,7 @@ public class OperationTest extends Assert {
         final Iterator<Instance> iterator = instances.iterator();
         assertInstance("i-63159a8a", "sir-02ekm3qz", "running", "ec2-54-237-127-17.compute-1.amazonaws.com", iterator.next());
         assertInstance("i-22159acb", "sir-02ejzb35", "running", "ec2-54-237-122-168.compute-1.amazonaws.com", iterator.next());
-        assertEquals(2, instances.size());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
@@ -394,7 +287,7 @@ public class OperationTest extends Assert {
         assertInstance("i-63159a8a", "sir-02ekm3qz", "running", "ec2-54-237-127-17.compute-1.amazonaws.com", iterator.next());
         assertInstance("i-22159acb", "sir-02ejzb35", "running", "ec2-54-237-122-168.compute-1.amazonaws.com", iterator.next());
         assertInstance("i-d8159a31", "sir-02enlfak", "terminated", "", iterator.next());
-        assertEquals(3, instances.size());
+        assertFalse(iterator.hasNext());
     }
 
     @Test
