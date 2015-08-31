@@ -21,7 +21,7 @@ public class Loader implements Commands.Loader {
         return Arrays.asList(
                 Instances.class,
                 Operation.class,
-                Main.class
+                Launch.class
         ).iterator();
     }
 }

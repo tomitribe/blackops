@@ -56,7 +56,7 @@ public class Operation {
         };
     }
 
-    @Command
+//    @Command
     public StreamingOutput expand(final OperationId operationId, final int to) {
         final List<Instance> instances = Operations.getInstances(operationId);
 
