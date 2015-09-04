@@ -24,15 +24,17 @@ public class Await {
     private Await() {
     }
 
-    public static <T> T check(final Supplier<T> supplier) {
+    public static <T> T check(final Supplier<T> supplier) throws TimeoutException {
         return check(supplier, 0, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period, final TimeUnit unit) {
+    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period,
+                              final TimeUnit unit) throws TimeoutException {
         return check(supplier, initialDelay, period, unit, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period, final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) {
+    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period,
+                              final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) throws TimeoutException {
         final Runnable command = () -> {
             final T value = supplier.get();
             if (value != null) {
@@ -43,7 +45,8 @@ public class Await {
         return check(command, initialDelay, period, unit, timeout, timeoutUnit);
     }
 
-    public static <T> T check(final Runnable command, final int initialDelay, final int period, final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) {
+    public static <T> T check(final Runnable command, final int initialDelay, final int period,
+                              final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) throws TimeoutException {
         final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         try {
 
@@ -70,10 +73,6 @@ public class Await {
 
                 throw (RuntimeException) cause;
 
-            } catch (TimeoutException e) {
-
-                throw new IllegalStateException(e);
-
             }
         } finally {
             executorService.shutdown();
@@ -82,12 +81,12 @@ public class Await {
         throw new IllegalStateException();
     }
 
-    public static void await(final PrintStream out, final Predicate<Map<String, State>> predicate, final Supplier<Map<String, State>> supplier) {
+    public static void await(final PrintStream out, final Predicate<Map<String, State>> predicate, final Supplier<Map<String, State>> supplier) throws TimeoutException {
         await(out, predicate, supplier, 0, 3, TimeUnit.SECONDS);
     }
 
     public static void await(final PrintStream out, final Predicate<Map<String, State>> predicate, final Supplier<Map<String, State>> supplier,
-                             final int initialDelay, final int period, final TimeUnit unit) {
+                             final int initialDelay, final int period, final TimeUnit unit) throws TimeoutException {
 
         final long start = System.currentTimeMillis();
 

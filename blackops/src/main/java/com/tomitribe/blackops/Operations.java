@@ -24,6 +24,7 @@ import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 public enum Operations {
@@ -45,7 +46,7 @@ public enum Operations {
         Aws.client().terminateInstances(terminateInstancesRequest);
     }
 
-    public static void awaitFulfillment(final PrintStream out) {
+    public static void awaitFulfillment(final PrintStream out) throws TimeoutException {
         final DescribeSpotInstanceRequestsRequest describeSpotInstanceRequestsRequest = new DescribeSpotInstanceRequestsRequest();
         final DescribeSpotInstanceRequestsResult result = Aws.client().describeSpotInstanceRequests(describeSpotInstanceRequestsRequest);
 
@@ -57,7 +58,7 @@ public enum Operations {
      *
      * The wait condition is considered met if none of the spot instances are in the "open" state
      */
-    public static void awaitFulfillment(final PrintStream out, final List<SpotInstanceRequest> needed) {
+    public static void awaitFulfillment(final PrintStream out, final List<SpotInstanceRequest> needed) throws TimeoutException {
         Await.await(out, states -> !states.containsKey("open"), () -> {
             final List<String> requestIds = needed.stream().map(SpotInstanceRequest::getSpotInstanceRequestId).collect(Collectors.toList());
 

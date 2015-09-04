@@ -21,6 +21,7 @@ import com.amazonaws.services.ec2.model.SpotInstanceRequest;
 import com.amazonaws.services.ec2.model.Tag;
 
 import java.util.List;
+import java.util.concurrent.TimeoutException;
 import java.util.stream.Collectors;
 
 /**
@@ -119,7 +120,7 @@ public class OperationBuilder {
                     .collect(Collectors.toList());
         }
 
-        public List<Instance> awaitInstances() {
+        public List<Instance> awaitInstances() throws TimeoutException {
 
             return Await.check(() -> {
                 final DescribeInstancesResult result = client.describeInstances(

@@ -23,6 +23,7 @@ import org.tomitribe.util.Join;
 import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeoutException;
 
 @Command
 public class Operation {
@@ -74,7 +75,11 @@ public class Operation {
     public static StreamingOutput awaitFulfillment(final RequestSpotInstancesResult result) {
         return os -> {
             final PrintStream stream = new PrintStream(os);
-            Operations.awaitFulfillment(stream, result.getSpotInstanceRequests());
+            try {
+                Operations.awaitFulfillment(stream, result.getSpotInstanceRequests());
+            } catch (TimeoutException e) {
+                throw new IllegalStateException(e);
+            }
         };
     }
 }
