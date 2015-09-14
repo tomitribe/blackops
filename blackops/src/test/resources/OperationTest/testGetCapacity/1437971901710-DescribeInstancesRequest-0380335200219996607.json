@@ -1,19 +1,26 @@
 {
-
-  "requestClientOptions" : {
-    "readLimit" : 131073
+  "requestClientOptions": {
+    "readLimit": 131073
   },
-  "requestMetricCollector" : null,
-  "credentials" : null,
-  "customRequestHeaders" : null,
-  "instanceIds" : null,
-  "filters" : [ {
-    "name" : "tag:operation-id",
-    "values" : [ "op-xn8w64hsg3dmb" ]
-  }, {
-    "name" : "instance-state-name",
-    "values" : [ "running", "pending" ]
-  } ],
-  "nextToken" : null,
-  "maxResults" : null
+  "requestMetricCollector": null,
+  "credentials": null,
+  "customRequestHeaders": null,
+  "instanceIds": null,
+  "filters": [
+    {
+      "name": "tag:operation-id",
+      "values": [
+        "op-xn8w64hsg3dmb"
+      ]
+    },
+    {
+      "name": "instance-state-name",
+      "values": [
+        "running",
+        "pending"
+      ]
+    }
+  ],
+  "nextToken": null,
+  "maxResults": null
 }
