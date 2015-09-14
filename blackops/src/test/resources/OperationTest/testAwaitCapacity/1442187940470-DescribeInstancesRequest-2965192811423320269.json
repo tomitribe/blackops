@@ -1,0 +1,16 @@
+{
+
+  "requestClientOptions" : {
+    "readLimit" : 131073
+  },
+  "requestMetricCollector" : null,
+  "credentials" : null,
+  "customRequestHeaders" : null,
+  "instanceIds" : null,
+  "filters" : [ {
+    "name" : "tag:operation-id",
+    "values" : [ "op-gere5lbkoguy6" ]
+  } ],
+  "nextToken" : null,
+  "maxResults" : null
+}

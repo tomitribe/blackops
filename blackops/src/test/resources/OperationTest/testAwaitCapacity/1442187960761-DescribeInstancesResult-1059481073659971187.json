@@ -1,0 +1,235 @@
+{
+  "reservations" : [ {
+    "reservationId" : "r-f919b310",
+    "ownerId" : "588134240945",
+    "requesterId" : "854251627541",
+    "groups" : [ {
+      "groupName" : "Ports 60000+10",
+      "groupId" : "sg-47cf452a"
+    } ],
+    "groupNames" : [ "Ports 60000+10" ],
+    "instances" : [ {
+      "instanceId" : "i-29463cc0",
+      "imageId" : "ami-5bf23530",
+      "state" : {
+        "code" : 16,
+        "name" : "running"
+      },
+      "privateDnsName" : "ip-10-146-173-190.ec2.internal",
+      "publicDnsName" : "ec2-54-144-136-64.compute-1.amazonaws.com",
+      "stateTransitionReason" : "",
+      "keyName" : "tomitribe_dev",
+      "amiLaunchIndex" : 0,
+      "productCodes" : null,
+      "instanceType" : "m3.medium",
+      "launchTime" : 1442187801000,
+      "placement" : {
+        "availabilityZone" : "us-east-1b",
+        "groupName" : "",
+        "tenancy" : "default"
+      },
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "platform" : null,
+      "monitoring" : {
+        "state" : "disabled"
+      },
+      "subnetId" : null,
+      "vpcId" : null,
+      "privateIpAddress" : "10.146.173.190",
+      "publicIpAddress" : "54.144.136.64",
+      "stateReason" : null,
+      "architecture" : "x86_64",
+      "rootDeviceType" : "ebs",
+      "rootDeviceName" : "/dev/xvda",
+      "blockDeviceMappings" : [ {
+        "deviceName" : "/dev/xvda",
+        "ebs" : {
+          "volumeId" : "vol-2918f2e1",
+          "status" : "attached",
+          "attachTime" : 1442187804000,
+          "deleteOnTermination" : true
+        }
+      } ],
+      "virtualizationType" : "hvm",
+      "instanceLifecycle" : "spot",
+      "spotInstanceRequestId" : "sir-02ed0mef",
+      "clientToken" : "cc344532-43ad-4c13-9ed7-e7fc88650f94",
+      "tags" : [ {
+        "key" : "Name",
+        "value" : "AwaitCapacity Test"
+      }, {
+        "key" : "shutdown",
+        "value" : "false"
+      }, {
+        "key" : "operation-id",
+        "value" : "op-gere5lbkoguy6"
+      } ],
+      "securityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "sourceDestCheck" : null,
+      "hypervisor" : "xen",
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : false,
+      "sriovNetSupport" : null
+    } ]
+  }, {
+    "reservationId" : "r-7218b29b",
+    "ownerId" : "588134240945",
+    "requesterId" : "854251627541",
+    "groups" : [ {
+      "groupName" : "Ports 60000+10",
+      "groupId" : "sg-47cf452a"
+    } ],
+    "groupNames" : [ "Ports 60000+10" ],
+    "instances" : [ {
+      "instanceId" : "i-1c463cf5",
+      "imageId" : "ami-5bf23530",
+      "state" : {
+        "code" : 16,
+        "name" : "running"
+      },
+      "privateDnsName" : "ip-10-11-193-43.ec2.internal",
+      "publicDnsName" : "ec2-54-90-15-210.compute-1.amazonaws.com",
+      "stateTransitionReason" : "",
+      "keyName" : "tomitribe_dev",
+      "amiLaunchIndex" : 0,
+      "productCodes" : null,
+      "instanceType" : "m3.medium",
+      "launchTime" : 1442187801000,
+      "placement" : {
+        "availabilityZone" : "us-east-1b",
+        "groupName" : "",
+        "tenancy" : "default"
+      },
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "platform" : null,
+      "monitoring" : {
+        "state" : "disabled"
+      },
+      "subnetId" : null,
+      "vpcId" : null,
+      "privateIpAddress" : "10.11.193.43",
+      "publicIpAddress" : "54.90.15.210",
+      "stateReason" : null,
+      "architecture" : "x86_64",
+      "rootDeviceType" : "ebs",
+      "rootDeviceName" : "/dev/xvda",
+      "blockDeviceMappings" : [ {
+        "deviceName" : "/dev/xvda",
+        "ebs" : {
+          "volumeId" : "vol-6c18f2a4",
+          "status" : "attached",
+          "attachTime" : 1442187803000,
+          "deleteOnTermination" : true
+        }
+      } ],
+      "virtualizationType" : "hvm",
+      "instanceLifecycle" : "spot",
+      "spotInstanceRequestId" : "sir-02e7ljm2",
+      "clientToken" : "254a1804-9856-49ba-878f-bd2cb05b260b",
+      "tags" : [ {
+        "key" : "shutdown",
+        "value" : "false"
+      }, {
+        "key" : "Name",
+        "value" : "AwaitCapacity Test"
+      }, {
+        "key" : "operation-id",
+        "value" : "op-gere5lbkoguy6"
+      } ],
+      "securityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "sourceDestCheck" : null,
+      "hypervisor" : "xen",
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : false,
+      "sriovNetSupport" : null
+    } ]
+  }, {
+    "reservationId" : "r-c319b32a",
+    "ownerId" : "588134240945",
+    "requesterId" : "854251627541",
+    "groups" : [ {
+      "groupName" : "Ports 60000+10",
+      "groupId" : "sg-47cf452a"
+    } ],
+    "groupNames" : [ "Ports 60000+10" ],
+    "instances" : [ {
+      "instanceId" : "i-82463c6b",
+      "imageId" : "ami-5bf23530",
+      "state" : {
+        "code" : 16,
+        "name" : "running"
+      },
+      "privateDnsName" : "ip-10-109-189-81.ec2.internal",
+      "publicDnsName" : "ec2-54-146-77-143.compute-1.amazonaws.com",
+      "stateTransitionReason" : "",
+      "keyName" : "tomitribe_dev",
+      "amiLaunchIndex" : 0,
+      "productCodes" : null,
+      "instanceType" : "m3.medium",
+      "launchTime" : 1442187801000,
+      "placement" : {
+        "availabilityZone" : "us-east-1b",
+        "groupName" : "",
+        "tenancy" : "default"
+      },
+      "kernelId" : null,
+      "ramdiskId" : null,
+      "platform" : null,
+      "monitoring" : {
+        "state" : "disabled"
+      },
+      "subnetId" : null,
+      "vpcId" : null,
+      "privateIpAddress" : "10.109.189.81",
+      "publicIpAddress" : "54.146.77.143",
+      "stateReason" : null,
+      "architecture" : "x86_64",
+      "rootDeviceType" : "ebs",
+      "rootDeviceName" : "/dev/xvda",
+      "blockDeviceMappings" : [ {
+        "deviceName" : "/dev/xvda",
+        "ebs" : {
+          "volumeId" : "vol-4018f288",
+          "status" : "attached",
+          "attachTime" : 1442187804000,
+          "deleteOnTermination" : true
+        }
+      } ],
+      "virtualizationType" : "hvm",
+      "instanceLifecycle" : "spot",
+      "spotInstanceRequestId" : "sir-02eagg0n",
+      "clientToken" : "4b10b74a-eaef-42bf-8655-ea0685d9fdbe",
+      "tags" : [ {
+        "key" : "operation-id",
+        "value" : "op-gere5lbkoguy6"
+      }, {
+        "key" : "shutdown",
+        "value" : "false"
+      }, {
+        "key" : "Name",
+        "value" : "AwaitCapacity Test"
+      } ],
+      "securityGroups" : [ {
+        "groupName" : "Ports 60000+10",
+        "groupId" : "sg-47cf452a"
+      } ],
+      "sourceDestCheck" : null,
+      "hypervisor" : "xen",
+      "networkInterfaces" : null,
+      "iamInstanceProfile" : null,
+      "ebsOptimized" : false,
+      "sriovNetSupport" : null
+    } ]
+  } ],
+  "nextToken" : null
+}
