@@ -44,7 +44,7 @@ public class EC2ResponseLogger {
         if (object == null) return null;
 
         final File file = File.createTempFile(System.currentTimeMillis() + "-" + object.getClass().getSimpleName() + "-", ".json");
-        System.out.println(file.getAbsolutePath());
+//        System.out.println(file.getAbsolutePath());
         IO.copy(IO.read(Json.toString(object)), file);
 
         // If test logging enabled, keep a copy

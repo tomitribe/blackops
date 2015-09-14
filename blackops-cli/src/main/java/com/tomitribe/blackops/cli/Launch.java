@@ -16,6 +16,7 @@ import com.tomitribe.blackops.Operations;
 import org.tomitribe.crest.api.Command;
 import org.tomitribe.crest.api.Default;
 import org.tomitribe.crest.api.Option;
+import org.tomitribe.crest.api.Required;
 import org.tomitribe.crest.api.StreamingOutput;
 import org.tomitribe.util.editor.AbstractConverter;
 import org.tomitribe.util.editor.Editors;
@@ -41,7 +42,7 @@ public class Launch {
 
     @Command
     public static StreamingOutput command(@Option("quiet") boolean quiet,
-                                          @Option("name") String name,
+                                          @Required @Option("name") String name,
                                           @Option("shutdown") @Default("false") final boolean shutdown,
                                           @Option("key") @Default("tomitribe_dev") final String keyName,
                                           @Option("security-group") @Default("Ports 60000+10") final String[] securityGroups,
@@ -65,7 +66,7 @@ public class Launch {
 
     @Command
     public static StreamingOutput script(@Option("quiet") boolean quiet,
-                                         @Option("name") String name,
+                                         @Required @Option("name") String name,
                                          @Option("shutdown") @Default("false") final boolean shutdown,
                                          @Option("key-name") @Default("tomitribe_dev") final String keyName,
                                          @Option("security-group") @Default("Ports 60000+10") final String[] securityGroups,

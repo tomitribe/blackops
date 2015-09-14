@@ -89,6 +89,10 @@ public class AmazonEC2Builder {
 
         @Override
         public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
+            if (method.getDeclaringClass().equals(Object.class)) {
+                return method.invoke(this, args);
+            }
+
             if (args != null && args.length == 1) {
                 compare(iterator.next(), args[0]);
             }

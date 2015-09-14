@@ -28,13 +28,13 @@ public class Await {
         return check(supplier, 0, 3, TimeUnit.SECONDS, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period,
+    public static <T> T check(final Supplier<T> supplier, final long initialDelay, final long period,
                               final TimeUnit unit) throws TimeoutException {
         return check(supplier, initialDelay, period, unit, Integer.MAX_VALUE, TimeUnit.DAYS);
     }
 
-    public static <T> T check(final Supplier<T> supplier, final int initialDelay, final int period,
-                              final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) throws TimeoutException {
+    public static <T> T check(final Supplier<T> supplier, final long initialDelay, final long period,
+                              final TimeUnit unit, final long timeout, final TimeUnit timeoutUnit) throws TimeoutException {
         final Runnable command = () -> {
             final T value = supplier.get();
             if (value != null) {
@@ -45,8 +45,8 @@ public class Await {
         return check(command, initialDelay, period, unit, timeout, timeoutUnit);
     }
 
-    public static <T> T check(final Runnable command, final int initialDelay, final int period,
-                              final TimeUnit unit, final int timeout, final TimeUnit timeoutUnit) throws TimeoutException {
+    public static <T> T check(final Runnable command, final long initialDelay, final long period,
+                              final TimeUnit unit, final long timeout, final TimeUnit timeoutUnit) throws TimeoutException {
         final ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         try {
 
@@ -71,7 +71,13 @@ public class Await {
                     return (T) completeException.getObject();
                 }
 
-                throw (RuntimeException) cause;
+                if (cause instanceof Error) {
+                    throw (Error) cause;
+                } else if (cause instanceof RuntimeException) {
+                    throw (RuntimeException) cause;
+                } else {
+                    throw new IllegalStateException(cause);
+                }
 
             }
         } finally {

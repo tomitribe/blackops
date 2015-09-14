@@ -21,6 +21,7 @@ import org.tomitribe.util.Join;
 import java.io.PrintStream;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Command
@@ -57,7 +58,7 @@ public class Instances {
 
     public static void print(PrintStream out, Instance instance) {
         final String name = Aws.getName(instance);
-        out.printf("%-30s %-45s %-10s %-12s %-12s %-17s %-30s %s%n",
+        out.printf("%-30s %-45s %-10s %-12s %-12s %-17s %-30s %-7s %s%n",
                 name,
                 instance.getPublicDnsName(),
                 instance.getState().getName(),
@@ -65,6 +66,7 @@ public class Instances {
                 instance.getInstanceId(),
                 instance.getKeyName(),
                 instance.getLaunchTime(),
+                TimeUnit.MILLISECONDS.toHours(System.currentTimeMillis() - instance.getLaunchTime().getTime()),
                 tags(instance)
         );
     }

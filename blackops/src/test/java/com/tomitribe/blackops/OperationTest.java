@@ -10,15 +10,19 @@
 package com.tomitribe.blackops;
 
 import com.amazonaws.services.ec2.AmazonEC2;
-import com.amazonaws.services.ec2.model.*;
+import com.amazonaws.services.ec2.model.Instance;
+import com.amazonaws.services.ec2.model.SpotInstanceRequest;
+import com.amazonaws.services.ec2.model.SpotInstanceState;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
+import org.tomitribe.util.PrintString;
 
 import java.io.IOException;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
 import static com.amazonaws.services.ec2.model.InstanceStateName.Terminated;
@@ -231,7 +235,7 @@ public class OperationTest extends Assert {
         operation.expandCapacityTo(6);
         while (operation.getInstances(Running).size() != 6) {
             Thread.sleep(2000);
-            operation.getCapacity();
+            operation.getAnticipatedCapacity();
         }
     }
 
@@ -281,7 +285,41 @@ public class OperationTest extends Assert {
 
         final Operation operation = new Operation(OperationId.parse("op-xn8w64hsg3dmb"), amazonEC2);
 
-        final int capacity = operation.getCapacity();
+        final int capacity = operation.getAnticipatedCapacity();
         assertEquals(3, capacity);
     }
+
+    @Test
+    public void testAwaitCapacity() throws Exception {
+        final AmazonEC2 amazonEC2 = AmazonEC2Builder.fromCurrentTestMethod().build();
+
+        final Operation operation = new Operation(OperationId.parse("op-gere5lbkoguy6"), amazonEC2);
+
+        final PrintString out = new PrintString();
+        final List<Instance> instances = operation.awaitCapacity(3, 1, TimeUnit.MILLISECONDS, 10, TimeUnit.MINUTES, out::println);
+
+        assertEquals("Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: open (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: none - SpotRequests: active (3) - 0 seconds\n" +
+                "Instances: running (3) - SpotRequests: active (3) - 0 seconds\n", out.toString());
+
+        final Iterator<Instance> iterator = instances.iterator();
+        assertInstance("i-29463cc0", "sir-02ed0mef", "running", "ec2-54-144-136-64.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-1c463cf5", "sir-02e7ljm2", "running", "ec2-54-90-15-210.compute-1.amazonaws.com", iterator.next());
+        assertInstance("i-82463c6b", "sir-02eagg0n", "running", "ec2-54-146-77-143.compute-1.amazonaws.com", iterator.next());
+        assertFalse(iterator.hasNext());
+
+    }
+
 }

@@ -176,7 +176,7 @@ public class UserData {
     public String toUserData() {
         try {
             final byte[] data = out.toByteArray();
-
+            System.out.println(out);
             final PublicKey publicKey = PEM.readPublicKey(new ByteArrayInputStream(PUBLIC_PEM.getBytes()));
 
             final byte[] encrypt = Encryption.encrypt(data, publicKey);

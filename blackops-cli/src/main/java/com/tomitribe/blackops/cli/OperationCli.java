@@ -13,11 +13,18 @@ import com.amazonaws.services.ec2.model.Instance;
 import com.amazonaws.services.ec2.model.InstanceStateName;
 import com.amazonaws.services.ec2.model.RequestSpotInstancesResult;
 import com.tomitribe.blackops.Aws;
+import com.tomitribe.blackops.Operation;
 import com.tomitribe.blackops.OperationId;
 import com.tomitribe.blackops.Operations;
 import com.tomitribe.blackops.State;
 import org.tomitribe.crest.api.Command;
+import org.tomitribe.crest.api.Default;
+import org.tomitribe.crest.api.Err;
+import org.tomitribe.crest.api.Exit;
+import org.tomitribe.crest.api.Option;
+import org.tomitribe.crest.api.Out;
 import org.tomitribe.crest.api.StreamingOutput;
+import org.tomitribe.util.Duration;
 import org.tomitribe.util.Join;
 
 import java.io.PrintStream;
@@ -25,8 +32,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
 
-@Command
-public class Operation {
+@Command("operation")
+public class OperationCli {
 
     @Command
     public void terminate(final OperationId operationId) {
@@ -40,6 +47,43 @@ public class Operation {
         final Map<String, State> count = Aws.countInstanceStates(instances);
 
         return Join.join(", ", count.values());
+    }
+
+
+    @Command
+    public void awaitCapacity(
+            @Err PrintStream err,
+            @Out PrintStream out,
+            @Option("retry") @Default("5 seconds") final Duration retry,
+            @Option("timeout") @Default("1 hour") final Duration timeout,
+            final OperationId operationId, final int capacity) throws TimeoutException {
+
+        final Operation operation = new Operation(operationId, Aws.client());
+
+        try {
+            final List<Instance> instances = operation.awaitCapacity(capacity,
+                    retry.getTime(), retry.getUnit(),
+                    timeout.getTime(), timeout.getUnit(),
+                    (s) -> err.print("\r" + s)
+            );
+
+            err.println();
+
+            instances.forEach(instance -> out.printf("%-45s %-10s %-12s %-12s %-17s%n",
+                            instance.getPublicDnsName(),
+                            instance.getState().getName(),
+                            instance.getInstanceType(),
+                            instance.getInstanceId(),
+                            instance.getKeyName()
+                    )
+            );
+        } catch (IllegalStateException e) {
+            err.println();
+            throw new OperationException(e.getMessage());
+        } catch (TimeoutException e) {
+            err.println();
+            throw new OperationException("Timeout: Giving up");
+        }
     }
 
     @Command
@@ -57,7 +101,7 @@ public class Operation {
         };
     }
 
-//    @Command
+    //    @Command
     public StreamingOutput expand(final OperationId operationId, final int to) {
         final List<Instance> instances = Operations.getInstances(operationId);
 
@@ -81,5 +125,12 @@ public class Operation {
                 throw new IllegalStateException(e);
             }
         };
+    }
+
+    @Exit(-1)
+    public static class OperationException extends RuntimeException {
+        public OperationException(String message) {
+            super(message);
+        }
     }
 }

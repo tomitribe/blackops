@@ -23,12 +23,17 @@ import com.amazonaws.services.ec2.model.SpotInstanceState;
 import com.amazonaws.services.ec2.model.Tag;
 import com.amazonaws.services.ec2.model.TerminateInstancesRequest;
 import com.amazonaws.services.ec2.model.TerminateInstancesResult;
+import org.tomitribe.util.TimeUtils;
 
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
-import static com.amazonaws.services.ec2.model.InstanceStateName.Pending;
 import static com.amazonaws.services.ec2.model.InstanceStateName.Running;
 
 /**
@@ -109,6 +114,10 @@ public class Operation {
         return Aws.countSpotInstanceRequestStates(getSpotInstanceRequests());
     }
 
+    /**
+     * TODO: Terminate should cancel spot requests and shutdown instances
+     * @return
+     */
     public List<InstanceStateChange> terminateInstances() {
         final TerminateInstancesRequest terminateInstancesRequest = new TerminateInstancesRequest(getInstanceIds());
         final TerminateInstancesResult result = ec2.terminateInstances(terminateInstancesRequest);
@@ -122,18 +131,83 @@ public class Operation {
     }
 
     public void expandCapacityTo(final int size) {
-        final int needed = getCapacity() - size;
+        final int needed = getAnticipatedCapacity() - size;
 
         if (needed > 0) {
             Operations.expandOperation(id, needed);
         }
     }
 
-    public int getCapacity() {
-        final int instances = getInstances(Running, Pending).size();
-        final int requests = getSpotInstanceRequests(SpotInstanceState.Open).size();
+    public int getAnticipatedCapacity() {
+        final List<Instance> instances = getInstances();
+        final List<SpotInstanceRequest> spotInstanceRequests = getSpotInstanceRequests();
 
-        return instances + requests;
+        return getAnticipatedCapacity(instances, spotInstanceRequests);
     }
 
+    private static int getAnticipatedCapacity(List<Instance> instances, List<SpotInstanceRequest> spotInstanceRequests) {
+        final List<String> ids = Aws.getInstanceIds(instances);
+
+        // Collect all spot instances that are open or active and have not been fulfilled
+        final Pattern spotInstancePattern = Pattern.compile("open|active");
+        final List<SpotInstanceRequest> anticipatedSpotRequests = spotInstanceRequests.stream()
+                .filter(spotInstanceRequest -> !ids.contains(spotInstanceRequest.getInstanceId()))
+                .filter(spotInstanceRequest -> spotInstancePattern.matcher(spotInstanceRequest.getState()).matches())
+                .collect(Collectors.toList());
+
+        // Collect all instances that are pending or running
+        final Pattern instanceFilter = Pattern.compile("pending|running");
+        final List<Instance> anticipatedInstances = instances.stream()
+                .filter(instance -> instanceFilter.matcher(instance.getState().getName()).matches())
+                .collect(Collectors.toList());
+
+        return anticipatedSpotRequests.size() + anticipatedInstances.size();
+    }
+
+    /**
+     * Should return the list of Instances that are ready and running
+     */
+    public List<Instance> awaitCapacity(final int needed) throws TimeoutException {
+        return awaitCapacity(needed, 1, TimeUnit.SECONDS, 2, TimeUnit.DAYS, (s) -> {});
+    }
+
+    /**
+     * Should return the list of Instances that are ready and running
+     */
+    public List<Instance> awaitCapacity(final int needed,
+                                        final long retryInterval, final TimeUnit retryUnit,
+                                        final long timeout, final TimeUnit timeoutUnit,
+                                        final Consumer<String> consumer) throws TimeoutException {
+
+        final long start = System.currentTimeMillis();
+
+        final Supplier<List<Instance>> stringSupplier = () -> {
+
+            final List<Instance> instances = getInstances();
+            final List<SpotInstanceRequest> spotInstanceRequests = getSpotInstanceRequests();
+
+            // Report our findings
+            consumer.accept(String.format("%s - %s",
+                    Operations.formatStatus(instances, spotInstanceRequests),
+                    TimeUtils.hoursAndSeconds(System.currentTimeMillis() - start)
+            ));
+
+            { // How many instances are we expecting?
+                final int missing = needed - getAnticipatedCapacity(instances, spotInstanceRequests);
+                if (missing > 0) {
+                    final String msg = String.format("\nMore spot instances must be requested: Order %s more", missing);
+                    throw new IllegalStateException(msg);
+                }
+            }
+
+            // Do we have enough running instances?
+            final List<Instance> running = instances.stream()
+                    .filter(instance -> "running".equals(instance.getState().getName()))
+                    .collect(Collectors.toList());
+
+            return running.size() >= needed ? running : null;
+        };
+
+        return Await.check(stringSupplier, 0, retryInterval, retryUnit, timeout, timeoutUnit);
+    }
 }

@@ -9,6 +9,7 @@
  */
 package com.tomitribe.blackops;
 
+import org.tomitribe.util.Files;
 import org.tomitribe.util.IO;
 
 import java.io.File;
@@ -28,6 +29,7 @@ public class MockData {
 
     public static Object[] objectsFromTestMethod(Class clazz, String method) {
         final File base = EC2ResponseLogger.getBase(clazz, method);
+        Files.dir(base);
         return objectsFromDirectory(base);
     }
 

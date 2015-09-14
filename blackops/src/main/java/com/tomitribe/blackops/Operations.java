@@ -25,6 +25,7 @@ import java.io.PrintStream;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 public enum Operations {
@@ -158,5 +159,31 @@ public enum Operations {
 
         final DescribeInstanceAttributeResult describeInstanceAttributeResult = Aws.client().describeInstanceAttribute(describeInstanceAttributeRequest);
         return describeInstanceAttributeResult.getInstanceAttribute().getUserData();
+    }
+
+    public static String formatStatus(List<Instance> instances, List<SpotInstanceRequest> spotInstanceRequests) {
+        final Map<String, State> instanceStates = Aws.countInstanceStates(instances);
+        final Map<String, State> spotInstanceRequestStates = Aws.countSpotInstanceRequestStates(spotInstanceRequests);
+        return formatStatus(instanceStates, spotInstanceRequestStates);
+    }
+
+    public static String formatStatus(Map<String, State> instanceStates, Map<String, State> spotInstanceRequestStates) {
+        return String.format("Instances: %s - SpotRequests: %s",
+                first(Operations::nonEmpty, States.printStates(instanceStates), "none"),
+                first(Operations::nonEmpty, States.printStates(spotInstanceRequestStates), "none")
+        );
+    }
+
+    public static boolean nonEmpty(String s) {
+        return s != null && !"".equals(s);
+    }
+
+    public static String first(final Predicate<String> predicate, final String... options) {
+        for (final String option : options) {
+            if (predicate.test(option)) {
+                return option;
+            }
+        }
+        return null;
     }
 }

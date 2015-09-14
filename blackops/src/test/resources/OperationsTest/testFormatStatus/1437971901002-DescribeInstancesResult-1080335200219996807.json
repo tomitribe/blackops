@@ -1,0 +1,105 @@
+{
+  "reservations": [
+    {
+      "instances": [
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "running"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "shutting-down"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "pending"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "running"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "stopped"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "pending"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "running"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "terminated"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "running"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "terminated"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "terminated"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "pending"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "shutting-down"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "stopping"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "terminated"
+          }
+        },
+        {
+          "launchTime": 0,
+          "state": {
+            "name": "stopping"
+          }
+        }
+      ]
+    }
+  ],
+  "nextToken": null
+}

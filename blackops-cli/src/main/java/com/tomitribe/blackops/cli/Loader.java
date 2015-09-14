@@ -20,7 +20,7 @@ public class Loader implements Commands.Loader {
     public Iterator<Class<?>> iterator() {
         return Arrays.asList(
                 Instances.class,
-                Operation.class,
+                OperationCli.class,
                 Launch.class
         ).iterator();
     }
